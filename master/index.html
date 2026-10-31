@@ -233,9 +233,9 @@ const diffDays = (a, b) => Math.round((pd(b) - pd(a)) / 864e5);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const fmtShort = s => { const d = pd(s); return `${DOW[wd(s)]} ${d.getDate()} ${MES[d.getMonth()].slice(0, 3)}`; };
 const fmtLong = s => { const d = pd(s); return `${DOWL[wd(s)]} ${d.getDate()} de ${MES[d.getMonth()]}`; };
-const now = new Date();
-const TODAY = iso(now);
-const NOWMIN = now.getHours() * 60 + now.getMinutes();
+let TODAY, NOWMIN;
+function tick() { const n = new Date(); TODAY = iso(n); NOWMIN = n.getHours() * 60 + n.getMinutes(); }
+tick();
 
 // ---- eventos unificados
 const S = DATA.subjects;
@@ -500,6 +500,18 @@ document.addEventListener("keydown", ev => {
 renderFilters();
 renderNext();
 setView(location.hash.slice(1) || store.get("view") || "agenda", true);
+
+// Mantener la fecha al día: al volver a la app y cada minuto mientras está abierta
+function refresh() {
+  const before = TODAY + NOWMIN;
+  tick();
+  if (TODAY + NOWMIN === before) return;
+  if (document.activeElement && document.activeElement.id === "note") { renderNext(); return; }
+  renderAll();
+}
+document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
+window.addEventListener("pageshow", refresh);
+setInterval(refresh, 60000);
 </script>
 
 </body></html>
