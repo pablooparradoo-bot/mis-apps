@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Máster 26/27">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}</style>
+<title>Máster Profesorado 26/27</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: barra fija con vistas (Agenda · Mes · Asignaturas), tira "lo próximo", filtros y la vista activa. Ink + amarillo universidad como acento. */
+:root {
+  --bg: #F6F6F2; --surface: #FFFFFF; --sunk: #EEEEE8; --line: #DEDDD4; --fg: #1B1B18; --muted: #6C6B62; --faint: #A3A296;
+  --accent: #F5C400; --accent-ink: #5C4A00; --accent-soft: #FFF3B8;
+  --exam: #D62839; --ink: #1B1B18; --tfm: #2A4E86; --tfm-soft: #DCE5F3; --pract: #2D7A50; --pract-soft: #DDF0E4; --fest: #B03A2E;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Figtree", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121210; --surface: #1C1C19; --sunk: #252521; --line: #33332D; --fg: #EDECE4; --muted: #A09F94; --faint: #6E6D64;
+  --accent: #F5C400; --accent-ink: #F5C400; --accent-soft: #3A3210;
+  --exam: #FF5A68; --ink: #EDECE4; --tfm: #8FB2EC; --tfm-soft: #22304A; --pract: #6CC896; --pract-soft: #1D3529; --fest: #F08A7E; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #121210; --surface: #1C1C19; --sunk: #252521; --line: #33332D; --fg: #EDECE4; --muted: #A09F94; --faint: #6E6D64;
+  --accent: #F5C400; --accent-ink: #F5C400; --accent-soft: #3A3210;
+  --exam: #FF5A68; --ink: #EDECE4; --tfm: #8FB2EC; --tfm-soft: #22304A; --pract: #6CC896; --pract-soft: #1D3529; --fest: #F08A7E; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.4; margin: 0; -webkit-text-size-adjust: 100%; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+.topin { display: flex; align-items: center; gap: 12px; padding-block: 10px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; margin-right: auto; min-width: 0; }
+.mark { width: 30px; height: 30px; border-radius: 7px; background: var(--accent); color: #1B1B18; font: 800 15px/30px var(--display); text-align: center; flex: none; }
+.brand h1 { font: 800 18px/1.1 var(--display); margin: 0; letter-spacing: -.01em; }
+.brand p { margin: 1px 0 0; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.seg { display: flex; background: var(--sunk); border-radius: 9px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: transparent; padding: 6px 12px; border-radius: 7px; font-weight: 600; font-size: 14px; cursor: pointer; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+@media (max-width: 520px) { .seg { width: 100%; } .seg button { flex: 1; } }
+
+.next { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding-block: 16px 4px; }
+.nx { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px; min-width: 0; cursor: pointer; text-align: left; }
+.nx .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; }
+.nx .big { font: 700 20px/1.15 var(--display); margin: 6px 0 2px; letter-spacing: -.01em; }
+.nx .sm { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nx .cd { font-family: var(--mono); font-size: 11px; color: var(--accent-ink); background: var(--accent-soft); padding: 1px 6px; border-radius: 4px; text-transform: none; letter-spacing: 0; white-space: nowrap; }
+.nx.exam .big { color: var(--exam); }
+@media (max-width: 760px) { .next { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-block: 12px 0; } .next::-webkit-scrollbar { display: none; } .nx { flex: 0 0 82%; scroll-snap-align: start; padding: 10px 12px; } .nx .big { font-size: 17px; } }
+
+.filters { display: flex; gap: 6px; overflow-x: auto; padding-block: 12px; scrollbar-width: none; }
+.filters::-webkit-scrollbar { display: none; }
+.chip { flex: none; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); border-radius: 99px; padding: 5px 11px 5px 8px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.chip i { width: 10px; height: 10px; border-radius: 3px; background: var(--c, var(--faint)); }
+.chip[aria-pressed="false"] { opacity: .45; }
+.chip[aria-pressed="false"] i { background: transparent; box-shadow: inset 0 0 0 1.5px var(--c, var(--faint)); }
+.sep { flex: none; width: 1px; background: var(--line); margin: 4px 2px; }
+
+main { padding-block: 4px 40px; }
+.view[hidden] { display: none; }
+
+/* ---------- Agenda ---------- */
+.agbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.agbar h2, .mhead h2 { font: 800 24px/1.1 var(--display); margin: 0; letter-spacing: -.02em; }
+.ghost { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.week { margin-top: 18px; }
+.week h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); margin: 0 0 6px; font-weight: 700; display: flex; gap: 8px; align-items: center; }
+.week h3 .now { background: var(--accent); color: #1B1B18; padding: 1px 7px; border-radius: 4px; letter-spacing: .05em; }
+.dayrow { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); cursor: pointer; }
+.dayrow.past { opacity: .5; }
+.dayrow .dd { text-align: left; }
+.dd b { display: block; font: 800 24px/1 var(--display); }
+.dd span { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+.dayrow.today .dd b { color: var(--accent-ink); }
+.dayrow.today { background: linear-gradient(90deg, var(--accent-soft), transparent 70%); border-radius: 8px; padding-left: 6px; margin-left: -6px; }
+.items { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.ev { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 10px; align-items: baseline; padding: 8px 10px; border-radius: 8px; background: color-mix(in srgb, var(--c) 14%, var(--surface)); border-left: 4px solid var(--c); }
+.ev .t { font: 700 13px var(--mono); font-variant-numeric: tabular-nums; }
+.ev .n { font-weight: 700; min-width: 0; }
+.ev .d { grid-column: 2; font-size: 13px; color: var(--muted); }
+.ev.ms { grid-template-columns: minmax(0, 1fr); }
+.ev.ms .d { grid-column: 1; }
+.ev.k-exam { --c: var(--exam); background: var(--exam); color: #fff; } .ev.k-exam .d { color: rgba(255,255,255,.85); }
+.ev.k-entrega { --c: var(--ink); background: var(--ink); color: var(--bg); } .ev.k-entrega .d { color: color-mix(in srgb, var(--bg) 75%, transparent); }
+.ev.k-tfm, .ev.k-range-tfm { --c: var(--tfm); background: var(--tfm-soft); }
+.ev.k-practicas { --c: var(--pract); background: var(--pract-soft); }
+.ev.k-sesion, .ev.k-revision { --c: var(--faint); background: var(--sunk); }
+.ev.k-extra { --c: var(--faint); background: transparent; border: 1px dashed var(--faint); border-left-width: 4px; }
+.ev.k-festivo { --c: var(--fest); background: transparent; color: var(--fest); padding-block: 4px; }
+.notepreview { font-size: 13px; color: var(--muted); padding: 6px 10px; border-radius: 8px; background: var(--sunk); white-space: pre-wrap; overflow-wrap: anywhere; }
+.notepreview::before { content: "✎ "; color: var(--accent-ink); }
+.empty { color: var(--muted); padding: 24px 0; }
+
+/* ---------- Mes ---------- */
+.mhead { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.mhead h2 { margin-right: auto; }
+.mhead h2 span { font-weight: 500; color: var(--faint); }
+.navb { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 18px; line-height: 1; }
+.navb:disabled { opacity: .3; cursor: default; }
+.mlayout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; align-items: start; }
+@media (max-width: 900px) { .mlayout { grid-template-columns: 1fr; } }
+.mgrid { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.mwd, .mweek { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)) repeat(2, minmax(0, .72fr)); }
+.mwd div { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 8px; border-bottom: 1px solid var(--line); }
+.mweek + .mweek .cell { border-top: 1px solid var(--line); }
+.cell { min-height: 108px; padding: 6px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 3px; cursor: pointer; min-width: 0; position: relative; background: var(--surface); text-align: left; border-top: 0; border-right: 0; border-bottom: 0; border-radius: 0; font: inherit; color: inherit; }
+.cell:first-child { border-left: 0; }
+.cell.we { background: color-mix(in srgb, var(--sunk) 45%, var(--surface)); }
+.cell.out { background: var(--sunk); cursor: default; }
+.cell.fest { background: repeating-linear-gradient(135deg, var(--sunk) 0 4px, var(--surface) 4px 9px); }
+.cell.pract { box-shadow: inset 0 -3px 0 color-mix(in srgb, var(--pract) 55%, transparent); }
+.cell.exam { box-shadow: inset 0 0 0 2px var(--exam); }
+.cell.sel { box-shadow: inset 0 0 0 2px var(--accent); }
+.cell .num { font: 700 14px var(--display); display: flex; align-items: center; gap: 4px; }
+.cell.today .num b { background: var(--accent); color: #1B1B18; border-radius: 6px; padding: 0 6px; }
+.cell .num em { font: 600 10px var(--body); color: var(--fest); font-style: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cell .num .pen { margin-left: auto; font-size: 11px; color: var(--accent-ink); }
+.mc { font-size: 11.5px; line-height: 1.2; padding: 2px 5px; border-radius: 4px; background: color-mix(in srgb, var(--c) 16%, var(--surface)); border-left: 3px solid var(--c); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow-wrap: anywhere; }
+.mc.range { display: block; white-space: nowrap; text-overflow: ellipsis; }
+.mc b { font-family: var(--mono); font-weight: 700; font-size: 10.5px; }
+.mc.k-exam { background: var(--exam); color: #fff; border-color: var(--exam); font-weight: 700; }
+.mc.k-entrega { background: var(--ink); color: var(--bg); border-color: var(--ink); font-weight: 700; }
+.mc.k-tfm, .mc.k-range-tfm { --c: var(--tfm); background: var(--tfm-soft); }
+.mc.k-practicas { --c: var(--pract); background: var(--pract-soft); }
+.mc.k-sesion, .mc.k-revision { --c: var(--faint); background: var(--sunk); }
+.mc.k-extra { --c: var(--faint); background: transparent; border: 1px dashed var(--faint); }
+.mc.range { border-left: 0; border-radius: 99px; font-size: 10.5px; opacity: .9; }
+.dots { display: none; gap: 3px; flex-wrap: wrap; }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+@media (max-width: 640px) {
+  .cell { min-height: 58px; padding: 4px; }
+  .cell .mc { display: none; }
+  .cell .num em { display: none; }
+  .dots { display: flex; }
+  .mwd div { padding: 6px 4px; text-align: center; }
+}
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 70px); }
+@media (max-width: 900px) { .panel { position: static; } }
+.panel h3 { font: 800 19px/1.2 var(--display); margin: 0 0 10px; }
+.panel h3 small { display: block; font: 500 13px var(--body); color: var(--muted); margin-top: 2px; }
+.panel .items { margin-bottom: 12px; }
+.panel label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); display: block; margin-bottom: 6px; }
+.panel textarea { width: 100%; min-height: 96px; resize: vertical; border: 1px solid var(--line); border-radius: 8px; padding: 10px; font: 15px/1.4 var(--body); background: var(--bg); color: var(--fg); }
+.saved { font-size: 12px; color: var(--muted); height: 16px; margin-top: 4px; }
+
+/* ---------- Asignaturas ---------- */
+.subjgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 12px; }
+.semh { font: 800 20px var(--display); margin: 22px 0 10px; letter-spacing: -.01em; }
+.semh:first-child { margin-top: 4px; }
+.sc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.sc .h { display: flex; gap: 10px; align-items: flex-start; }
+.sc .sw { width: 14px; height: 14px; border-radius: 4px; background: var(--c); flex: none; margin-top: 4px; }
+.sc h4 { margin: 0; font: 700 17px/1.2 var(--display); }
+.sc .full { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.bar { height: 6px; background: var(--sunk); border-radius: 99px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--c); border-radius: 99px; }
+.meta { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); gap: 8px; flex-wrap: wrap; }
+.meta b { color: var(--fg); font-variant-numeric: tabular-nums; }
+.pills { display: flex; flex-wrap: wrap; gap: 4px; }
+.pills span { font: 600 11.5px var(--mono); padding: 2px 6px; border-radius: 4px; background: color-mix(in srgb, var(--c) 16%, var(--surface)); font-variant-numeric: tabular-nums; }
+.pills span.done { opacity: .45; text-decoration: line-through; }
+.pills span.nxt { background: var(--c); color: #fff; }
+.notebox { margin-top: 26px; background: var(--accent-soft); border-radius: var(--r); padding: 14px 16px; font-size: 14px; line-height: 1.5; }
+.notebox h4 { margin: 0 0 6px; font: 700 15px var(--display); }
+.notebox ul { margin: 0; padding-left: 18px; }
+footer { color: var(--faint); font-size: 12px; padding-block: 0 30px; }
+@media (prefers-reduced-motion: no-preference) { .dayrow, .cell, .nx { transition: background .15s; } }
+</style>
+
+</head><body>
+<header class="top"><div class="wrap topin">
+  <div class="brand"><div class="mark">26</div><div style="min-width:0"><h1>Máster Profesorado 26/27</h1><p>Grupo 5 · ADE, Economía y Turismo · hora peninsular</p></div></div>
+  <nav class="seg" aria-label="Vista">
+    <button id="v-agenda" data-v="agenda" aria-pressed="true">Agenda</button>
+    <button id="v-mes" data-v="mes" aria-pressed="false">Mes</button>
+    <button id="v-asignaturas" data-v="asignaturas" aria-pressed="false">Asignaturas</button>
+  </nav>
+</div></header>
+
+<div class="wrap">
+  <section class="next" id="next" aria-label="Lo próximo"></section>
+  <div class="filters" id="filters" role="group" aria-label="Filtros"></div>
+</div>
+
+<main class="wrap">
+  <section class="view" id="view-agenda">
+    <div class="agbar"><h2 id="ag-title">Agenda</h2><div style="display:flex;gap:6px"><button class="ghost" id="btn-past">Ver semanas pasadas</button><button class="ghost" id="btn-today">Hoy</button></div></div>
+    <div id="agenda"></div>
+  </section>
+  <section class="view" id="view-mes" hidden>
+    <div class="mlayout">
+      <div>
+        <div class="mhead"><h2 id="m-title"></h2><button class="ghost" id="m-today">Hoy</button><button class="navb" id="m-prev" aria-label="Mes anterior">‹</button><button class="navb" id="m-next" aria-label="Mes siguiente">›</button></div>
+        <div class="mgrid" id="mgrid"></div>
+      </div>
+      <aside class="panel" id="panel"></aside>
+    </div>
+  </section>
+  <section class="view" id="view-asignaturas" hidden><div id="subjects"></div></section>
+</main>
+<noscript><div class="wrap"><h2>Agenda completa</h2><ul><li><b>2 nov 2026</b> · Festivo · Todos los Santos</li><li><b>4 nov 2026</b> · 19:00 Complementos</li><li><b>10 nov 2026</b> · 19:00 Familia</li><li><b>11 nov 2026</b> · 19:00 Complementos</li><li><b>12 nov 2026</b> · 17:00 Didáctica</li><li><b>12 nov 2026</b> · 19:00 Metodologías</li><li><b>16 nov 2026</b> · 19:00 Pensamiento (EN)</li><li><b>17 nov 2026</b> · 19:00 Familia</li><li><b>18 nov 2026</b> · 19:00 Complementos</li><li><b>19 nov 2026</b> · 17:00 Didáctica</li><li><b>24 nov 2026</b> · 17:00 Diversidad</li><li><b>24 nov 2026</b> · 19:00 Familia</li><li><b>25 nov 2026</b> · 17:00 Procesos</li><li><b>25 nov 2026</b> · 19:00 Complementos</li><li><b>26 nov 2026</b> · 17:00 Didáctica</li><li><b>26 nov 2026</b> · 19:00 Metodologías</li><li><b>30 nov 2026</b> · 19:00 Pensamiento (EN)</li><li><b>1 dic 2026</b> · 17:00 Diversidad</li><li><b>2 dic 2026</b> · 17:00 Procesos</li><li><b>2 dic 2026</b> · 19:00 Complementos</li><li><b>3 dic 2026</b> · 17:00 Didáctica</li><li><b>7 dic 2026</b> · Festivo · Constitución</li><li><b>8 dic 2026</b> · Festivo · Inmaculada</li><li><b>9 dic 2026</b> · 17:00 Procesos</li><li><b>9 dic 2026</b> · 19:00 Complementos</li><li><b>10 dic 2026</b> · 17:00 Didáctica</li><li><b>10 dic 2026</b> · 19:00 Metodologías</li><li><b>14 dic 2026</b> · 19:00 Pensamiento (EN)</li><li><b>15 dic 2026</b> · 17:00 Diversidad</li><li><b>16 dic 2026</b> · 17:00 Procesos</li><li><b>16 dic 2026</b> · 19:00 Complementos</li><li><b>17 dic 2026</b> · 17:00 Didáctica</li><li><b>22 dic 2026</b> · 17:00 Diversidad</li><li><b>25 dic 2026</b> · Festivo · Navidad</li><li><b>1 ene 2027</b> · Festivo · Año Nuevo</li><li><b>6 ene 2027</b> · Festivo · Reyes</li><li><b>7 ene 2027</b> · Límite: solicitar tema y tipo de TFM</li><li><b>11 ene 2027</b> · 19:00 Pensamiento (EN)</li><li><b>12 ene 2027</b> · 17:00 Familia</li><li><b>13 ene 2027</b> · 19:00 Complementos</li><li><b>14 ene 2027</b> · 17:00 Didáctica</li><li><b>14 ene 2027</b> · 19:00 Metodologías</li><li><b>19 ene 2027</b> · 17:00 Familia</li><li><b>20 ene 2027</b> · 17:00 Procesos</li><li><b>21 ene 2027</b> · 19:00 Metodologías</li><li><b>25 ene 2027</b> · 19:00 Pensamiento (EN)</li><li><b>26 ene 2027</b> · 17:00 Diversidad</li><li><b>28 ene 2027</b> · 17:00 Didáctica</li><li><b>1 feb 2027</b> · Inicio prácticas + tutor de prácticas</li><li><b>3 feb 2027</b> · ENTREGA actividades 1er cuatri.</li><li><b>4 feb 2027</b> · Sesión dudas metodología examen</li><li><b>11 feb 2027</b> · EXAMEN 1er cuatrimestre</li><li><b>13 feb 2027</b> · EXAMEN 1er cuatrimestre</li><li><b>16 feb 2027</b> · Asignación tutor TFM</li><li><b>17 feb 2027</b> · Corrección 1er borrador (hasta 23/02)</li><li><b>17 feb 2027</b> · TFM · Entrega 1er borrador</li><li><b>17 feb 2027</b> · 17:00 Tecnologías</li><li><b>17 feb 2027</b> · 19:00 Innovación</li><li><b>24 feb 2027</b> · Revisión notas 1er cuatri. (hasta 25/02)</li><li><b>25 feb 2027</b> · 17:00 Diseño curricular</li><li><b>1 mar 2027</b> · Festivo · Día de Andalucía</li><li><b>1 mar 2027</b> · Sesión inicio TFM con tutor (hasta 05/03)</li><li><b>3 mar 2027</b> · 17:00 Tecnologías</li><li><b>3 mar 2027</b> · 19:00 Innovación</li><li><b>9 mar 2027</b> · TFM · Entrega 2º borrador</li><li><b>10 mar 2027</b> · Corrección 2º borrador (hasta 16/03)</li><li><b>11 mar 2027</b> · 17:00 Diseño curricular</li><li><b>17 mar 2027</b> · 17:00 Tecnologías</li><li><b>17 mar 2027</b> · 19:00 Innovación</li><li><b>25 mar 2027</b> · Festivo · Jueves Santo</li><li><b>26 mar 2027</b> · Festivo · Viernes Santo</li><li><b>30 mar 2027</b> · TFM · Entrega 3er borrador</li><li><b>31 mar 2027</b> · Corrección 3er borrador (hasta 06/04)</li><li><b>31 mar 2027</b> · 17:00 Tecnologías</li><li><b>31 mar 2027</b> · 19:00 Innovación</li><li><b>8 abr 2027</b> · 17:00 Diseño curricular</li><li><b>12 abr 2027</b> · Sesión seguimiento TFM (hasta 16/04)</li><li><b>14 abr 2027</b> · 17:00 Tecnologías</li><li><b>14 abr 2027</b> · 19:00 Innovación</li><li><b>22 abr 2027</b> · 17:00 Diseño curricular</li><li><b>29 abr 2027</b> · 17:00 Diseño curricular</li><li><b>1 may 2027</b> · Festivo · Día del Trabajo</li><li><b>4 may 2027</b> · TFM · Entrega 4º borrador</li><li><b>5 may 2027</b> · Corrección 4º borrador (hasta 11/05)</li><li><b>6 may 2027</b> · ENTREGA actividades 2º cuatri.</li><li><b>12 may 2027</b> · Sesión dudas metodología examen</li><li><b>20 may 2027</b> · EXAMEN 2º cuatrimestre</li><li><b>22 may 2027</b> · EXAMEN 2º cuatrimestre</li><li><b>26 may 2027</b> · Autorización TFM (tutor) (hasta 02/06)</li><li><b>26 may 2027</b> · TFM · Entrega definitiva al tutor</li><li><b>28 may 2027</b> · FIN prácticas + memoria</li><li><b>2 jun 2027</b> · Revisión notas 2º cuatri. (hasta 03/06)</li><li><b>3 jun 2027</b> · TFM · Entrega definitiva en plataforma</li><li><b>21 jun 2027</b> · Exposiciones TFM (4ª semana) (hasta 30/06)</li></ul></div></noscript>
+<footer class="wrap" id="foot">Fuentes: agenda básica, horario de videoconferencias del Grupo 5 y calendario general del curso 26-27. Las notas se guardan solo en este navegador.</footer>
+
+<script>
+const DATA = {"subjects": {"DIV": {"name": "Diversidad en el aprendizaje: el desarrollo cognitivo, social y emocional", "short": "Diversidad", "color": "#E4572E", "sem": 1, "exam": "9:00–9:30", "sessions": 5}, "PRO": {"name": "Procesos y contextos educativos: planificación, estrategias y evaluación del proceso de enseñanza-aprendizaje", "short": "Procesos", "color": "#F29E1F", "sem": 1, "exam": "9:45–10:15", "sessions": 5}, "FAM": {"name": "Familia y comunidad en la sociedad global: retos y desafíos en contextos educativos", "short": "Familia", "color": "#C9A100", "sem": 1, "exam": "10:30–11:00", "sessions": 5}, "PSE": {"name": "Pensamiento Social y Económico (Inglés)", "short": "Pensamiento (EN)", "color": "#17A398", "sem": 1, "exam": "11:15–11:45", "sessions": 5}, "COM": {"name": "Complementos para la formación disciplinar de la especialidad (ADE, Economía y Turismo)", "short": "Complementos", "color": "#2F6FDB", "sem": 1, "exam": "12:00–12:30", "sessions": 8}, "MET": {"name": "Metodologías de investigación educativa", "short": "Metodologías", "color": "#8A4FD3", "sem": 1, "exam": "12:45–14:15", "sessions": 5}, "DID": {"name": "Aprendizaje y enseñanza de la especialidad: Didáctica (ADE, Economía y Turismo)", "short": "Didáctica", "color": "#3E9B3E", "sem": 1, "exam": "14:30–15:00", "sessions": 8}, "TEC": {"name": "Tecnologías digitales y educación", "short": "Tecnologías", "color": "#0E9CC4", "sem": 2, "exam": "10:30–11:00", "sessions": 5}, "INN": {"name": "Innovación para la práctica educativa de la especialidad (ADE, Economía y Turismo)", "short": "Innovación", "color": "#D2408F", "sem": 2, "exam": "9:00–9:30", "sessions": 5}, "DIS": {"name": "Aprendizaje y enseñanza de la especialidad: Diseño curricular (ADE, Economía y Turismo)", "short": "Diseño curricular", "color": "#9A6A2F", "sem": 2, "exam": "9:45–10:15", "sessions": 5}}, "classes": [{"date": "2026-11-04", "start": "19:00", "end": "21:00", "subj": "COM"}, {"date": "2026-11-10", "start": "19:00", "end": "21:00", "subj": "FAM"}, {"date": "2026-11-11", "start": "19:00", "end": "21:00", "subj": "COM"}, {"date": "2026-11-12", "start": "17:00", "end": "19:00", "subj": "DID"}, {"date": "2026-11-12", "start": "19:00", "end": "21:00", "subj": "MET"}, {"date": "2026-11-16", "start": "19:00", "end": "21:00", "subj": "PSE"}, {"date": "2026-11-17", "start": "19:00", "end": "21:00", "subj": "FAM"}, {"date": "2026-11-18", "start": "19:00", "end": "21:00", "subj": "COM"}, {"date": "2026-11-19", "start": "17:00", "end": "19:00", "subj": "DID"}, {"date": "2026-11-24", "start": "17:00", "end": "19:00", "subj": "DIV"}, {"date": "2026-11-24", "start": "19:00", "end": "21:00", "subj": "FAM"}, {"date": "2026-11-25", "start": "17:00", "end": "19:00", "subj": "PRO"}, {"date": "2026-11-25", "start": "19:00", "end": "21:00", "subj": "COM"}, {"date": "2026-11-26", "start": "17:00", "end": "19:00", "subj": "DID"}, {"date": "2026-11-26", "start": "19:00", "end": "21:00", "subj": "MET"}, {"date": "2026-11-30", "start": "19:00", "end": "21:00", "subj": "PSE"}, {"date": "2026-12-01", "start": "17:00", "end": "19:00", "subj": "DIV"}, {"date": "2026-12-02", "start": "17:00", "end": "19:00", "subj": "PRO"}, {"date": "2026-12-02", "start": "19:00", "end": "21:00", "subj": "COM"}, {"date": "2026-12-03", "start": "17:00", "end": "19:00", "subj": "DID"}, {"date": "2026-12-09", "start": "17:00", "end": "19:00", "subj": "PRO"}, {"date": "2026-12-09", "start": "19:00", "end": "21:00", "subj": "COM"}, {"date": "2026-12-10", "start": "17:00", "end": "19:00", "subj": "DID"}, {"date": "2026-12-10", "start": "19:00", "end": "21:00", "subj": "MET"}, {"date": "2026-12-14", "start": "19:00", "end": "21:00", "subj": "PSE"}, {"date": "2026-12-15", "start": "17:00", "end": "19:00", "subj": "DIV"}, {"date": "2026-12-16", "start": "17:00", "end": "19:00", "subj": "PRO"}, {"date": "2026-12-16", "start": "19:00", "end": "21:00", "subj": "COM"}, {"date": "2026-12-17", "start": "17:00", "end": "19:00", "subj": "DID"}, {"date": "2026-12-22", "start": "17:00", "end": "19:00", "subj": "DIV"}, {"date": "2027-01-11", "start": "19:00", "end": "21:00", "subj": "PSE"}, {"date": "2027-01-12", "start": "17:00", "end": "19:00", "subj": "FAM"}, {"date": "2027-01-13", "start": "19:00", "end": "21:00", "subj": "COM"}, {"date": "2027-01-14", "start": "17:00", "end": "19:00", "subj": "DID"}, {"date": "2027-01-14", "start": "19:00", "end": "21:00", "subj": "MET"}, {"date": "2027-01-19", "start": "17:00", "end": "19:00", "subj": "FAM"}, {"date": "2027-01-20", "start": "17:00", "end": "19:00", "subj": "PRO"}, {"date": "2027-01-21", "start": "19:00", "end": "21:00", "subj": "MET"}, {"date": "2027-01-25", "start": "19:00", "end": "21:00", "subj": "PSE"}, {"date": "2027-01-26", "start": "17:00", "end": "19:00", "subj": "DIV"}, {"date": "2027-01-28", "start": "17:00", "end": "19:00", "subj": "DID"}, {"date": "2027-02-17", "start": "17:00", "end": "19:00", "subj": "TEC"}, {"date": "2027-02-17", "start": "19:00", "end": "21:00", "subj": "INN"}, {"date": "2027-02-25", "start": "17:00", "end": "19:00", "subj": "DIS"}, {"date": "2027-03-03", "start": "17:00", "end": "19:00", "subj": "TEC"}, {"date": "2027-03-03", "start": "19:00", "end": "21:00", "subj": "INN"}, {"date": "2027-03-11", "start": "17:00", "end": "19:00", "subj": "DIS"}, {"date": "2027-03-17", "start": "17:00", "end": "19:00", "subj": "TEC"}, {"date": "2027-03-17", "start": "19:00", "end": "21:00", "subj": "INN"}, {"date": "2027-03-31", "start": "17:00", "end": "19:00", "subj": "TEC"}, {"date": "2027-03-31", "start": "19:00", "end": "21:00", "subj": "INN"}, {"date": "2027-04-08", "start": "17:00", "end": "19:00", "subj": "DIS"}, {"date": "2027-04-14", "start": "17:00", "end": "19:00", "subj": "TEC"}, {"date": "2027-04-14", "start": "19:00", "end": "21:00", "subj": "INN"}, {"date": "2027-04-22", "start": "17:00", "end": "19:00", "subj": "DIS"}, {"date": "2027-04-29", "start": "17:00", "end": "19:00", "subj": "DIS"}], "milestones": [{"date": "2026-11-02", "end": null, "kind": "festivo", "label": "Festivo · Todos los Santos", "detail": "Trasladado del domingo 1 de noviembre"}, {"date": "2026-12-07", "end": null, "kind": "festivo", "label": "Festivo · Constitución", "detail": "Trasladado del domingo 6 de diciembre"}, {"date": "2026-12-08", "end": null, "kind": "festivo", "label": "Festivo · Inmaculada", "detail": ""}, {"date": "2026-12-25", "end": null, "kind": "festivo", "label": "Festivo · Navidad", "detail": ""}, {"date": "2027-01-01", "end": null, "kind": "festivo", "label": "Festivo · Año Nuevo", "detail": ""}, {"date": "2027-01-06", "end": null, "kind": "festivo", "label": "Festivo · Reyes", "detail": ""}, {"date": "2027-03-01", "end": null, "kind": "festivo", "label": "Festivo · Día de Andalucía", "detail": "Trasladado del domingo 28 de febrero"}, {"date": "2027-03-25", "end": null, "kind": "festivo", "label": "Festivo · Jueves Santo", "detail": ""}, {"date": "2027-03-26", "end": null, "kind": "festivo", "label": "Festivo · Viernes Santo", "detail": ""}, {"date": "2027-05-01", "end": null, "kind": "festivo", "label": "Festivo · Día del Trabajo", "detail": ""}, {"date": "2027-01-07", "end": null, "kind": "tfm", "label": "Límite: solicitar tema y tipo de TFM", "detail": "Fecha límite para solicitar tema y tipo de TFM"}, {"date": "2027-02-01", "end": null, "kind": "practicas", "label": "Inicio prácticas + tutor de prácticas", "detail": "Asignación de tutor de prácticas e inicio de las prácticas curriculares (a partir del 1 de febrero)"}, {"date": "2027-02-03", "end": null, "kind": "entrega", "label": "ENTREGA actividades 1er cuatri.", "detail": "Fecha límite de entrega de actividades del primer cuatrimestre"}, {"date": "2027-02-04", "end": null, "kind": "sesion", "label": "Sesión dudas metodología examen", "detail": "Sesión de resolución de dudas o incidencias de la metodología de examen"}, {"date": "2027-02-11", "end": null, "kind": "exam", "label": "EXAMEN 1er cuatrimestre", "detail": "Exámenes ordinarios del primer cuatrimestre (online). Franjas: ver portada"}, {"date": "2027-02-13", "end": null, "kind": "exam", "label": "EXAMEN 1er cuatrimestre", "detail": "Exámenes ordinarios del primer cuatrimestre (online). Franjas: ver portada"}, {"date": "2027-02-16", "end": null, "kind": "tfm", "label": "Asignación tutor TFM", "detail": "Asignación de tutor de TFM"}, {"date": "2027-02-17", "end": null, "kind": "tfm", "label": "TFM · Entrega 1er borrador", "detail": "Entrega del 1er borrador de TFM"}, {"date": "2027-02-17", "end": "2027-02-23", "kind": "range-tfm", "label": "Corrección 1er borrador", "detail": "Corrección del 1er borrador de TFM (tutor)"}, {"date": "2027-02-24", "end": "2027-02-25", "kind": "revision", "label": "Revisión notas 1er cuatri.", "detail": "Revisión de las notas del primer cuatrimestre"}, {"date": "2027-03-01", "end": "2027-03-05", "kind": "range-tfm", "label": "Sesión inicio TFM con tutor", "detail": "Sesión de inicio al TFM de tutorización entre tutor y alumno"}, {"date": "2027-03-09", "end": null, "kind": "tfm", "label": "TFM · Entrega 2º borrador", "detail": "Entrega del 2º borrador de TFM"}, {"date": "2027-03-10", "end": "2027-03-16", "kind": "range-tfm", "label": "Corrección 2º borrador", "detail": "Corrección del 2º borrador de TFM (tutor)"}, {"date": "2027-03-30", "end": null, "kind": "tfm", "label": "TFM · Entrega 3er borrador", "detail": "Entrega del 3er borrador de TFM"}, {"date": "2027-03-31", "end": "2027-04-06", "kind": "range-tfm", "label": "Corrección 3er borrador", "detail": "Corrección del 3er borrador de TFM (tutor)"}, {"date": "2027-04-12", "end": "2027-04-16", "kind": "range-tfm", "label": "Sesión seguimiento TFM", "detail": "Sesión de seguimiento de tutorización entre tutor y alumno"}, {"date": "2027-05-04", "end": null, "kind": "tfm", "label": "TFM · Entrega 4º borrador", "detail": "Entrega del 4º borrador de TFM"}, {"date": "2027-05-05", "end": "2027-05-11", "kind": "range-tfm", "label": "Corrección 4º borrador", "detail": "Corrección del 4º borrador de TFM (tutor)"}, {"date": "2027-05-06", "end": null, "kind": "entrega", "label": "ENTREGA actividades 2º cuatri.", "detail": "Fecha límite de entrega de actividades del segundo cuatrimestre según el calendario general (la agenda básica indica 28/05: confírmalo)"}, {"date": "2027-05-12", "end": null, "kind": "sesion", "label": "Sesión dudas metodología examen", "detail": "Sesión de resolución de dudas o incidencias de la metodología de examen"}, {"date": "2027-05-20", "end": null, "kind": "exam", "label": "EXAMEN 2º cuatrimestre", "detail": "Exámenes ordinarios del segundo cuatrimestre (online). Franjas: ver portada"}, {"date": "2027-05-22", "end": null, "kind": "exam", "label": "EXAMEN 2º cuatrimestre", "detail": "Exámenes ordinarios del segundo cuatrimestre (online). Franjas: ver portada"}, {"date": "2027-05-26", "end": null, "kind": "tfm", "label": "TFM · Entrega definitiva al tutor", "detail": "Entrega definitiva del TFM al tutor"}, {"date": "2027-05-26", "end": "2027-06-02", "kind": "range-tfm", "label": "Autorización TFM (tutor)", "detail": "Autorización del TFM por parte del tutor"}, {"date": "2027-05-28", "end": null, "kind": "practicas", "label": "FIN prácticas + memoria", "detail": "Fin de las prácticas y entrega límite de la memoria de prácticas"}, {"date": "2027-06-02", "end": "2027-06-03", "kind": "revision", "label": "Revisión notas 2º cuatri.", "detail": "Revisión de las notas del segundo cuatrimestre"}, {"date": "2027-06-03", "end": null, "kind": "tfm", "label": "TFM · Entrega definitiva en plataforma", "detail": "Entrega definitiva del TFM en la plataforma"}, {"date": "2027-06-21", "end": "2027-06-30", "kind": "range-tfm", "label": "Exposiciones TFM (4ª semana)", "detail": "Exposiciones de TFM a partir de la 4ª semana de junio (fecha exacta por confirmar)"}, {"date": "2027-06-08", "end": null, "kind": "extra", "label": "Extra · TFM 1er borrador", "detail": "Convocatoria extraordinaria: entrega del 1er borrador de TFM"}, {"date": "2027-06-15", "end": null, "kind": "extra", "label": "Extra · Fin prácticas + memoria", "detail": "Convocatoria extraordinaria: fin de prácticas curriculares y límite de entrega de la memoria"}, {"date": "2027-06-22", "end": null, "kind": "extra", "label": "Extra · TFM 2º borrador", "detail": "Convocatoria extraordinaria: entrega del 2º borrador de TFM"}, {"date": "2027-06-23", "end": null, "kind": "extra", "label": "Extra · Entrega actividades", "detail": "Convocatoria extraordinaria: entrega límite de actividades"}], "july": [{"date": "2027-07-03", "label": "Exámenes convocatoria extraordinaria (sábado, 9:00)"}, {"date": "2027-07-05", "label": "Extra · Entrega definitiva TFM al tutor"}, {"date": "2027-07-06", "label": "Extra · Autorización TFM por el tutor (hasta el 12)"}, {"date": "2027-07-13", "label": "Extra · Entrega TFM en plataforma · Revisión notas (13 y 14)"}, {"date": "2027-07-19", "label": "Extra · Exposiciones TFM (4ª semana de julio)"}]};
+const MES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+const MESC = MES.map(m => m[0].toUpperCase() + m.slice(1));
+const DOW = ["lun","mar","mié","jue","vie","sáb","dom"];
+const DOWL = ["lunes","martes","miércoles","jueves","viernes","sábado","domingo"];
+const RANGE_START = "2026-11-01", RANGE_END = "2027-07-31";
+
+const store = {
+  get(k) { try { return localStorage.getItem("mupeso26:" + k); } catch (e) { return null; } },
+  set(k, v) { try { if (v) localStorage.setItem("mupeso26:" + k, v); else localStorage.removeItem("mupeso26:" + k); } catch (e) {} }
+};
+const pd = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const addD = (s, n) => { const d = pd(s); d.setDate(d.getDate() + n); return iso(d); };
+const wd = s => (pd(s).getDay() + 6) % 7;
+const diffDays = (a, b) => Math.round((pd(b) - pd(a)) / 864e5);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fmtShort = s => { const d = pd(s); return `${DOW[wd(s)]} ${d.getDate()} ${MES[d.getMonth()].slice(0, 3)}`; };
+const fmtLong = s => { const d = pd(s); return `${DOWL[wd(s)]} ${d.getDate()} de ${MES[d.getMonth()]}`; };
+const now = new Date();
+const TODAY = iso(now);
+const NOWMIN = now.getHours() * 60 + now.getMinutes();
+
+// ---- eventos unificados
+const S = DATA.subjects;
+const counter = {};
+const EVENTS = [];
+DATA.classes.forEach(c => {
+  counter[c.subj] = (counter[c.subj] || 0) + 1;
+  const s = S[c.subj];
+  EVENTS.push({ type: "class", subj: c.subj, date: c.date, end: c.date, start: c.start, fin: c.end, color: s.color,
+    title: s.short, detail: `${s.name}`, n: counter[c.subj], N: s.sessions });
+});
+DATA.milestones.forEach(m => EVENTS.push({ type: "ms", kind: m.kind, date: m.date, end: m.end || m.date, title: m.label, detail: m.detail }));
+DATA.july.forEach(j => EVENTS.push({ type: "ms", kind: "extra", date: j.date, end: j.date, title: j.label, detail: "Convocatoria extraordinaria" }));
+EVENTS.sort((a, b) => a.date.localeCompare(b.date) || (a.start || "00").localeCompare(b.start || "00"));
+
+// ---- filtros
+const F = { subj: new Set(Object.keys(S)), ms: true, fest: true, extra: false };
+try { const saved = JSON.parse(store.get("filters") || "null"); if (saved) { F.subj = new Set(saved.subj); F.ms = saved.ms; F.fest = saved.fest; F.extra = saved.extra; } } catch (e) {}
+const saveF = () => store.set("filters", JSON.stringify({ subj: [...F.subj], ms: F.ms, fest: F.fest, extra: F.extra }));
+function visible(e) {
+  if (e.type === "class") return F.subj.has(e.subj);
+  if (e.kind === "festivo") return F.fest;
+  if (e.kind === "extra") return F.extra;
+  return F.ms;
+}
+function eventsOn(day) {
+  return EVENTS.filter(e => visible(e) && e.date <= day && e.end >= day);
+}
+const isRange = e => e.end !== e.date;
+
+function renderFilters() {
+  const el = document.getElementById("filters");
+  let h = "";
+  for (const sem of [1, 2]) {
+    Object.entries(S).filter(([, s]) => s.sem === sem).forEach(([k, s]) => {
+      h += `<button class="chip" id="f-${k}" data-f="${k}" style="--c:${s.color}" aria-pressed="${F.subj.has(k)}"><i></i>${esc(s.short)}</button>`;
+    });
+    h += `<span class="sep"></span>`;
+  }
+  h += `<button class="chip" id="f-ms" data-f="ms" style="--c:var(--tfm)" aria-pressed="${F.ms}"><i></i>Entregas, TFM y prácticas</button>`;
+  h += `<button class="chip" id="f-fest" data-f="fest" style="--c:var(--fest)" aria-pressed="${F.fest}"><i></i>Festivos</button>`;
+  h += `<button class="chip" id="f-extra" data-f="extra" style="--c:var(--faint)" aria-pressed="${F.extra}"><i></i>Extraordinaria</button>`;
+  el.innerHTML = h;
+}
+document.getElementById("filters").addEventListener("click", ev => {
+  const b = ev.target.closest("[data-f]"); if (!b) return;
+  const f = b.dataset.f;
+  if (S[f]) { F.subj.has(f) ? F.subj.delete(f) : F.subj.add(f); }
+  else F[f] = !F[f];
+  saveF(); renderFilters(); renderAll();
+});
+
+// ---- lo próximo
+function upcoming(pred) {
+  return EVENTS.find(e => pred(e) && (e.date > TODAY || (e.date === TODAY && (!e.fin || toMin(e.fin) > NOWMIN))));
+}
+const toMin = t => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+function cd(date) {
+  const n = diffDays(TODAY, date);
+  return n === 0 ? "hoy" : n === 1 ? "mañana" : `en ${n} días`;
+}
+function renderNext() {
+  const c = upcoming(e => e.type === "class");
+  const dl = upcoming(e => e.type === "ms" && ["entrega", "tfm", "practicas"].includes(e.kind));
+  const ex = upcoming(e => e.type === "ms" && e.kind === "exam");
+  let h = "";
+  h += c ? `<button class="nx" data-go="${c.date}"><div class="lbl">Próxima clase <span class="cd">${cd(c.date)}</span></div><div class="big">${esc(c.title)} · ${c.start}</div><div class="sm">${fmtShort(c.date)} · sesión ${c.n} de ${c.N}</div></button>`
+         : `<div class="nx"><div class="lbl">Próxima clase</div><div class="big">Sin clases pendientes</div><div class="sm">Ya no quedan videoconferencias</div></div>`;
+  h += dl ? `<button class="nx" data-go="${dl.date}"><div class="lbl">Próxima entrega o hito <span class="cd">${cd(dl.date)}</span></div><div class="big">${esc(dl.title)}</div><div class="sm">${fmtShort(dl.date)}</div></button>` : "";
+  h += ex ? `<button class="nx exam" data-go="${ex.date}"><div class="lbl">Próximo examen <span class="cd">${cd(ex.date)}</span></div><div class="big">${esc(ex.title)}</div><div class="sm">${fmtShort(ex.date)} · online</div></button>` : "";
+  document.getElementById("next").innerHTML = h;
+}
+document.getElementById("next").addEventListener("click", ev => {
+  const b = ev.target.closest("[data-go]"); if (!b) return;
+  goMonth(b.dataset.go);
+});
+
+// ---- render de un evento
+function evHTML(e, day, full) {
+  if (e.type === "class") {
+    return `<div class="ev" style="--c:${e.color}"><span class="t">${e.start}</span><span class="n">${esc(e.title)}</span><span class="d">${full ? esc(e.detail) + " · " : ""}sesión ${e.n} de ${e.N} · ${e.start}–${e.fin}</span></div>`;
+  }
+  const rng = isRange(e) ? ` · ${pd(e.date).getDate()} ${MES[pd(e.date).getMonth()].slice(0,3)} → ${pd(e.end).getDate()} ${MES[pd(e.end).getMonth()].slice(0,3)}` : "";
+  const det = e.detail && e.detail !== e.title ? esc(e.detail) : "";
+  return `<div class="ev ms k-${e.kind}"><span class="n">${esc(e.title)}</span>${det || rng ? `<span class="d">${det}${rng}</span>` : ""}</div>`;
+}
+
+// ---- Agenda
+let showPast = false;
+function weekStart(s) { return addD(s, -wd(s)); }
+function renderAgenda() {
+  const el = document.getElementById("agenda");
+  const thisWeek = weekStart(TODAY);
+  const days = {};
+  EVENTS.filter(visible).forEach(e => {
+    // los rangos aparecen solo el primer día (y el lunes si continúan)
+    let d = e.date;
+    while (d <= e.end) {
+      if (d === e.date || wd(d) === 0) (days[d] = days[d] || []).push(e);
+      d = addD(d, 1);
+    }
+  });
+  // incluir días con notas
+  let d = RANGE_START;
+  while (d <= RANGE_END) { if (store.get("note:" + d)) days[d] = days[d] || []; d = addD(d, 1); }
+  const keys = Object.keys(days).sort().filter(k => showPast || weekStart(k) >= thisWeek);
+  if (!keys.length) { el.innerHTML = `<p class="empty">No hay nada con estos filtros.</p>`; return; }
+  let h = "", cur = null;
+  keys.forEach(k => {
+    const ws = weekStart(k);
+    if (ws !== cur) {
+      if (cur) h += "</div>";
+      cur = ws;
+      const we = addD(ws, 6), a = pd(ws), b = pd(we);
+      const lab = a.getMonth() === b.getMonth() ? `${a.getDate()}–${b.getDate()} ${MES[a.getMonth()]}` : `${a.getDate()} ${MES[a.getMonth()].slice(0,3)} – ${b.getDate()} ${MES[b.getMonth()].slice(0,3)}`;
+      h += `<div class="week"><h3>Semana del ${lab}${ws === thisWeek ? ' <span class="now">Esta semana</span>' : ""}</h3>`;
+    }
+    const note = store.get("note:" + k);
+    const cls = ["dayrow", k < TODAY ? "past" : "", k === TODAY ? "today" : ""].join(" ");
+    h += `<div class="${cls}" data-day="${k}" id="d-${k}"><div class="dd"><b>${pd(k).getDate()}</b><span>${DOW[wd(k)]}<br>${MES[pd(k).getMonth()].slice(0,3)}</span></div><div class="items">${days[k].map(e => evHTML(e, k)).join("")}${note ? `<div class="notepreview">${esc(note)}</div>` : ""}</div></div>`;
+  });
+  h += "</div>";
+  el.innerHTML = h;
+}
+document.getElementById("agenda").addEventListener("click", ev => {
+  const r = ev.target.closest("[data-day]"); if (r) goMonth(r.dataset.day);
+});
+document.getElementById("btn-past").addEventListener("click", ev => {
+  showPast = !showPast; ev.target.textContent = showPast ? "Ocultar semanas pasadas" : "Ver semanas pasadas"; renderAgenda();
+});
+document.getElementById("btn-today").addEventListener("click", () => {
+  const rows = [...document.querySelectorAll("#agenda [data-day]")];
+  const t = rows.find(r => r.dataset.day >= TODAY) || rows[0];
+  if (t) t.scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+// ---- Mes
+const clampMonth = s => s < RANGE_START ? RANGE_START : s > RANGE_END ? RANGE_END : s;
+let selDay = clampMonth(TODAY);
+let mCursor = selDay.slice(0, 7);
+function goMonth(day) { selDay = day; mCursor = day.slice(0, 7); setView("mes"); }
+function renderMonth() {
+  const [y, m] = mCursor.split("-").map(Number);
+  document.getElementById("m-title").innerHTML = `${MESC[m - 1]} <span>${y}</span>`;
+  document.getElementById("m-prev").disabled = mCursor <= RANGE_START.slice(0, 7);
+  document.getElementById("m-next").disabled = mCursor >= RANGE_END.slice(0, 7);
+  const first = `${mCursor}-01`;
+  let d = weekStart(first);
+  let h = `<div class="mwd">${DOW.map(x => `<div>${x}</div>`).join("")}</div>`;
+  while (true) {
+    h += `<div class="mweek">`;
+    for (let i = 0; i < 7; i++) {
+      const inM = d.slice(0, 7) === mCursor;
+      if (!inM) { h += `<div class="cell out${i > 4 ? " we" : ""}"></div>`; d = addD(d, 1); continue; }
+      const evs = eventsOn(d);
+      const all = EVENTS.filter(e => e.date <= d && e.end >= d);
+      const fest = all.find(e => e.kind === "festivo");
+      const exam = evs.some(e => e.kind === "exam");
+      const pract = d >= "2027-02-01" && d <= "2027-05-28" && F.ms;
+      const note = store.get("note:" + d);
+      const cls = ["cell", i > 4 ? "we" : "", fest && F.fest ? "fest" : "", exam ? "exam" : "", pract ? "pract" : "", d === TODAY ? "today" : "", d === selDay ? "sel" : ""].join(" ");
+      let inner = `<span class="num"><b>${pd(d).getDate()}</b>${fest && F.fest ? `<em>${esc(fest.title.replace("Festivo · ", ""))}</em>` : ""}${note ? '<span class="pen" title="Tiene nota">✎</span>' : ""}</span>`;
+      const order = e => e.kind === "exam" ? 0 : e.kind === "entrega" ? 1 : isRange(e) ? 2 : e.type === "class" ? 3 : 4;
+      const list = evs.filter(e => e.kind !== "festivo").sort((a, b) => order(a) - order(b) || (a.start || "").localeCompare(b.start || ""));
+      list.forEach(e => {
+        if (e.type === "class") inner += `<div class="mc" style="--c:${e.color}"><b>${e.start}</b> ${esc(e.title)}</div>`;
+        else if (isRange(e)) inner += `<div class="mc range k-${e.kind}">${e.date === d || wd(d) === 0 || pd(d).getDate() === 1 ? esc(e.title) : "&nbsp;"}</div>`;
+        else inner += `<div class="mc k-${e.kind}">${esc(e.title)}</div>`;
+      });
+      inner += `<span class="dots">${list.map(e => `<i style="--c:${e.type === "class" ? e.color : e.kind === "exam" ? "var(--exam)" : e.kind === "entrega" ? "var(--ink)" : e.kind === "practicas" ? "var(--pract)" : e.kind === "extra" || e.kind === "sesion" || e.kind === "revision" ? "var(--faint)" : "var(--tfm)"}"></i>`).join("")}</span>`;
+      h += `<button class="${cls}" data-day="${d}" aria-label="${fmtLong(d)}">${inner}</button>`;
+      d = addD(d, 1);
+    }
+    h += `</div>`;
+    if (d.slice(0, 7) !== mCursor) break;
+  }
+  document.getElementById("mgrid").innerHTML = h;
+  renderPanel();
+}
+function renderPanel() {
+  const d = selDay;
+  const evs = eventsOn(d);
+  const fest = EVENTS.find(e => e.kind === "festivo" && e.date === d);
+  const note = store.get("note:" + d) || "";
+  const inPract = d >= "2027-02-01" && d <= "2027-05-28";
+  let h = `<h3>${fmtLong(d)[0].toUpperCase() + fmtLong(d).slice(1)}<small>${pd(d).getFullYear()}${inPract ? " · periodo de prácticas" : ""}</small></h3>`;
+  const list = evs.filter(e => !(e.kind === "festivo" && !F.fest));
+  h += `<div class="items">${list.length ? list.map(e => evHTML(e, d, true)).join("") : `<p class="empty" style="padding:4px 0">${fest ? "" : "Día libre en el máster."}</p>`}</div>`;
+  h += `<label for="note">Mis notas de este día</label><textarea id="note" placeholder="Apuntes, tareas, recordatorios…">${esc(note)}</textarea><div class="saved" id="saved"></div>`;
+  document.getElementById("panel").innerHTML = h;
+  let t;
+  document.getElementById("note").addEventListener("input", ev => {
+    clearTimeout(t);
+    t = setTimeout(() => {
+      store.set("note:" + d, ev.target.value.trim());
+      document.getElementById("saved").textContent = "Guardado en este dispositivo";
+      const cell = document.querySelector(`.cell[data-day="${d}"] .num`);
+      if (cell && !cell.querySelector(".pen") && ev.target.value.trim()) cell.insertAdjacentHTML("beforeend", '<span class="pen">✎</span>');
+    }, 400);
+  });
+}
+document.getElementById("mgrid").addEventListener("click", ev => {
+  const c = ev.target.closest(".cell[data-day]"); if (!c) return;
+  selDay = c.dataset.day;
+  document.querySelectorAll(".cell.sel").forEach(x => x.classList.remove("sel"));
+  c.classList.add("sel");
+  renderPanel();
+  if (window.innerWidth <= 900) document.getElementById("panel").scrollIntoView({ behavior: "smooth", block: "nearest" });
+});
+const shiftMonth = n => { const [y, m] = mCursor.split("-").map(Number); const d = new Date(y, m - 1 + n, 1); mCursor = iso(d).slice(0, 7); renderMonth(); };
+document.getElementById("m-prev").addEventListener("click", () => shiftMonth(-1));
+document.getElementById("m-next").addEventListener("click", () => shiftMonth(1));
+document.getElementById("m-today").addEventListener("click", () => { selDay = clampMonth(TODAY); mCursor = selDay.slice(0, 7); renderMonth(); });
+
+// ---- Asignaturas
+function renderSubjects() {
+  let h = "";
+  for (const sem of [1, 2]) {
+    h += `<h2 class="semh">${sem === 1 ? "Primer cuatrimestre · exámenes 11 y 13 de febrero" : "Segundo cuatrimestre · exámenes 20 y 22 de mayo"}</h2><div class="subjgrid">`;
+    Object.entries(S).filter(([, s]) => s.sem === sem).forEach(([k, s]) => {
+      const cls = EVENTS.filter(e => e.subj === k);
+      const done = cls.filter(e => e.date < TODAY || (e.date === TODAY && toMin(e.fin) <= NOWMIN)).length;
+      const nxt = cls.find(e => !(e.date < TODAY || (e.date === TODAY && toMin(e.fin) <= NOWMIN)));
+      h += `<article class="sc" style="--c:${s.color}"><div class="h"><span class="sw"></span><div style="min-width:0"><h4>${esc(s.short)}</h4><div class="full">${esc(s.name)}</div></div></div>
+        <div class="bar"><i style="width:${done / cls.length * 100}%"></i></div>
+        <div class="meta"><span><b>${done}/${cls.length}</b> sesiones hechas</span><span>Examen <b>${s.exam}</b></span></div>
+        <div class="meta"><span>${nxt ? `Siguiente: <b>${fmtShort(nxt.date)} · ${nxt.start}</b>` : "<b>Clases terminadas</b>"}</span></div>
+        <div class="pills">${cls.map(e => `<span class="${e === nxt ? "nxt" : (cls.indexOf(e) < done ? "done" : "")}" title="${fmtLong(e.date)} ${e.start}">${pd(e.date).getDate()}/${pd(e.date).getMonth() + 1} ${e.start}</span>`).join("")}</div></article>`;
+    });
+    h += `</div>`;
+  }
+  h += `<div class="notebox"><h4>A tener en cuenta</h4><ul>
+    <li>Entrega de actividades del 2º cuatrimestre: el calendario general marca el <b>6 de mayo</b> y la agenda básica el 28 de mayo. Aquí aparece el 6; confírmalo con la universidad.</li>
+    <li>La agenda básica tiene erratas de año: los exámenes extraordinarios son el <b>sábado 3 de julio de 2027</b> y la entrega de actividades extra el <b>23 de junio</b>.</li>
+    <li>Exámenes online: sábado de 9:00 a 13:15 en el 1er cuatrimestre y de 9:00 a 11:45 en el 2º. Cada asignatura tiene su franja (ver tarjetas).</li>
+    <li>Festivos de Andalucía incluidos. Faltan los 2 festivos locales de tu municipio.</li></ul></div>`;
+  document.getElementById("subjects").innerHTML = h;
+}
+
+// ---- vistas
+const VIEWS = ["agenda", "mes", "asignaturas"];
+let view = "agenda";
+function setView(v, fromHash) {
+  if (!VIEWS.includes(v)) v = "agenda";
+  view = v;
+  VIEWS.forEach(x => { document.getElementById("view-" + x).hidden = x !== v; document.getElementById("v-" + x).setAttribute("aria-pressed", x === v); });
+  if (!fromHash && location.hash !== "#" + v) { try { history.replaceState(null, "", "#" + v); } catch (e) {} }
+  store.set("view", v);
+  renderView();
+  if (!fromHash) window.scrollTo({ top: 0 });
+}
+function renderView() { if (view === "agenda") renderAgenda(); else if (view === "mes") renderMonth(); else renderSubjects(); }
+function renderAll() { renderNext(); renderView(); }
+document.querySelector(".seg").addEventListener("click", ev => { const b = ev.target.closest("[data-v]"); if (b) setView(b.dataset.v); });
+window.addEventListener("hashchange", () => setView(location.hash.slice(1), true));
+document.addEventListener("keydown", ev => {
+  if (view !== "mes" || ev.target.closest("textarea")) return;
+  if (ev.key === "ArrowLeft" && !document.getElementById("m-prev").disabled) shiftMonth(-1);
+  if (ev.key === "ArrowRight" && !document.getElementById("m-next").disabled) shiftMonth(1);
+});
+
+renderFilters();
+renderNext();
+setView(location.hash.slice(1) || store.get("view") || "agenda", true);
+</script>
+
+</body></html>

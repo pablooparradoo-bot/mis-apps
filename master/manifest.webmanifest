@@ -1,0 +1,3 @@
+{ "name": "Máster Profesorado 26/27", "short_name": "Máster 26/27", "start_url": "./", "scope": "./", "display": "standalone",
+  "background_color": "#F6F6F2", "theme_color": "#FFFFFF", "lang": "es",
+  "icons": [ { "src": "icon-180.png", "sizes": "180x180", "type": "image/png" }, { "src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" } ] }

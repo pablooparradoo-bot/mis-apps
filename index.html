@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mis apps</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mis apps">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#F6F6F2">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Lanzadera: lista de apps en tarjetas grandes, pensada para el pulgar. Mismo lenguaje que las apps: tinta + amarillo. */
+:root {
+  --bg: #F6F6F2; --surface: #FFFFFF; --line: #DEDDD4; --fg: #1B1B18; --muted: #6C6B62; --accent: #F5C400; --accent-soft: #FFF3B8;
+  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif; --body: "Figtree", -apple-system, system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root {
+  --bg: #121210; --surface: #1C1C19; --line: #33332D; --fg: #EDECE4; --muted: #A09F94; --accent: #F5C400; --accent-soft: #3A3210; color-scheme: dark; } }
+* { box-sizing: border-box; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.4;
+  padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+main { max-width: 640px; margin: 0 auto; padding-block: 28px 40px; }
+h1 { font: 800 34px/1 var(--display); letter-spacing: -.03em; margin: 0; }
+.sub { color: var(--muted); margin: 6px 0 22px; font-size: 15px; }
+.apps { display: flex; flex-direction: column; gap: 10px; }
+a.app { display: grid; grid-template-columns: 58px minmax(0, 1fr) auto; gap: 14px; align-items: center; text-decoration: none; color: inherit;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; }
+a.app:active { transform: scale(.985); }
+a.app:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.app img { width: 58px; height: 58px; border-radius: 14px; display: block; }
+.app h2 { font: 700 18px/1.15 var(--display); margin: 0; }
+.app p { margin: 2px 0 0; font-size: 14px; color: var(--muted); }
+.app .go { font-size: 22px; color: var(--muted); }
+.tip { margin-top: 26px; background: var(--accent-soft); border-radius: 14px; padding: 14px 16px; font-size: 14px; line-height: 1.5; }
+.tip b { font-family: var(--display); }
+@media (display-mode: standalone) { .tip { display: none; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Mis apps</h1>
+  <p class="sub">Herramientas hechas con Claude</p>
+  <nav class="apps" id="apps">
+    <!-- Para añadir una app: crea su carpeta y añade una tarjeta aquí -->
+    <a class="app" href="master/">
+      <img src="master/icon-180.png" alt="">
+      <div><h2>Máster Profesorado 26/27</h2><p>Clases del Grupo 5, entregas, exámenes y TFM</p></div>
+      <span class="go" aria-hidden="true">›</span>
+    </a>
+  </nav>
+  <div class="tip"><b>Ponla en tu pantalla de inicio:</b> en Safari toca Compartir y luego “Añadir a pantalla de inicio”. Puedes hacerlo con esta página (todas tus apps en un icono) o con cada app por separado.</div>
+</main>
+</body>
+</html>
