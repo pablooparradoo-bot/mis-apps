@@ -1,0 +1,21 @@
+{
+  "name": "La Discoteca",
+  "short_name": "Discoteca",
+  "description": "Tu colección de vinilos: portadas, canciones, precios, wishlist y PDF para regalar",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ECEEF3",
+  "theme_color": "#FFFFFF",
+  "lang": "es",
+  "icons": [
+    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Colección", "url": "./#coleccion" },
+    { "name": "Wishlist", "url": "./#wishlist" },
+    { "name": "Números", "url": "./#numeros" }
+  ]
+}
