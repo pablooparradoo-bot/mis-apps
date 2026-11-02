@@ -1,0 +1,1240 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Calendario Master Profesorado 26-27 Grupo 5//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Máster Profesorado 26/27 · G5
+X-WR-CALDESC:Calendario no oficial del Grupo 5 (ADE\, Economía y Turismo). Fechas oficiales en el campus virtual.
+X-WR-TIMEZONE:Europe/Madrid
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VTIMEZONE
+TZID:Europe/Madrid
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:20261104-com@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261104T190000
+DTEND;TZID=Europe/Madrid:20261104T210000
+SUMMARY:Complementos · videoconferencia (1/8)
+DESCRIPTION:Complementos para la formación disciplinar de la especialidad
+  (ADE\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatr
+ imestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261110-fam@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261110T190000
+DTEND;TZID=Europe/Madrid:20261110T210000
+SUMMARY:Familia · videoconferencia (1/5)
+DESCRIPTION:Familia y comunidad en la sociedad global: retos y desafíos e
+ n contextos educativos\nMáster Profesorado · Grupo 5 · 1º cuatrimestr
+ e
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261111-com@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261111T190000
+DTEND;TZID=Europe/Madrid:20261111T210000
+SUMMARY:Complementos · videoconferencia (2/8)
+DESCRIPTION:Complementos para la formación disciplinar de la especialidad
+  (ADE\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatr
+ imestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261112-did@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261112T170000
+DTEND;TZID=Europe/Madrid:20261112T190000
+SUMMARY:Didáctica · videoconferencia (1/8)
+DESCRIPTION:Aprendizaje y enseñanza de la especialidad: Didáctica (ADE\,
+  Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261112-met@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261112T190000
+DTEND;TZID=Europe/Madrid:20261112T210000
+SUMMARY:Metodologías · videoconferencia (1/5)
+DESCRIPTION:Metodologías de investigación educativa\nMáster Profesorado
+  · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261116-pse@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261116T190000
+DTEND;TZID=Europe/Madrid:20261116T210000
+SUMMARY:Pensamiento (EN) · videoconferencia (1/5)
+DESCRIPTION:Pensamiento Social y Económico (Inglés)\nMáster Profesorado
+  · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261117-fam@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261117T190000
+DTEND;TZID=Europe/Madrid:20261117T210000
+SUMMARY:Familia · videoconferencia (2/5)
+DESCRIPTION:Familia y comunidad en la sociedad global: retos y desafíos e
+ n contextos educativos\nMáster Profesorado · Grupo 5 · 1º cuatrimestr
+ e
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261118-com@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261118T190000
+DTEND;TZID=Europe/Madrid:20261118T210000
+SUMMARY:Complementos · videoconferencia (3/8)
+DESCRIPTION:Complementos para la formación disciplinar de la especialidad
+  (ADE\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatr
+ imestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261119-did@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261119T170000
+DTEND;TZID=Europe/Madrid:20261119T190000
+SUMMARY:Didáctica · videoconferencia (2/8)
+DESCRIPTION:Aprendizaje y enseñanza de la especialidad: Didáctica (ADE\,
+  Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261124-div@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261124T170000
+DTEND;TZID=Europe/Madrid:20261124T190000
+SUMMARY:Diversidad · videoconferencia (1/5)
+DESCRIPTION:Diversidad en el aprendizaje: el desarrollo cognitivo\, social
+  y emocional\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261124-fam@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261124T190000
+DTEND;TZID=Europe/Madrid:20261124T210000
+SUMMARY:Familia · videoconferencia (3/5)
+DESCRIPTION:Familia y comunidad en la sociedad global: retos y desafíos e
+ n contextos educativos\nMáster Profesorado · Grupo 5 · 1º cuatrimestr
+ e
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261125-pro@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261125T170000
+DTEND;TZID=Europe/Madrid:20261125T190000
+SUMMARY:Procesos · videoconferencia (1/5)
+DESCRIPTION:Procesos y contextos educativos: planificación\, estrategias 
+ y evaluación del proceso de enseñanza-aprendizaje\nMáster Profesorado 
+ · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261125-com@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261125T190000
+DTEND;TZID=Europe/Madrid:20261125T210000
+SUMMARY:Complementos · videoconferencia (4/8)
+DESCRIPTION:Complementos para la formación disciplinar de la especialidad
+  (ADE\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatr
+ imestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261126-did@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261126T170000
+DTEND;TZID=Europe/Madrid:20261126T190000
+SUMMARY:Didáctica · videoconferencia (3/8)
+DESCRIPTION:Aprendizaje y enseñanza de la especialidad: Didáctica (ADE\,
+  Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261126-met@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261126T190000
+DTEND;TZID=Europe/Madrid:20261126T210000
+SUMMARY:Metodologías · videoconferencia (2/5)
+DESCRIPTION:Metodologías de investigación educativa\nMáster Profesorado
+  · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261130-pse@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261130T190000
+DTEND;TZID=Europe/Madrid:20261130T210000
+SUMMARY:Pensamiento (EN) · videoconferencia (2/5)
+DESCRIPTION:Pensamiento Social y Económico (Inglés)\nMáster Profesorado
+  · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261201-div@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261201T170000
+DTEND;TZID=Europe/Madrid:20261201T190000
+SUMMARY:Diversidad · videoconferencia (2/5)
+DESCRIPTION:Diversidad en el aprendizaje: el desarrollo cognitivo\, social
+  y emocional\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261202-pro@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261202T170000
+DTEND;TZID=Europe/Madrid:20261202T190000
+SUMMARY:Procesos · videoconferencia (2/5)
+DESCRIPTION:Procesos y contextos educativos: planificación\, estrategias 
+ y evaluación del proceso de enseñanza-aprendizaje\nMáster Profesorado 
+ · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261202-com@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261202T190000
+DTEND;TZID=Europe/Madrid:20261202T210000
+SUMMARY:Complementos · videoconferencia (5/8)
+DESCRIPTION:Complementos para la formación disciplinar de la especialidad
+  (ADE\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatr
+ imestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261203-did@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261203T170000
+DTEND;TZID=Europe/Madrid:20261203T190000
+SUMMARY:Didáctica · videoconferencia (4/8)
+DESCRIPTION:Aprendizaje y enseñanza de la especialidad: Didáctica (ADE\,
+  Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261209-pro@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261209T170000
+DTEND;TZID=Europe/Madrid:20261209T190000
+SUMMARY:Procesos · videoconferencia (3/5)
+DESCRIPTION:Procesos y contextos educativos: planificación\, estrategias 
+ y evaluación del proceso de enseñanza-aprendizaje\nMáster Profesorado 
+ · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261209-com@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261209T190000
+DTEND;TZID=Europe/Madrid:20261209T210000
+SUMMARY:Complementos · videoconferencia (6/8)
+DESCRIPTION:Complementos para la formación disciplinar de la especialidad
+  (ADE\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatr
+ imestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261210-did@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261210T170000
+DTEND;TZID=Europe/Madrid:20261210T190000
+SUMMARY:Didáctica · videoconferencia (5/8)
+DESCRIPTION:Aprendizaje y enseñanza de la especialidad: Didáctica (ADE\,
+  Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261210-met@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261210T190000
+DTEND;TZID=Europe/Madrid:20261210T210000
+SUMMARY:Metodologías · videoconferencia (3/5)
+DESCRIPTION:Metodologías de investigación educativa\nMáster Profesorado
+  · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261214-pse@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261214T190000
+DTEND;TZID=Europe/Madrid:20261214T210000
+SUMMARY:Pensamiento (EN) · videoconferencia (3/5)
+DESCRIPTION:Pensamiento Social y Económico (Inglés)\nMáster Profesorado
+  · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261215-div@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261215T170000
+DTEND;TZID=Europe/Madrid:20261215T190000
+SUMMARY:Diversidad · videoconferencia (3/5)
+DESCRIPTION:Diversidad en el aprendizaje: el desarrollo cognitivo\, social
+  y emocional\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261216-pro@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261216T170000
+DTEND;TZID=Europe/Madrid:20261216T190000
+SUMMARY:Procesos · videoconferencia (4/5)
+DESCRIPTION:Procesos y contextos educativos: planificación\, estrategias 
+ y evaluación del proceso de enseñanza-aprendizaje\nMáster Profesorado 
+ · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261216-com@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261216T190000
+DTEND;TZID=Europe/Madrid:20261216T210000
+SUMMARY:Complementos · videoconferencia (7/8)
+DESCRIPTION:Complementos para la formación disciplinar de la especialidad
+  (ADE\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatr
+ imestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261217-did@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261217T170000
+DTEND;TZID=Europe/Madrid:20261217T190000
+SUMMARY:Didáctica · videoconferencia (6/8)
+DESCRIPTION:Aprendizaje y enseñanza de la especialidad: Didáctica (ADE\,
+  Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20261222-div@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20261222T170000
+DTEND;TZID=Europe/Madrid:20261222T190000
+SUMMARY:Diversidad · videoconferencia (4/5)
+DESCRIPTION:Diversidad en el aprendizaje: el desarrollo cognitivo\, social
+  y emocional\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270111-pse@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270111T190000
+DTEND;TZID=Europe/Madrid:20270111T210000
+SUMMARY:Pensamiento (EN) · videoconferencia (4/5)
+DESCRIPTION:Pensamiento Social y Económico (Inglés)\nMáster Profesorado
+  · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270112-fam@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270112T170000
+DTEND;TZID=Europe/Madrid:20270112T190000
+SUMMARY:Familia · videoconferencia (4/5)
+DESCRIPTION:Familia y comunidad en la sociedad global: retos y desafíos e
+ n contextos educativos\nMáster Profesorado · Grupo 5 · 1º cuatrimestr
+ e
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270113-com@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270113T190000
+DTEND;TZID=Europe/Madrid:20270113T210000
+SUMMARY:Complementos · videoconferencia (8/8)
+DESCRIPTION:Complementos para la formación disciplinar de la especialidad
+  (ADE\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatr
+ imestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270114-did@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270114T170000
+DTEND;TZID=Europe/Madrid:20270114T190000
+SUMMARY:Didáctica · videoconferencia (7/8)
+DESCRIPTION:Aprendizaje y enseñanza de la especialidad: Didáctica (ADE\,
+  Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270114-met@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270114T190000
+DTEND;TZID=Europe/Madrid:20270114T210000
+SUMMARY:Metodologías · videoconferencia (4/5)
+DESCRIPTION:Metodologías de investigación educativa\nMáster Profesorado
+  · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270119-fam@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270119T170000
+DTEND;TZID=Europe/Madrid:20270119T190000
+SUMMARY:Familia · videoconferencia (5/5)
+DESCRIPTION:Familia y comunidad en la sociedad global: retos y desafíos e
+ n contextos educativos\nMáster Profesorado · Grupo 5 · 1º cuatrimestr
+ e
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270120-pro@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270120T170000
+DTEND;TZID=Europe/Madrid:20270120T190000
+SUMMARY:Procesos · videoconferencia (5/5)
+DESCRIPTION:Procesos y contextos educativos: planificación\, estrategias 
+ y evaluación del proceso de enseñanza-aprendizaje\nMáster Profesorado 
+ · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270121-met@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270121T190000
+DTEND;TZID=Europe/Madrid:20270121T210000
+SUMMARY:Metodologías · videoconferencia (5/5)
+DESCRIPTION:Metodologías de investigación educativa\nMáster Profesorado
+  · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270125-pse@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270125T190000
+DTEND;TZID=Europe/Madrid:20270125T210000
+SUMMARY:Pensamiento (EN) · videoconferencia (5/5)
+DESCRIPTION:Pensamiento Social y Económico (Inglés)\nMáster Profesorado
+  · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270126-div@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270126T170000
+DTEND;TZID=Europe/Madrid:20270126T190000
+SUMMARY:Diversidad · videoconferencia (5/5)
+DESCRIPTION:Diversidad en el aprendizaje: el desarrollo cognitivo\, social
+  y emocional\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270128-did@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270128T170000
+DTEND;TZID=Europe/Madrid:20270128T190000
+SUMMARY:Didáctica · videoconferencia (8/8)
+DESCRIPTION:Aprendizaje y enseñanza de la especialidad: Didáctica (ADE\,
+  Economía y Turismo)\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270217-tec@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270217T170000
+DTEND;TZID=Europe/Madrid:20270217T190000
+SUMMARY:Tecnologías · videoconferencia (1/5)
+DESCRIPTION:Tecnologías digitales y educación\nMáster Profesorado · Gr
+ upo 5 · 2º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270217-inn@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270217T190000
+DTEND;TZID=Europe/Madrid:20270217T210000
+SUMMARY:Innovación · videoconferencia (1/5)
+DESCRIPTION:Innovación para la práctica educativa de la especialidad (AD
+ E\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 2º cuatrimes
+ tre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270225-dis@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270225T170000
+DTEND;TZID=Europe/Madrid:20270225T190000
+SUMMARY:Diseño curricular · videoconferencia (1/5)
+DESCRIPTION:Aprendizaje y enseñanza de la especialidad: Diseño curricula
+ r (ADE\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 2º cuat
+ rimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270303-tec@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270303T170000
+DTEND;TZID=Europe/Madrid:20270303T190000
+SUMMARY:Tecnologías · videoconferencia (2/5)
+DESCRIPTION:Tecnologías digitales y educación\nMáster Profesorado · Gr
+ upo 5 · 2º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270303-inn@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270303T190000
+DTEND;TZID=Europe/Madrid:20270303T210000
+SUMMARY:Innovación · videoconferencia (2/5)
+DESCRIPTION:Innovación para la práctica educativa de la especialidad (AD
+ E\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 2º cuatrimes
+ tre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270311-dis@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270311T170000
+DTEND;TZID=Europe/Madrid:20270311T190000
+SUMMARY:Diseño curricular · videoconferencia (2/5)
+DESCRIPTION:Aprendizaje y enseñanza de la especialidad: Diseño curricula
+ r (ADE\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 2º cuat
+ rimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270317-tec@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270317T170000
+DTEND;TZID=Europe/Madrid:20270317T190000
+SUMMARY:Tecnologías · videoconferencia (3/5)
+DESCRIPTION:Tecnologías digitales y educación\nMáster Profesorado · Gr
+ upo 5 · 2º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270317-inn@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270317T190000
+DTEND;TZID=Europe/Madrid:20270317T210000
+SUMMARY:Innovación · videoconferencia (3/5)
+DESCRIPTION:Innovación para la práctica educativa de la especialidad (AD
+ E\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 2º cuatrimes
+ tre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270331-tec@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270331T170000
+DTEND;TZID=Europe/Madrid:20270331T190000
+SUMMARY:Tecnologías · videoconferencia (4/5)
+DESCRIPTION:Tecnologías digitales y educación\nMáster Profesorado · Gr
+ upo 5 · 2º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270331-inn@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270331T190000
+DTEND;TZID=Europe/Madrid:20270331T210000
+SUMMARY:Innovación · videoconferencia (4/5)
+DESCRIPTION:Innovación para la práctica educativa de la especialidad (AD
+ E\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 2º cuatrimes
+ tre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270408-dis@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270408T170000
+DTEND;TZID=Europe/Madrid:20270408T190000
+SUMMARY:Diseño curricular · videoconferencia (3/5)
+DESCRIPTION:Aprendizaje y enseñanza de la especialidad: Diseño curricula
+ r (ADE\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 2º cuat
+ rimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270414-tec@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270414T170000
+DTEND;TZID=Europe/Madrid:20270414T190000
+SUMMARY:Tecnologías · videoconferencia (5/5)
+DESCRIPTION:Tecnologías digitales y educación\nMáster Profesorado · Gr
+ upo 5 · 2º cuatrimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270414-inn@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270414T190000
+DTEND;TZID=Europe/Madrid:20270414T210000
+SUMMARY:Innovación · videoconferencia (5/5)
+DESCRIPTION:Innovación para la práctica educativa de la especialidad (AD
+ E\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 2º cuatrimes
+ tre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270422-dis@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270422T170000
+DTEND;TZID=Europe/Madrid:20270422T190000
+SUMMARY:Diseño curricular · videoconferencia (4/5)
+DESCRIPTION:Aprendizaje y enseñanza de la especialidad: Diseño curricula
+ r (ADE\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 2º cuat
+ rimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270429-dis@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;TZID=Europe/Madrid:20270429T170000
+DTEND;TZID=Europe/Madrid:20270429T190000
+SUMMARY:Diseño curricular · videoconferencia (5/5)
+DESCRIPTION:Aprendizaje y enseñanza de la especialidad: Diseño curricula
+ r (ADE\, Economía y Turismo)\nMáster Profesorado · Grupo 5 · 2º cuat
+ rimestre
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270107-limite-solicitar-tema-y-tipo-de-tfm@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270107
+DTEND;VALUE=DATE:20270108
+SUMMARY:Límite: solicitar tema y tipo de TFM
+DESCRIPTION:Fecha límite para solicitar tema y tipo de TFM
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Límite: solicitar tema y tipo de TFM
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270201-inicio-practicas-tutor-de-practicas@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270202
+SUMMARY:Inicio prácticas + tutor de prácticas
+DESCRIPTION:Asignación de tutor de prácticas e inicio de las prácticas 
+ curriculares (a partir del 1 de febrero)
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Inicio prácticas + tutor de prácticas
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270203-entrega-actividades-1er-cuatri@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270203
+DTEND;VALUE=DATE:20270204
+SUMMARY:ENTREGA actividades 1er cuatri.
+DESCRIPTION:Fecha límite de entrega de actividades del primer cuatrimestr
+ e
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ENTREGA actividades 1er cuatri.
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270204-sesion-dudas-metodologia-examen@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270204
+DTEND;VALUE=DATE:20270205
+SUMMARY:Sesión dudas metodología examen
+DESCRIPTION:Sesión de resolución de dudas o incidencias de la metodolog
+ ía de examen
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20270211-examen-1er-cuatrimestre@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270211
+DTEND;VALUE=DATE:20270212
+SUMMARY:EXAMEN 1er cuatrimestre
+DESCRIPTION:Exámenes ordinarios del primer cuatrimestre (online). Franjas
+ : ver portada
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:EXAMEN 1er cuatrimestre
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270213-examen-1er-cuatrimestre@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270213
+DTEND;VALUE=DATE:20270214
+SUMMARY:EXAMEN 1er cuatrimestre
+DESCRIPTION:Exámenes ordinarios del primer cuatrimestre (online). Franjas
+ : ver portada
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:EXAMEN 1er cuatrimestre
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270216-asignacion-tutor-tfm@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270216
+DTEND;VALUE=DATE:20270217
+SUMMARY:Asignación tutor TFM
+DESCRIPTION:Asignación de tutor de TFM
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Asignación tutor TFM
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270217-tfm-entrega-1er-borrador@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270217
+DTEND;VALUE=DATE:20270218
+SUMMARY:TFM · Entrega 1er borrador
+DESCRIPTION:Entrega del 1er borrador de TFM
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:TFM · Entrega 1er borrador
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270217-correccion-1er-borrador@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270217
+DTEND;VALUE=DATE:20270224
+SUMMARY:Corrección 1er borrador
+DESCRIPTION:Corrección del 1er borrador de TFM (tutor)
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20270224-revision-notas-1er-cuatri@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270224
+DTEND;VALUE=DATE:20270226
+SUMMARY:Revisión notas 1er cuatri.
+DESCRIPTION:Revisión de las notas del primer cuatrimestre
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20270301-sesion-inicio-tfm-con-tutor@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270301
+DTEND;VALUE=DATE:20270306
+SUMMARY:Sesión inicio TFM con tutor
+DESCRIPTION:Sesión de inicio al TFM de tutorización entre tutor y alumno
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20270309-tfm-entrega-2o-borrador@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270309
+DTEND;VALUE=DATE:20270310
+SUMMARY:TFM · Entrega 2º borrador
+DESCRIPTION:Entrega del 2º borrador de TFM
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:TFM · Entrega 2º borrador
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270310-correccion-2o-borrador@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270310
+DTEND;VALUE=DATE:20270317
+SUMMARY:Corrección 2º borrador
+DESCRIPTION:Corrección del 2º borrador de TFM (tutor)
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20270330-tfm-entrega-3er-borrador@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270330
+DTEND;VALUE=DATE:20270331
+SUMMARY:TFM · Entrega 3er borrador
+DESCRIPTION:Entrega del 3er borrador de TFM
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:TFM · Entrega 3er borrador
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270331-correccion-3er-borrador@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270331
+DTEND;VALUE=DATE:20270407
+SUMMARY:Corrección 3er borrador
+DESCRIPTION:Corrección del 3er borrador de TFM (tutor)
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20270412-sesion-seguimiento-tfm@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270412
+DTEND;VALUE=DATE:20270417
+SUMMARY:Sesión seguimiento TFM
+DESCRIPTION:Sesión de seguimiento de tutorización entre tutor y alumno
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20270504-tfm-entrega-4o-borrador@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270504
+DTEND;VALUE=DATE:20270505
+SUMMARY:TFM · Entrega 4º borrador
+DESCRIPTION:Entrega del 4º borrador de TFM
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:TFM · Entrega 4º borrador
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270505-correccion-4o-borrador@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270505
+DTEND;VALUE=DATE:20270512
+SUMMARY:Corrección 4º borrador
+DESCRIPTION:Corrección del 4º borrador de TFM (tutor)
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20270506-entrega-actividades-2o-cuatri@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270506
+DTEND;VALUE=DATE:20270507
+SUMMARY:ENTREGA actividades 2º cuatri.
+DESCRIPTION:Fecha límite de entrega de actividades del segundo cuatrimest
+ re según el calendario general (la agenda básica indica 28/05: confírm
+ alo)
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ENTREGA actividades 2º cuatri.
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270512-sesion-dudas-metodologia-examen@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270512
+DTEND;VALUE=DATE:20270513
+SUMMARY:Sesión dudas metodología examen
+DESCRIPTION:Sesión de resolución de dudas o incidencias de la metodolog
+ ía de examen
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20270520-examen-2o-cuatrimestre@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270520
+DTEND;VALUE=DATE:20270521
+SUMMARY:EXAMEN 2º cuatrimestre
+DESCRIPTION:Exámenes ordinarios del segundo cuatrimestre (online). Franja
+ s: ver portada
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:EXAMEN 2º cuatrimestre
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270522-examen-2o-cuatrimestre@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270522
+DTEND;VALUE=DATE:20270523
+SUMMARY:EXAMEN 2º cuatrimestre
+DESCRIPTION:Exámenes ordinarios del segundo cuatrimestre (online). Franja
+ s: ver portada
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:EXAMEN 2º cuatrimestre
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270526-tfm-entrega-definitiva-al-tutor@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270526
+DTEND;VALUE=DATE:20270527
+SUMMARY:TFM · Entrega definitiva al tutor
+DESCRIPTION:Entrega definitiva del TFM al tutor
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:TFM · Entrega definitiva al tutor
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270526-autorizacion-tfm-tutor@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270526
+DTEND;VALUE=DATE:20270603
+SUMMARY:Autorización TFM (tutor)
+DESCRIPTION:Autorización del TFM por parte del tutor
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20270528-fin-practicas-memoria@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270528
+DTEND;VALUE=DATE:20270529
+SUMMARY:FIN prácticas + memoria
+DESCRIPTION:Fin de las prácticas y entrega límite de la memoria de prác
+ ticas
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:FIN prácticas + memoria
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270602-revision-notas-2o-cuatri@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270602
+DTEND;VALUE=DATE:20270604
+SUMMARY:Revisión notas 2º cuatri.
+DESCRIPTION:Revisión de las notas del segundo cuatrimestre
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20270603-tfm-entrega-definitiva-en-plataforma@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270603
+DTEND;VALUE=DATE:20270604
+SUMMARY:TFM · Entrega definitiva en plataforma
+DESCRIPTION:Entrega definitiva del TFM en la plataforma
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:TFM · Entrega definitiva en plataforma
+TRIGGER:-P2D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270621-exposiciones-tfm-4a-semana@master-g5-2627
+DTSTAMP:20261102T163736Z
+DTSTART;VALUE=DATE:20270621
+DTEND;VALUE=DATE:20270701
+SUMMARY:Exposiciones TFM (4ª semana)
+DESCRIPTION:Exposiciones de TFM a partir de la 4ª semana de junio (fecha 
+ exacta por confirmar)
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR
