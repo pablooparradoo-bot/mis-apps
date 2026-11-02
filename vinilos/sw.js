@@ -1,5 +1,5 @@
 /* La Discoteca: funciona sin conexión. La página se pide primero a la red (para recibir actualizaciones) y, si no hay red, se usa la copia guardada. */
-const V = "vinilos-v1.0.0";
+const V = "vinilos-v1.1.0";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon-180.png", "./icon-512.png"];
 
 self.addEventListener("install", (e) => {
@@ -31,7 +31,7 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
-  const fonts = u.host === "fonts.googleapis.com" || u.host === "fonts.gstatic.com" || u.host === "cdnjs.cloudflare.com";
+  const fonts = u.host === "fonts.googleapis.com" || u.host === "fonts.gstatic.com" || u.host === "cdnjs.cloudflare.com" || u.host === "cdn.jsdelivr.net";
   if (u.origin === self.location.origin || fonts) {
     e.respondWith(
       caches.match(r).then((hit) => {
