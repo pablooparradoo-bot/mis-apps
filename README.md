@@ -6,6 +6,7 @@ Apps web personales hechas con Claude, publicadas con GitHub Pages para usarlas 
 |---|---|
 | Caja de Pablo | `caja/` |
 | Máster Profesorado 26/27 | `master/` |
+| Mi Habituario | `habituario/` |
 
 > Los datos de cada app se guardan solo en el dispositivo (localStorage). Nunca se suben al repositorio.
 

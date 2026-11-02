@@ -1,0 +1,22 @@
+{
+  "name": "Mi Habituario",
+  "short_name": "Habituario",
+  "description": "Hábitos, calma, sueño, deporte y diario",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F3F5F8",
+  "theme_color": "#F3F5F8",
+  "lang": "es",
+  "icons": [
+    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Hoy", "url": "./#hoy" },
+    { "name": "Diario", "url": "./#diario" },
+    { "name": "Deporte", "url": "./#deporte" },
+    { "name": "Sueño", "url": "./#sueno" }
+  ]
+}
