@@ -1,0 +1,32 @@
+name: Actualizar coplas
+on:
+  schedule:
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["coplas/scripts/**", ".github/workflows/coplas.yml"]
+permissions:
+  contents: write
+concurrency:
+  group: coplas
+  cancel-in-progress: false
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python coplas/scripts/actualizar.py
+      - name: Guardar cambios
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add coplas/catalogo.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Coplas: catálogo actualizado"
+          git pull --rebase origin main
+          git push origin HEAD:main

@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Coplas de Cádiz</title>
+<meta name="description" content="Catálogo de coplas del Carnaval de Cádiz con favoritas y copla al azar.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Coplas">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#F6F6F2">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Mismo lenguaje que el resto de mis-apps: tinta + amarillo. Una columna para el pulgar y barra inferior con tres destinos. */
+:root {
+  --bg: #F6F6F2; --surface: #FFFFFF; --line: #DEDDD4; --fg: #1B1B18; --muted: #6C6B62; --accent: #F5C400; --on-accent: #1B1B18; --accent-soft: #FFF3B8;
+  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif; --body: "Figtree", -apple-system, system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root {
+  --bg: #121210; --surface: #1C1C19; --line: #33332D; --fg: #EDECE4; --muted: #A09F94; --accent: #F5C400; --on-accent: #1B1B18; --accent-soft: #3A3210; color-scheme: dark; } }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--bg); padding-top: env(safe-area-inset-top, 0px); }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.4;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width: 680px; margin: 0 auto; padding-block: 22px calc(92px + env(safe-area-inset-bottom, 0px)); }
+h1 { font: 800 32px/1 var(--display); letter-spacing: -.03em; margin: 0; text-wrap: balance; }
+h2 { font: 700 19px/1.2 var(--display); margin: 0; letter-spacing: -.01em; }
+.sub { color: var(--muted); margin: 6px 0 18px; font-size: 14px; font-variant-numeric: tabular-nums; }
+button, input, a { font-family: inherit; }
+button { color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.vista { display: flex; flex-direction: column; gap: 14px; }
+
+/* Azar */
+.tirada { background: var(--accent); color: var(--on-accent); border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.tirada .tipo { font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.tirada h2 { font-size: 30px; line-height: 1.05; font-weight: 800; letter-spacing: -.025em; min-height: 2.1em; text-wrap: balance; overflow-wrap: anywhere; }
+.tirada .det { font-size: 15px; min-height: 1.4em; }
+.acciones { display: grid; grid-template-columns: minmax(0, 1fr) 52px; gap: 8px; }
+.tocar { background: var(--on-accent); color: #FFF8D6; text-decoration: none; text-align: center; font-weight: 600; border-radius: 14px; padding: 14px; }
+.tirada .estrella { background: transparent; border: 2px solid var(--on-accent); color: var(--on-accent); border-radius: 14px; width: 52px; height: auto; font-size: 22px; }
+.tirada .estrella[aria-pressed="true"] { color: var(--on-accent); }
+.otra { width: 100%; background: var(--surface); border: 2px solid var(--fg); border-radius: 16px; padding: 15px; font: 700 18px var(--display); }
+.otra:active, .tocar:active { transform: scale(.985); }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { background: var(--surface); border: 1px solid var(--line); border-radius: 99px; padding: 7px 13px; font-size: 14px; font-weight: 500; }
+.chip[aria-pressed="true"] { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+
+/* Listas */
+.seccion { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.lista { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.fila { display: grid; grid-template-columns: minmax(0, 1fr) 48px; align-items: stretch; }
+.fila + .fila { border-top: 1px solid var(--line); }
+.fila a { color: inherit; text-decoration: none; padding: 11px 4px 11px 14px; min-width: 0; }
+.fila b { display: block; font-weight: 600; overflow-wrap: anywhere; }
+.fila small { display: block; color: var(--muted); font-size: 13.5px; overflow-wrap: anywhere; }
+.estrella { background: none; border: 0; font-size: 21px; color: var(--muted); line-height: 1; }
+.estrella[aria-pressed="true"] { color: var(--fg); }
+@media (prefers-color-scheme: dark) { .fila .estrella[aria-pressed="true"] { color: var(--accent); } }
+.buscar { width: 100%; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 13px 14px; font-size: 16px; }
+.grupo { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.grupo summary { display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px; cursor: pointer; font-weight: 600; list-style: none; }
+.grupo summary::-webkit-details-marker { display: none; }
+.grupo summary span:last-child { color: var(--muted); font-weight: 500; font-variant-numeric: tabular-nums; }
+.grupo .lista { border: 0; border-top: 1px solid var(--line); border-radius: 0; }
+.grupos { display: flex; flex-direction: column; gap: 6px; }
+.aviso { background: var(--accent-soft); border-radius: 14px; padding: 13px 15px; font-size: 14px; line-height: 1.45; }
+.vacio { text-align: center; color: var(--muted); padding: 34px 18px; background: var(--surface); border: 1px dashed var(--line); border-radius: 16px; }
+.boton2 { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; font-weight: 600; font-size: 15px; }
+.fila2 { display: flex; gap: 8px; flex-wrap: wrap; }
+footer { color: var(--muted); font-size: 13px; margin-top: 22px; line-height: 1.5; }
+footer a { color: inherit; }
+
+/* Barra inferior */
+nav.barra { position: fixed; left: 0; right: 0; bottom: 0; background: var(--surface); border-top: 1px solid var(--line); z-index: 5;
+  padding: 6px max(10px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-left, 0px)); }
+.barra div { max-width: 680px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.barra a { text-align: center; color: var(--muted); text-decoration: none; font-weight: 600; font-size: 14px; padding: 11px 4px; border-radius: 12px; }
+.barra a[aria-current="page"] { background: var(--accent); color: var(--on-accent); }
+#toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(78px + env(safe-area-inset-bottom, 0px)); background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-size: 14px; z-index: 6; max-width: calc(100% - 32px); }
+@media (prefers-reduced-motion: reduce) { .otra:active, .tocar:active { transform: none; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Coplas de Cádiz</h1>
+  <p class="sub" id="resumen">Cargando el catálogo…</p>
+
+  <section class="vista" id="v-azar" hidden>
+    <div class="chips" id="ambitos" role="group" aria-label="Elegir entre"></div>
+    <article class="tirada" aria-live="polite">
+      <div class="tipo" id="az-tipo">&nbsp;</div>
+      <h2 id="az-titulo">&nbsp;</h2>
+      <div class="det" id="az-det"></div>
+      <div class="acciones">
+        <a class="tocar" id="az-link" target="_blank" rel="noopener">Abrir letra y acordes ↗</a>
+        <button class="estrella" id="az-fav" aria-pressed="false" aria-label="Marcar como favorita">☆</button>
+      </div>
+    </article>
+    <button class="otra" id="az-otra">Otra al azar</button>
+    <div class="seccion">
+      <h2>Novedades</h2>
+      <ul class="lista" id="novedades"></ul>
+    </div>
+  </section>
+
+  <section class="vista" id="v-coplas" hidden>
+    <input class="buscar" id="q" type="search" placeholder="Busca agrupación, título, autor o año" aria-label="Buscar coplas" autocomplete="off">
+    <div class="chips" id="vistas" role="group" aria-label="Ordenar por"></div>
+    <div id="nota-autores" hidden></div>
+    <div class="grupos" id="grupos"></div>
+  </section>
+
+  <section class="vista" id="v-favoritas" hidden>
+    <div id="favs"></div>
+    <div class="fila2" id="fav-acciones" hidden>
+      <button class="boton2" id="fav-azar">Una favorita al azar</button>
+      <button class="boton2" id="fav-pasar">Pasar a otro dispositivo</button>
+    </div>
+  </section>
+
+  <footer>Letras, acordes y transcripciones son de sus autores y de <a href="https://acordesgaditanos.com/" target="_blank" rel="noopener">Acordes Gaditanos</a>; cada copla se abre en su página. <span id="actualizado"></span></footer>
+</main>
+<nav class="barra" aria-label="Secciones"><div>
+  <a href="#azar" data-v="azar">Al azar</a>
+  <a href="#coplas" data-v="coplas">Coplas</a>
+  <a href="#favoritas" data-v="favoritas">Favoritas</a>
+</div></nav>
+<div id="toast" role="status" hidden></div>
+
+<script>
+"use strict";
+const BASE = "https://acordesgaditanos.com/acordes/";
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const norm = (s) => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+const leer = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+const guardar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+
+let COPLAS = [], PORSLUG = new Map(), NOV = [];
+let favs = leer("coplas.favs", []);
+let recientes = leer("coplas.recientes", []);
+let ambito = leer("coplas.ambito", "todas");
+let orden = leer("coplas.orden", "anio");
+let actual = null, toastT = 0;
+
+const AMBITOS = [["todas", "Todas"], ["Pasodoble", "Pasodobles"], ["Presentación", "Presentaciones"], ["Cuarteta", "Cuartetas"], ["pop", "Popurrís"], ["favs", "Favoritas"]];
+const ORDENES = [["anio", "Año"], ["tipo", "Tipo"], ["grupo", "Agrupación"], ["musica", "Música"], ["letra", "Letra"], ["modalidad", "Modalidad"]];
+const TIPOS_ORDEN = ["Pasodoble", "Presentación", "Popurrí", "Final de popurrí", "Cuarteta", "Tango", "Estribillo", "Testamento", "Credo", "Otra"];
+
+function toast(t) { const el = $("toast"); el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => (el.hidden = true), 2600); }
+const url = (c) => BASE + c.s + "/";
+const esFav = (s) => favs.includes(s);
+const subtitulo = (c) => [c.n ? `${c.k} «${c.n}»` : c.k, c.y, (c.mu && c.mu[0]) || (c.le && c.le[0])].filter(Boolean).join(" · ");
+const fila = (c) => `<li class="fila"><a href="${esc(url(c))}" target="_blank" rel="noopener"><b>${esc(c.a)}</b><small>${esc(subtitulo(c))}</small></a><button class="estrella" data-fav="${esc(c.s)}" aria-pressed="${esFav(c.s)}" aria-label="${esFav(c.s) ? "Quitar de" : "Añadir a"} favoritas: ${esc(c.a)}">${esFav(c.s) ? "★" : "☆"}</button></li>`;
+
+function alternarFav(s) {
+  favs = esFav(s) ? favs.filter((x) => x !== s) : [s, ...favs];
+  guardar("coplas.favs", favs);
+  document.querySelectorAll(`[data-fav="${CSS.escape(s)}"]`).forEach((b) => {
+    const on = esFav(s); b.setAttribute("aria-pressed", on); b.textContent = on ? "★" : "☆";
+  });
+  pintarTirada(); pintarFavs(); pintarAmbitos();
+}
+
+/* Azar */
+function candidatas() {
+  if (ambito === "favs") return favs.map((s) => PORSLUG.get(s)).filter(Boolean);
+  if (ambito === "todas") return COPLAS;
+  if (ambito === "pop") return COPLAS.filter((c) => c.k === "Popurrí" || c.k === "Final de popurrí");
+  return COPLAS.filter((c) => c.k === ambito);
+}
+function elegir() {
+  const cs = candidatas();
+  if (!cs.length) return null;
+  const memoria = Math.min(recientes.length, Math.floor(cs.length * 0.6));
+  const evitar = new Set(recientes.slice(0, memoria));
+  const libres = cs.filter((c) => !evitar.has(c.s));
+  const base = libres.length ? libres : cs;
+  const a = new Uint32Array(1); crypto.getRandomValues(a);
+  return base[a[0] % base.length];
+}
+function pintarTirada() {
+  const c = actual, hay = !!c;
+  $("az-link").hidden = !hay; $("az-fav").hidden = !hay;
+  if (!hay) {
+    $("az-tipo").innerHTML = "&nbsp;";
+    $("az-titulo").textContent = ambito === "favs" ? "Aún no tienes favoritas" : "Sin coplas aquí";
+    $("az-det").textContent = ambito === "favs" ? "Marca alguna con la estrella y entrará en el sorteo." : "";
+    return;
+  }
+  $("az-tipo").textContent = [c.m, c.k].filter(Boolean).join(" · ");
+  $("az-titulo").textContent = c.a;
+  const autores = [...new Set([...(c.mu || []), ...(c.le || [])])].join(", ");
+  $("az-det").textContent = [c.n && `«${c.n}»`, `Carnaval ${c.y}`, autores].filter(Boolean).join(" · ");
+  $("az-link").href = url(c);
+  const f = esFav(c.s);
+  $("az-fav").textContent = f ? "★" : "☆"; $("az-fav").setAttribute("aria-pressed", f);
+  $("az-fav").setAttribute("aria-label", f ? "Quitar de favoritas" : "Marcar como favorita");
+}
+function tirar() {
+  const c = elegir();
+  const fijar = () => {
+    actual = c;
+    if (c) { recientes = [c.s, ...recientes.filter((x) => x !== c.s)].slice(0, 200); guardar("coplas.recientes", recientes); }
+    pintarTirada();
+  };
+  const cs = candidatas();
+  if (!c || cs.length < 3 || matchMedia("(prefers-reduced-motion: reduce)").matches) return fijar();
+  let n = 0;
+  const t = setInterval(() => {
+    $("az-titulo").textContent = cs[Math.floor(Math.random() * cs.length)].a;
+    if (++n >= 8) { clearInterval(t); fijar(); }
+  }, 55);
+}
+function pintarAmbitos() {
+  $("ambitos").innerHTML = AMBITOS.map(([v, t]) => `<button class="chip" data-ambito="${v}" aria-pressed="${ambito === v}">${t}${v === "favs" && favs.length ? ` (${favs.length})` : ""}</button>`).join("");
+}
+
+/* Catálogo */
+function claves(c) {
+  switch (orden) {
+    case "tipo": return [c.k];
+    case "grupo": return [c.a];
+    case "musica": return c.mu || [];
+    case "letra": return c.le || [];
+    case "modalidad": return c.m ? [c.m] : [];
+    default: return [String(c.y)];
+  }
+}
+function pintarGrupos() {
+  const q = norm($("q").value.trim());
+  $("vistas").innerHTML = ORDENES.map(([v, t]) => `<button class="chip" data-orden="${v}" aria-pressed="${orden === v}">${t}</button>`).join("");
+  const conFicha = COPLAS.filter((c) => c.f).length;
+  const nota = $("nota-autores");
+  const dependeFicha = ["musica", "letra", "modalidad"].includes(orden);
+  nota.hidden = !(dependeFicha && conFicha < COPLAS.length);
+  nota.innerHTML = nota.hidden ? "" : `<div class="aviso">Autores y modalidad se están completando solos: ${conFicha} de ${COPLAS.length} coplas. Mientras tanto, las demás no aparecen en esta vista.</div>`;
+
+  if (q) {
+    const palabras = q.split(/\s+/);
+    const res = COPLAS.filter((c) => { const h = norm([c.t, c.a, c.n, c.y, c.m, ...(c.mu || []), ...(c.le || [])].join(" ")); return palabras.every((p) => h.includes(p)); });
+    $("grupos").innerHTML = res.length ? `<ul class="lista">${res.map(fila).join("")}</ul>` : `<div class="vacio">Nada con «${esc($("q").value)}». Prueba con el nombre de la agrupación o el año.</div>`;
+    return;
+  }
+  const m = new Map();
+  for (const c of COPLAS) for (const k of claves(c)) {
+    const id = norm(k); if (!m.has(id)) m.set(id, { nombre: k, items: [] }); m.get(id).items.push(c);
+  }
+  let g = [...m.values()];
+  if (orden === "anio") g.sort((a, b) => b.nombre - a.nombre);
+  else if (orden === "tipo") g.sort((a, b) => TIPOS_ORDEN.indexOf(a.nombre) - TIPOS_ORDEN.indexOf(b.nombre));
+  else g.sort((a, b) => a.nombre.localeCompare(b.nombre, "es", { sensitivity: "base" }));
+  GRUPOS = g;
+  $("grupos").innerHTML = g.length ? g.map((x, i) => `<details class="grupo" data-i="${i}"><summary><span>${esc(x.nombre)}</span><span>${x.items.length}</span></summary></details>`).join("") : `<div class="vacio">Esta vista aparecerá cuando se complete la primera actualización.</div>`;
+}
+let GRUPOS = [];
+
+/* Favoritas */
+function pintarFavs() {
+  const cs = favs.map((s) => PORSLUG.get(s)).filter(Boolean);
+  $("favs").innerHTML = cs.length ? `<ul class="lista">${cs.map(fila).join("")}</ul>` : `<div class="vacio">Toca la estrella de cualquier copla y la tendrás aquí, a un toque.</div>`;
+  $("fav-acciones").hidden = !cs.length;
+}
+async function pasarFavs() {
+  const enlace = location.href.split("#")[0] + "#fav=" + favs.join(",");
+  try {
+    if (navigator.share) { await navigator.share({ title: "Mis coplas favoritas", url: enlace }); return; }
+    await navigator.clipboard.writeText(enlace); toast("Enlace copiado. Ábrelo en el otro dispositivo.");
+  } catch (e) { if (e.name !== "AbortError") { prompt("Copia este enlace:", enlace); } }
+}
+function importarFavs() {
+  const m = location.hash.match(/^#fav=(.*)$/);
+  if (!m) return false;
+  const nuevas = m[1].split(",").filter((s) => PORSLUG.has(s) && !esFav(s));
+  favs = [...favs, ...nuevas]; guardar("coplas.favs", favs);
+  pintarFavs(); pintarAmbitos();
+  toast(nuevas.length ? `${nuevas.length} favoritas añadidas` : "Ya tenías estas favoritas");
+  history.replaceState(null, "", "#favoritas");
+  return true;
+}
+
+/* Navegación */
+function mostrar() {
+  importarFavs();
+  const h = location.hash.slice(1);
+  const v = ["azar", "coplas", "favoritas"].includes(h) ? h : "azar";
+  for (const n of ["azar", "coplas", "favoritas"]) $("v-" + n).hidden = n !== v;
+  document.querySelectorAll(".barra a").forEach((a) => a.dataset.v === v ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
+  window.scrollTo(0, 0);
+}
+
+document.addEventListener("click", (e) => {
+  const t = e.target.closest("button"); if (!t) return;
+  if (t.dataset.fav) alternarFav(t.dataset.fav);
+  else if (t.dataset.ambito) { ambito = t.dataset.ambito; guardar("coplas.ambito", ambito); pintarAmbitos(); tirar(); }
+  else if (t.dataset.orden) { orden = t.dataset.orden; guardar("coplas.orden", orden); pintarGrupos(); }
+});
+document.addEventListener("toggle", (e) => {
+  const d = e.target;
+  if (d.classList && d.classList.contains("grupo") && d.open && !d.querySelector(".lista")) {
+    d.insertAdjacentHTML("beforeend", `<ul class="lista">${GRUPOS[+d.dataset.i].items.map(fila).join("")}</ul>`);
+  }
+}, true);
+$("az-otra").addEventListener("click", tirar);
+$("az-fav").addEventListener("click", () => actual && alternarFav(actual.s));
+$("fav-azar").addEventListener("click", () => { ambito = "favs"; guardar("coplas.ambito", ambito); pintarAmbitos(); location.hash = "azar"; tirar(); });
+$("fav-pasar").addEventListener("click", pasarFavs);
+$("q").addEventListener("input", pintarGrupos);
+addEventListener("hashchange", mostrar);
+
+async function iniciar() {
+  try {
+    const r = await fetch("catalogo.json", { cache: "no-cache" });
+    if (!r.ok) throw new Error(r.status);
+    const d = await r.json();
+    COPLAS = d.coplas; NOV = d.novedades || [];
+    PORSLUG = new Map(COPLAS.map((c) => [c.s, c]));
+    const anios = COPLAS.map((c) => c.y);
+    $("resumen").textContent = `${COPLAS.length} coplas · Carnaval ${Math.min(...anios)}–${Math.max(...anios)}`;
+    if (d.actualizado) $("actualizado").textContent = `Catálogo actualizado el ${new Date(d.actualizado + "T12:00:00").toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })}.`;
+    $("novedades").innerHTML = NOV.map((s) => PORSLUG.get(s)).filter(Boolean).slice(0, 10).map(fila).join("");
+    pintarAmbitos(); pintarGrupos(); pintarFavs(); mostrar();
+    const c = elegir(); actual = c; pintarTirada();
+  } catch (e) {
+    $("resumen").textContent = "No se ha podido cargar el catálogo. Comprueba la conexión y vuelve a abrir la app.";
+  }
+}
+iniciar();
+if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+</script>
+</body>
+</html>

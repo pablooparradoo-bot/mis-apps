@@ -8,8 +8,13 @@ Apps web personales hechas con Claude, publicadas con GitHub Pages para usarlas 
 | Máster Profesorado 26/27 | `master/` |
 | Mi Habituario | `habituario/` |
 | La Discoteca (vinilos) | `vinilos/` |
+| Coplas de Cádiz | `coplas/` |
 
 > Los datos de cada app se guardan solo en el dispositivo (localStorage). Nunca se suben al repositorio.
+
+## Coplas de Cádiz
+
+`coplas/catalogo.json` guarda solo datos de catálogo y enlaces a [Acordes Gaditanos](https://acordesgaditanos.com/). No guarda letras ni acordes. La GitHub Action `coplas.yml` lo actualiza cada día.
 
 ## Añadir una app nueva
 
