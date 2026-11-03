@@ -148,10 +148,11 @@ let favs = leer("coplas.favs", []);
 let recientes = leer("coplas.recientes", []);
 let ambito = leer("coplas.ambito", "todas");
 let orden = leer("coplas.orden", "anio");
+if (orden === "modalidad") orden = "anio";
 let actual = null, toastT = 0;
 
 const AMBITOS = [["todas", "Todas"], ["Pasodoble", "Pasodobles"], ["Presentación", "Presentaciones"], ["Cuarteta", "Cuartetas"], ["pop", "Popurrís"], ["favs", "Favoritas"]];
-const ORDENES = [["anio", "Año"], ["tipo", "Tipo"], ["grupo", "Agrupación"], ["musica", "Música"], ["letra", "Letra"], ["modalidad", "Modalidad"]];
+const ORDENES = [["anio", "Año"], ["tipo", "Tipo"], ["grupo", "Agrupación"], ["musica", "Música"], ["letra", "Letra"]];
 const TIPOS_ORDEN = ["Pasodoble", "Presentación", "Popurrí", "Final de popurrí", "Cuarteta", "Tango", "Estribillo", "Testamento", "Credo", "Otra"];
 
 function toast(t) { const el = $("toast"); el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => (el.hidden = true), 2600); }
@@ -230,7 +231,6 @@ function claves(c) {
     case "grupo": return [c.a];
     case "musica": return c.mu || [];
     case "letra": return c.le || [];
-    case "modalidad": return c.m ? [c.m] : [];
     default: return [String(c.y)];
   }
 }
@@ -239,9 +239,9 @@ function pintarGrupos() {
   $("vistas").innerHTML = ORDENES.map(([v, t]) => `<button class="chip" data-orden="${v}" aria-pressed="${orden === v}">${t}</button>`).join("");
   const conFicha = COPLAS.filter((c) => c.f).length;
   const nota = $("nota-autores");
-  const dependeFicha = ["musica", "letra", "modalidad"].includes(orden);
+  const dependeFicha = ["musica", "letra"].includes(orden);
   nota.hidden = !(dependeFicha && conFicha < COPLAS.length);
-  nota.innerHTML = nota.hidden ? "" : `<div class="aviso">Autores y modalidad se están completando solos: ${conFicha} de ${COPLAS.length} coplas. Mientras tanto, las demás no aparecen en esta vista.</div>`;
+  nota.innerHTML = nota.hidden ? "" : `<div class="aviso">Los autores se están completando solos: ${conFicha} de ${COPLAS.length} coplas. Mientras tanto, las demás no aparecen en esta vista.</div>`;
 
   if (q) {
     const palabras = q.split(/\s+/);
