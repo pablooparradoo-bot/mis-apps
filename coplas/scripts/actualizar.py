@@ -54,7 +54,8 @@ class Listado(html.parser.HTMLParser):
         elif tag == "a" and self.anio:
             m = re.search(r"/acordes/([^/?#\"]+)/?$", dict(attrs).get("href") or "")
             if m:
-                self.href, self.a = m.group(1), ""
+                # Unifica enlaces con tildes escritas tal cual o ya codificadas (%C3%AD)
+                self.href, self.a = urllib.parse.quote(m.group(1), safe="%-._~"), ""
 
     def handle_data(self, d):
         if self.en_h2:
@@ -151,7 +152,7 @@ def main():
             time.sleep(PAUSA)
             try:
                 fic = analizar_ficha(pedir(url))
-            except urllib.error.URLError as e:
+            except (urllib.error.URLError, OSError, ValueError) as e:  # una ficha rara no tira el resto
                 print(f"Salto {c['s']}: {e}"); continue
             if fic["a"]:
                 c["a"] = fic["a"]
