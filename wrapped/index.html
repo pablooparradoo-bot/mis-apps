@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<title>Wrapped ale &lt;3 &amp; parrado</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Wrapped Ale">
+<meta name="theme-color" content="#191339">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800;900&family=Figtree:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+*{box-sizing:border-box}
+/* Layout: phone-sized story column, one full-bleed slide at a time, tap/swipe to advance. Single deliberate look (sunset at Cortadura), no theme switch. */
+:root{
+  --noche:#191339;      /* night over the Atlantic */
+  --rosa:#FF8FC7;       /* her 🩷 */
+  --atardecer:#FF6A3D;  /* Cortadura sunset */
+  --marea:#0E5E6F;      /* tide */
+  --arena:#F6E7C8;      /* sand */
+  --tinta:#16112E;
+  --blanco:#FFF8F0;
+  --font-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --font-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{margin:0;background:#0d0a20;color:var(--blanco);font-family:var(--font-body);-webkit-tap-highlight-color:transparent;overflow:hidden}
+.stage{position:relative;height:100%;max-width:480px;margin:0 auto;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:pan-y}
+.progress{position:absolute;z-index:20;left:0;right:0;top:0;display:flex;gap:4px;
+  padding-top:calc(env(safe-area-inset-top,0px) + 12px);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.progress span{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.28);overflow:hidden}
+.progress span i{display:block;height:100%;width:0;background:rgba(255,255,255,.95);transition:width .35s ease}
+.progress span.done i{width:100%}
+.brand{position:absolute;z-index:20;top:calc(env(safe-area-inset-top,0px) + 24px);left:max(16px,env(safe-area-inset-left,0px));
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;opacity:.75}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:18px;
+  padding-block:calc(env(safe-area-inset-top,0px) + 64px) calc(env(safe-area-inset-bottom,0px) + 56px);
+  padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px));
+  visibility:hidden;opacity:0;transform:translateX(18px);transition:opacity .35s ease,transform .35s ease,visibility 0s .35s}
+.slide.on{visibility:visible;opacity:1;transform:none;transition:opacity .35s ease,transform .35s ease}
+.slide > *{min-width:0}
+.bg-noche{background:var(--noche);color:var(--blanco)}
+.bg-rosa{background:var(--rosa);color:var(--tinta)}
+.bg-atardecer{background:var(--atardecer);color:var(--tinta)}
+.bg-marea{background:var(--marea);color:var(--blanco)}
+.bg-arena{background:var(--arena);color:var(--tinta)}
+.ts{font-family:var(--font-mono);font-size:12px;letter-spacing:.02em;opacity:.8}
+.ts b{font-weight:600}
+h1,h2{font-family:var(--font-display);font-weight:900;margin:0;line-height:.98;letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(40px,12vw,58px)}
+h2{font-size:clamp(28px,8.4vw,40px)}
+.big{font-family:var(--font-display);font-weight:900;font-size:clamp(64px,21vw,104px);line-height:.9;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.mid{font-family:var(--font-display);font-weight:800;font-size:clamp(34px,10vw,48px);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+p{margin:0;font-size:17px;line-height:1.45;max-width:34ch}
+.small{font-size:14px;line-height:1.45;opacity:.85}
+.lead{font-size:20px;font-weight:600;line-height:1.3}
+.hint{position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);left:0;right:0;text-align:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;opacity:.7}
+/* split bar */
+.split{display:flex;height:56px;border-radius:8px;overflow:hidden;gap:3px}
+.split div{display:flex;align-items:center;padding:0 12px;font-weight:800;font-size:15px;white-space:nowrap}
+.split .p{background:var(--marea);color:var(--blanco)}
+.split .a{background:var(--rosa);color:var(--tinta)}
+.legend{display:flex;justify-content:space-between;font-size:14px;gap:12px}
+/* rows */
+.rows{display:grid;gap:10px}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px solid currentColor;border-color:color-mix(in srgb,currentColor 22%,transparent);padding-bottom:8px}
+.row span:first-child{font-weight:600;font-size:18px}
+.row span:last-child{font-family:var(--font-display);font-weight:800;font-size:20px;font-variant-numeric:tabular-nums}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.cols h3{margin:0 0 6px;font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.8}
+.word{display:flex;justify-content:space-between;gap:6px;padding:6px 0;border-bottom:1px solid color-mix(in srgb,currentColor 20%,transparent);font-size:15px}
+.word b{font-variant-numeric:tabular-nums}
+/* tiles */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{border-radius:14px;padding:14px;background:color-mix(in srgb,var(--tinta) 8%,transparent);display:flex;flex-direction:column;gap:4px}
+.tile .n{font-family:var(--font-display);font-weight:800;font-size:28px;font-variant-numeric:tabular-nums}
+.tile .l{font-weight:600}
+.tile .w{font-size:13px;opacity:.8}
+/* emojis */
+.emo{display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap}
+.emo div{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.emo .e{font-size:64px;line-height:1}
+.emo .c{font-family:var(--font-display);font-weight:800;font-size:22px}
+.emo .who{font-family:var(--font-mono);font-size:11px;opacity:.8}
+/* charts */
+.chart{display:flex;flex-direction:column;gap:6px}
+.bars{display:flex;align-items:flex-end;gap:2px;height:170px;border-bottom:1px solid color-mix(in srgb,currentColor 35%,transparent)}
+.bars button{flex:1;min-width:0;height:100%;padding:0;border:0;background:transparent;display:flex;align-items:flex-end;cursor:pointer}
+.bars button i{display:block;width:100%;border-radius:4px 4px 0 0;background:color-mix(in srgb,currentColor 38%,transparent);transition:background .2s}
+.bars button.peak i,.bars button:hover i,.bars button:focus-visible i,.bars button.sel i{background:currentColor}
+.bars button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.axis{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;opacity:.75}
+.readout{font-family:var(--font-mono);font-size:12px;min-height:1.4em}
+/* jaja */
+.jaja{font-family:var(--font-display);font-weight:900;font-size:clamp(18px,5.6vw,26px);line-height:1;word-break:break-all;letter-spacing:-.01em}
+/* timeline */
+.tl{display:grid;gap:14px;border-left:2px solid currentColor;padding-left:16px}
+.tl > div{position:relative}
+.tl > div::before{content:"";position:absolute;left:-23px;top:5px;width:12px;height:12px;border-radius:50%;background:currentColor}
+.tl .d{font-family:var(--font-mono);font-size:12px;font-weight:600}
+.tl .t{font-size:15px;line-height:1.35}
+.tl .future::before{background:var(--atardecer);box-shadow:0 0 0 3px var(--tinta)}
+blockquote{margin:0;font-family:var(--font-display);font-weight:800;font-size:clamp(24px,7vw,32px);line-height:1.15;letter-spacing:-.01em;text-wrap:balance}
+.btn{align-self:flex-start;font:600 14px var(--font-body);color:var(--tinta);background:var(--rosa);border:0;border-radius:999px;padding:12px 18px;cursor:pointer}
+.btn:focus-visible{outline:2px solid var(--blanco);outline-offset:3px}
+.sun{position:absolute;right:12%;bottom:calc(30% - 90px);width:180px;height:180px;border-radius:50%;background:var(--atardecer);opacity:.9;pointer-events:none}
+.sun + .sea{position:absolute;left:0;right:0;bottom:0;height:30%;background:linear-gradient(var(--marea),#0a3f4b);pointer-events:none}
+.slide .z{position:relative;z-index:1}
+.cover{justify-content:flex-start;padding-top:calc(env(safe-area-inset-top,0px) + 16vh)}
+.hint{z-index:2}
+@media (prefers-reduced-motion:reduce){.slide,.slide.on{transition:none;transform:none}.progress span i{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage" aria-roledescription="carrusel">
+  <div class="progress" id="progress"></div>
+
+  <!-- 1 -->
+  <section class="slide bg-noche cover on" aria-label="Portada">
+    <div class="sun"></div><div class="sea"></div>
+    <div class="ts z">[27/12/24, 22:44:20] <b>ale &lt;3</b>: Los mensajes y las llamadas están cifrados…</div>
+    <h1 class="z">ale&nbsp;&lt;3 &amp; parrado</h1>
+    <p class="lead z">Vuestro Wrapped de WhatsApp</p>
+    <p class="small z">7 ene 2025 → 5 nov 2026 · 225.651 mensajes analizados</p>
+    <div class="hint">TOCA PARA EMPEZAR →</div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide bg-rosa" aria-label="Días">
+    <div class="ts">668 días de chat</div>
+    <div class="big" data-count="665">665</div>
+    <p class="lead">días con mensajes, de 668 posibles.</p>
+    <p>Solo hubo tres días sin escribiros. Dos de ellos, en septiembre de 2025, porque estabais juntos de viaje por Portugal.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide bg-atardecer" aria-label="Mensajes">
+    <div class="ts">Os habéis mandado</div>
+    <div class="big" data-count="225651">225.651</div>
+    <p class="lead">mensajes.</p>
+    <p>Unos <b>339 cada día</b>: más o menos uno cada tres minutos que estáis despiertos.</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide bg-marea" aria-label="Palabras">
+    <div class="ts">Y en palabras</div>
+    <div class="big" data-count="926461" style="font-size:clamp(56px,17vw,90px)">926.461</div>
+    <p class="lead">palabras escritas entre los dos.</p>
+    <p>El Quijote tiene unas 381.000. Lleváis casi <b>dos Quijotes y medio</b> de conversación.</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide bg-arena" aria-label="Quién habla más">
+    <div class="ts">¿Quién escribe más?</div>
+    <h2>Pablo, por poco.</h2>
+    <div class="split" role="img" aria-label="Pablo 54,5 por ciento, Ale 45,5 por ciento">
+      <div class="p" style="flex:54.5">54,5%</div>
+      <div class="a" style="flex:45.5">45,5%</div>
+    </div>
+    <div class="legend"><span><b>parrado</b> · 122.935</span><span><b>ale &lt;3</b> · 102.716</span></div>
+    <p>Pero ella pregunta más: <b>12.658 interrogaciones</b> contra 10.799.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide bg-noche" aria-label="Racha">
+    <div class="ts">Racha más larga</div>
+    <div class="big" data-count="379" style="color:var(--rosa)">379</div>
+    <p class="lead">días seguidos sin saltaros ni uno.</p>
+    <p>Del 19 de septiembre de 2025 al 2 de octubre de 2026. Más de un año entero hablando todos los días.</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide bg-rosa" aria-label="Meses">
+    <div class="ts">Mensajes por mes</div>
+    <h2>Diciembre de 2025 fue vuestro mes.</h2>
+    <p><b>15.782 mensajes</b> en 31 días, más de 500 al día.</p>
+    <div class="chart" data-nointeract>
+      <div class="bars" id="months"></div>
+      <div class="axis"><span>ene 25</span><span>jul 25</span><span>ene 26</span><span>jul 26</span><span>nov 26</span></div>
+      <div class="readout" id="monthsOut">Toca una barra para ver el mes.</div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide bg-atardecer" aria-label="Día récord">
+    <div class="ts">[17/3/25, 12:31] <b>ale &lt;3</b>: me chocan todas las rodillas</div>
+    <h2>El día récord: 17 de marzo de 2025.</h2>
+    <div class="big" data-count="1266">1.266</div>
+    <p>mensajes en un solo día. Ale en un autobús, con el asiento de delante clavado en las rodillas, viendo capítulos y con unas ganas enormes de darte el regalo que traía.</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide bg-marea" aria-label="Horas">
+    <div class="ts">Mensajes por hora del día</div>
+    <h2>Vuestra hora son las 22:00.</h2>
+    <p><b>24.234 mensajes</b> entre las diez y las once de la noche. Y 7.577 de madrugada, entre las 0 y las 5.</p>
+    <div class="chart" data-nointeract>
+      <div class="bars" id="hours"></div>
+      <div class="axis"><span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>23h</span></div>
+      <div class="readout" id="hoursOut">Toca una barra para ver la hora.</div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide bg-arena" aria-label="Buenos días y buenas noches">
+    <div class="ts">Quién abre y quién cierra</div>
+    <h2>Él da los buenos días. Ella, las buenas noches.</h2>
+    <div class="rows">
+      <div class="row"><span>Pablo escribe primero por la mañana</span><span>580</span></div>
+      <div class="row"><span>Ale escribe primero por la mañana</span><span>85</span></div>
+      <div class="row"><span>Ale tiene la última palabra de la noche</span><span>484</span></div>
+      <div class="row"><span>Pablo tiene la última palabra</span><span>112</span></div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide bg-noche" aria-label="Te amo">
+    <div class="ts">La frase del chat</div>
+    <div class="big" data-count="8470" style="color:var(--rosa)">8.470</div>
+    <p class="lead">«te amo».</p>
+    <div class="legend" style="max-width:320px"><span><b>parrado</b> 5.568</span><span><b>ale &lt;3</b> 2.902</span></div>
+    <p>Más <b>3.951 «te quiero»</b> y <b>18.919 «amor»</b>. Vuestra palabra más usada, con muchísima diferencia.</p>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide bg-rosa" aria-label="Cómo os llamáis">
+    <div class="ts">Cómo os llamáis</div>
+    <h2>Mi niña y guapo.</h2>
+    <div class="cols">
+      <div><h3>Pablo a Ale</h3>
+        <div class="word"><span>mi niña</span><b>2.489</b></div>
+        <div class="word"><span>mi vida</span><b>2.283</b></div>
+        <div class="word"><span>princesa</span><b>726</b></div>
+        <div class="word"><span>amorsin</span><b>622</b></div>
+      </div>
+      <div><h3>Ale a Pablo</h3>
+        <div class="word"><span>guapo</span><b>2.216</b></div>
+        <div class="word"><span>gordi</span><b>775</b></div>
+        <div class="word"><span>guapísimo</span><b>361</b></div>
+        <div class="word"><span>amor de mi vida</span><b>103</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide bg-atardecer" aria-label="Diccionario">
+    <div class="ts">Vuestro diccionario</div>
+    <h2>Biennn, oleee y jeje.</h2>
+    <div class="cols">
+      <div><h3>ale &lt;3</h3>
+        <div class="word"><span>biennn</span><b>2.000</b></div>
+        <div class="word"><span>valee</span><b>978</b></div>
+        <div class="word"><span>oleee</span><b>814</b></div>
+        <div class="word"><span>lloro</span><b>455</b></div>
+        <div class="word"><span>omg</span><b>336</b></div>
+      </div>
+      <div><h3>parrado</h3>
+        <div class="word"><span>jeje</span><b>1.527</b></div>
+        <div class="word"><span>descansa</span><b>1.140</b></div>
+        <div class="word"><span>avísame</span><b>724</b></div>
+        <div class="word"><span>oleee</span><b>617</b></div>
+        <div class="word"><span>con locura</span><b>606</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide bg-marea" aria-label="Emojis">
+    <div class="ts">Emojis favoritos</div>
+    <h2>Ella en rosa, él llorando.</h2>
+    <div class="emo">
+      <div><span class="e">🩷</span><span class="c">903</span><span class="who">ALE</span></div>
+      <div><span class="e">☹️</span><span class="c">468</span><span class="who">ALE</span></div>
+      <div><span class="e">😭</span><span class="c">751</span><span class="who">PABLO</span></div>
+    </div>
+    <p class="small">Casi 4 de cada 10 emojis que manda Pablo son 😭.</p>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide bg-arena" aria-label="Multimedia">
+    <div class="ts">Todo lo que no es texto</div>
+    <h2>Ella manda audios. Él manda fotos.</h2>
+    <div class="tiles">
+      <div class="tile"><span class="n">4.921</span><span class="l">stickers</span><span class="w">gana Ale · 2.656</span></div>
+      <div class="tile"><span class="n">3.340</span><span class="l">fotos</span><span class="w">gana Pablo · 2.074</span></div>
+      <div class="tile"><span class="n">2.292</span><span class="l">audios</span><span class="w">gana Ale · 1.279</span></div>
+      <div class="tile"><span class="n">357</span><span class="l">vídeos</span><span class="w">gana Pablo · 207</span></div>
+    </div>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide bg-noche" aria-label="Velocidad">
+    <div class="ts">Tiempo de respuesta</div>
+    <h2>Seis de cada diez respuestas llegan en menos de un minuto.</h2>
+    <div class="rows">
+      <div class="row"><span>Pablo tarda (mediana)</span><span style="color:var(--rosa)">21 s</span></div>
+      <div class="row"><span>Ale tarda (mediana)</span><span style="color:var(--rosa)">31 s</span></div>
+    </div>
+  </section>
+
+  <!-- 17 -->
+  <section class="slide bg-rosa" aria-label="Récords">
+    <div class="ts">[8/3/26, 12:26] <b>parrado</b>:</div>
+    <div class="jaja">JAJAJAJAJAJAJAJAJAJAJAJAJAJAJAJJAJAJAJAAJ</div>
+    <p>El jajaja más largo: <b>41 letras</b>.</p>
+    <div class="rows">
+      <div class="row"><span>Mensajes seguidos de Pablo sin respuesta (1/11/26)</span><span>43</span></div>
+      <div class="row"><span>Veces que alguien dijo «es broma»</span><span>272</span></div>
+    </div>
+    <p class="small">El «es broma» está casi empatado: Ale 140, Pablo 132.</p>
+  </section>
+
+  <!-- 18 -->
+  <section class="slide bg-arena" aria-label="Momentos">
+    <div class="ts">Vuestra historia en el chat</div>
+    <div class="tl">
+      <div><div class="d">27/12/24</div><div class="t">Nace este chat. Vuestro día 27.</div></div>
+      <div><div class="d">8/1/25</div><div class="t">«y vemos la puesta de sol en Cortadura?» La primera cita.</div></div>
+      <div><div class="d">1/3/25</div><div class="t">El primer «te quiero» del chat. Lo escribió ella: «te quiero muuucho 🩷».</div></div>
+      <div><div class="d">Sep 2025</div><div class="t">Primer viaje juntos: el Algarve y Lisboa.</div></div>
+      <div><div class="d">Cada día 27</div><div class="t">«HOY ES NUESTRO ANIVERSARIOOOO», sin fallar un mes.</div></div>
+      <div class="future"><div class="d">27/12/26</div><div class="t"><b>Dos años.</b></div></div>
+    </div>
+  </section>
+
+  <!-- 19 -->
+  <section class="slide bg-noche" aria-label="Final">
+    <div class="sun" style="bottom:-90px;opacity:.5"></div>
+    <div class="ts z">[8/10/25, 23:00] <b>ale &lt;3</b>:</div>
+    <blockquote class="z">«me encantan esos detallitos que tienes, y sé que jamás vas a dejar de tenerlos»</blockquote>
+    <p class="z">665 días escritos. Los que quedan, por escribir.</p>
+    <button class="btn z" id="restart" data-nointeract type="button">Volver a empezar</button>
+  </section>
+</div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var prog=document.getElementById('progress');
+  slides.forEach(function(){var s=document.createElement('span');s.appendChild(document.createElement('i'));prog.appendChild(s)});
+  var bars=[].slice.call(prog.children);
+  var cur=0;
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function fmtES(n){var s=String(Math.round(n));return s.replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
+  function countUp(slide){
+    if(reduce)return;
+    slide.querySelectorAll('[data-count]').forEach(function(el){
+      var to=+el.getAttribute('data-count'),t0=null,dur=900;
+      function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);p=1-Math.pow(1-p,3);el.textContent=fmtES(to*p);if(p<1)requestAnimationFrame(step);else el.textContent=fmtES(to)}
+      requestAnimationFrame(step);
+    });
+  }
+  function go(i){
+    if(i<0||i>=slides.length)return;
+    slides[cur].classList.remove('on');cur=i;slides[cur].classList.add('on');
+    bars.forEach(function(b,k){b.classList.toggle('done',k<=cur)});
+    var th=getComputedStyle(slides[cur]).backgroundColor;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',th);
+    countUp(slides[cur]);
+    try{localStorage.setItem('wrapped-slide',cur)}catch(e){}
+  }
+  bars.forEach(function(b,k){b.classList.toggle('done',k<=0)});
+  var stage=document.getElementById('stage');
+  stage.addEventListener('click',function(e){
+    if(e.target.closest('[data-nointeract]'))return;
+    var r=stage.getBoundingClientRect();
+    if(e.clientX-r.left<r.width*0.3)go(cur-1);else go(cur+1);
+  });
+  var sx=null,sy=null;
+  stage.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  stage.addEventListener('touchend',function(e){
+    if(sx===null)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){e.preventDefault();go(dx<0?cur+1:cur-1)}
+    sx=null;
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(cur+1)}
+    if(e.key==='ArrowLeft'){e.preventDefault();go(cur-1)}
+  });
+  document.getElementById('restart').addEventListener('click',function(){go(0)});
+
+  // charts
+  var months=[["ene 25",12965],["feb 25",9414],["mar 25",11268],["abr 25",8977],["may 25",9413],["jun 25",7311],["jul 25",8106],["ago 25",9014],["sep 25",7087],["oct 25",11530],["nov 25",13851],["dic 25",15782],["ene 26",14317],["feb 26",11998],["mar 26",10111],["abr 26",10762],["may 26",9477],["jun 26",8775],["jul 26",8123],["ago 26",8489],["sep 26",8651],["oct 26",8632],["nov 26 (5 días)",1616]];
+  var hours=[4908,1800,551,252,66,202,1686,5398,10895,9469,8895,10466,11220,12727,14320,12380,13288,13348,13764,12740,12860,17788,24234,12414].map(function(v,h){return [h+":00–"+h+":59",v]});
+  function chart(id,outId,data,unit){
+    var el=document.getElementById(id),out=document.getElementById(outId);
+    var max=Math.max.apply(null,data.map(function(d){return d[1]}));
+    data.forEach(function(d){
+      var b=document.createElement('button');b.type='button';
+      b.setAttribute('aria-label',d[0]+': '+fmtES(d[1])+' mensajes');
+      if(d[1]===max)b.classList.add('peak');
+      var i=document.createElement('i');i.style.height=Math.max(2,d[1]/max*100)+'%';b.appendChild(i);
+      var show=function(){el.querySelectorAll('.sel').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');out.textContent=d[0]+' · '+fmtES(d[1])+' mensajes'};
+      b.addEventListener('click',show);b.addEventListener('mouseenter',show);b.addEventListener('focus',show);
+      el.appendChild(b);
+    });
+  }
+  chart('months','monthsOut',months);
+  chart('hours','hoursOut',hours);
+})();
+</script>
+
+</body>
+</html>
