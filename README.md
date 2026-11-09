@@ -9,6 +9,7 @@ Apps web personales hechas con Claude, publicadas con GitHub Pages para usarlas 
 | Mi Habituario | `habituario/` |
 | La Discoteca (vinilos) | `vinilos/` |
 | Coplas de Cádiz | `coplas/` |
+| Un ramito de violetas (regalo 9-N para Alejandra) | `violetas/` |
 
 > Los datos de cada app se guardan solo en el dispositivo (localStorage). Nunca se suben al repositorio.
 
