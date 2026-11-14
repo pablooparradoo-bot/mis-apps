@@ -3036,7 +3036,7 @@ function applyBackup(b){
   SP.workouts=b.workouts||{};SP.runs=b.runs||{};SP.cfg={...SPDEF,...(b.sportCfg||{})};SP.meta=b.sportMeta||{};
   J.entries=b.journal||{};J.cfg={...JDEF,...(b.journalCfg||{})};
   AG.tasks=b.agenda||{};O.t=b.opos||{};O.cfg={...ODEF,...(b.oposCfg||{})};O.log={s:[],tests:[],uds:[],prog:"",...(b.oposLog||{})};MS.att=b.msAtt||{};
-  O.bank=b.oBank||[];O.cards=b.oCards||{};O.qstat=b.oQstat||{};O.crev=b.oCrev||{};MS.notes=b.msNotes||{};MS.tfm={...JSON.parse(JSON.stringify(TFMDEF)),...(b.tfm||{})};MS.prac={...JSON.parse(JSON.stringify(PRDEF)),...(b.prac||{})};REV.w=b.rev||{};ACH.u=b.ach||{};LB.books=b.lect||{};LB.cfg={goal:12,...(b.lectCfg||{})};MS.foros=b.msForos||{};MS.acts=b.msActs||{};MS.ev=b.msEval||{};MS.tq={bank:[],log:[],qstat:{},pen:0,subj:"",n:20,...(b.msTq||{})};MS.mcards=b.msCards||{};MS.mcrev=b.msCrev||{};
+  O.bank=b.oBank||[];O.cards=b.oCards||{};O.qstat=b.oQstat||{};O.crev=b.oCrev||{};MS.notes=b.msNotes||{};MS.tfm={...JSON.parse(JSON.stringify(TFMDEF)),...(b.tfm||{})};MS.prac={...JSON.parse(JSON.stringify(PRDEF)),...(b.prac||{})};REV.w=b.rev||{};ACH.u=b.ach||{};LB.books=b.lect||{};LB.cfg={goal:12,...(b.lectCfg||{})};MS.foros=b.msForos||{};MS.acts=b.msActs||{};MS.ev=b.msEval||{};MS.tq={bank:[],log:[],qstat:{},pen:0,subj:"",n:20,opts:3,...(b.msTq||{})};MS.mcards=b.msCards||{};MS.mcrev=b.msCrev||{};
   S.loaded=true;saveLocal();
   if(db){const cp=x=>()=>JSON.parse(JSON.stringify(x));
     queue("config/habits",()=>({habits:S.habits}));Object.keys(S.months).forEach(k=>queue("months/"+k,cp(S.months[k])));
@@ -4258,7 +4258,8 @@ function vLectInicio(){const r=lbList().filter(b=>b.status==="leyendo");if(!r.le
   return`<section class="sheet dash-read">${r.slice(0,2).map(b=>{const p=b.pages?Math.min(1,(b.page||0)/b.pages):0;return`<button class="lbr" data-act="x-book" data-id="${b.id}">${lbCover(b)}<span class="lbr-t"><span class="lbl">Leyendo</span><b>${esc(b.title)}</b>${b.pages?`<span class="mbar"><b style="width:${p*100}%;background:var(--ink)"></b></span><small>${Math.round(p*100)}% · pág. ${b.page||0} de ${b.pages}</small>`:`<small>${esc(b.author||"")}</small>`}</span></button>`}).join("")}</section>`}
 
 /* ================= MÁSTER: test y tarjetas por asignatura ================= */
-Object.assign(MS,{tq:{bank:[],log:[],qstat:{},pen:0,subj:"",n:20},mcards:{},mcrev:{}});
+Object.assign(MS,{tq:{bank:[],log:[],qstat:{},pen:0,subj:"",n:20,opts:3},mcards:{},mcrev:{}});
+const mtOpts=()=>MS.tq.opts===4?4:3;
 const MT={run:null,paste:"",tema:"",genTxt:"",busy:false,ses:null,form:false,imp:false,ktema:""};
 function mtSubj(){const k=MS.tq.subj;if(k&&MS.data.subjects[k])return k;const nx=msNextClass();return nx&&MS.data.subjects[nx.subj]?nx.subj:subjList()[0][0]}
 const mtLog=k=>MS.tq.log.filter(x=>x.subj===k);
@@ -4266,16 +4267,15 @@ const mtBank=k=>MS.tq.bank.filter(x=>x.subj===k);
 const mtAvg=k=>{const l=mtLog(k).slice(-5);return l.length?l.reduce((a,x)=>a+x.n,0)/l.length:null};
 const mkList=k=>Object.values(MS.mcards).filter(c=>c&&c.id&&(!k||c.subj===k));
 const mkDue=k=>mkList(k).filter(c=>!c.due||c.due<=todayStr());
-function mtPrompt(){const s=subjOf(mtSubj());const tm=MT.tema.trim();const n=MS.tq.n||20;
-  return`Hazme un test de ${n} preguntas tipo test (4 opciones, solo una correcta) de la asignatura «${s.name||s.short}» del Máster de Profesorado${tm?`, sobre: ${tm}`:""}. Usa única y exclusivamente los apuntes y materiales de ESTA asignatura; no mezcles contenidos ni conceptos de otras asignaturas. Que se parezcan a las de un examen real: variadas, sin ambigüedades y con distractores creíbles. Escríbelo EXACTAMENTE con este formato, para pegarlo en mi app (una línea en blanco entre preguntas):
+function mtPrompt(){const s=subjOf(mtSubj());const tm=MT.tema.trim();const n=MS.tq.n||20;const no=mtOpts();
+  return`Hazme un test de ${n} preguntas tipo test con ${no} opciones de respuesta cada una (${"abcd".slice(0,no).split("").join(", ")}) y solo una correcta de la asignatura «${s.name||s.short}» del Máster de Profesorado${tm?`, sobre: ${tm}`:""}. Usa única y exclusivamente los apuntes y materiales de ESTA asignatura; no mezcles contenidos ni conceptos de otras asignaturas. Que se parezcan a las de un examen real: variadas, sin ambigüedades y con distractores creíbles. Escríbelo EXACTAMENTE con este formato, para pegarlo en mi app (una línea en blanco entre preguntas):
 
 1. Texto de la pregunta [Tema 2]
-a) opción
-b) opción
-c) opción
-d) opción
+${"abcd".slice(0,no).split("").map(l=>l+") opción").join("\n")}
 Respuesta: b
-Explicación: una o dos frases.`}
+Explicación: una o dos frases.
+
+Importante: exactamente ${no} opciones por pregunta, ni una más ni una menos, y reparte la respuesta correcta entre todas las letras.`}
 function mkPrompt(){const s=subjOf(mtSubj());const tm=MT.ktema.trim();
   return`De los apuntes de la asignatura «${s.name||s.short}» del Máster de Profesorado${tm?` (${tm})`:""}, saca 20 tarjetas de memoria con los conceptos, autores, leyes, clasificaciones y definiciones clave para un examen tipo test. Usa solo el material de ESTA asignatura. Escríbelas EXACTAMENTE así, una por línea, para pegarlas en mi app:
 Pregunta | Respuesta`}
@@ -4294,7 +4294,7 @@ function vMTest(){
       ${answered?`<div class="tq-fb ${p===q.ans?"ok":"ko"}"><b>${p===q.ans?"¡Correcta!":"Incorrecta: era la "+L4[q.ans]+")"}</b>${q.exp?`<p>${esc(q.exp)}</p>`:""}</div>`:""}
       <div class="row" style="justify-content:space-between"><button class="btn ghost" data-act="mt-skip" ${answered?"hidden":""}>Dejar en blanco</button><span></span>${answered?`<button class="btn primary" data-act="mt-next">${r.i+1<r.qs.length?"Siguiente →":"Ver resultado"}</button>`:""}</div></section>`}
   if(r&&r.done){const d=r.done;const s=subjOf(r.subj);const fails=r.qs.map((q,i)=>({q,p:r.picks[i]})).filter(x=>x.p!==x.q.ans);
-    return`<section class="sheet tq" style="--c:${s.color}"><div class="lbl"><i class="sdot"></i>${esc(s.short)} · resultado</div><div class="tres"><b class="${d.nota>=5?"ok":"ko"}">${String(d.nota).replace(".",",")}</b><span>${d.ok} aciertos · ${d.ko} fallos · ${d.bl} en blanco${MS.tq.pen?` · penalización ${MS.tq.pen===.25?"1/4":"1/3"}`:""}</span></div>
+    return`<section class="sheet tq" style="--c:${s.color}"><div class="lbl"><i class="sdot"></i>${esc(s.short)} · resultado</div><div class="tres"><b class="${d.nota>=5?"ok":"ko"}">${String(d.nota).replace(".",",")}</b><span>${d.ok} aciertos · ${d.ko} fallos · ${d.bl} en blanco${MS.tq.pen?` · penalización ${MS.tq.pen===.25?"1/4":MS.tq.pen===.5?"1/2":"1/3"}`:""}</span></div>
       ${fails.length?`<div class="lbl">Para repasar</div><ul class="fails">${fails.map(x=>`<li><b>${esc(x.q.q)}</b><span>Correcta: ${L4[x.q.ans]}) ${esc(x.q.opts[x.q.ans])}</span>${x.q.exp?`<small>${esc(x.q.exp)}</small>`:""}</li>`).join("")}</ul><p class="small muted" style="margin:0">Los fallos se guardan en el banco de ${esc(s.short)}. Cuando aciertes una pregunta dos veces seguidas, sale del banco.</p>`:`<p>¡Pleno! 🎉</p>`}
       <div class="row"><button class="btn primary" data-act="mt-close">Listo</button>${fails.length?`<button class="btn" data-act="mt-tocards">Pasar los fallos a tarjetas</button>`:""}</div></section>`}
   const k=mtSubj();const s=subjOf(k);const log=mtLog(k);const bank=mtBank(k);const avg=mtAvg(k);const best=log.length?Math.max(...log.map(x=>x.n)):null;
@@ -4306,14 +4306,14 @@ function vMTest(){
     <div class="spread"><div><div class="lbl">${s.sem}º cuatrimestre${s.exam?` · examen ${s.exam}`:""}</div><h2 class="sec">${esc(s.short)}</h2></div>${bank.length?`<button class="btn" data-act="mt-fallos">Repasar fallos (${bank.length})</button>`:""}</div>
     ${log.length?`<div class="kpis"><div class="kpi"><div class="lbl">Tests</div><div class="v">${log.length}</div></div><div class="kpi"><div class="lbl">Media reciente</div><div class="v">${fmtN(Math.round(avg*10)/10)}</div></div><div class="kpi"><div class="lbl">Mejor nota</div><div class="v">${fmtN(best)}</div></div><div class="kpi"><div class="lbl">Aciertos</div><div class="v">${tot.ok+tot.ko?Math.round(tot.ok/(tot.ok+tot.ko)*100):"—"}<small>%</small></div></div></div>`:""}
     <ol class="tsteps"><li><b>Pide el test a Claude</b> con los apuntes de ${esc(s.short)}. Esta instrucción ya le dice la asignatura y el formato:
-        <div class="row"><input type="text" data-mttema value="${esc(MT.tema)}" placeholder="Tema o unidad (opcional): Tema 2" aria-label="Tema del test"><select data-mtcfg="n" aria-label="Número de preguntas">${[10,15,20,30,40].map(v=>`<option value="${v}" ${(MS.tq.n||20)===v?"selected":""}>${v} preguntas</option>`).join("")}</select></div>
+        <div class="row"><input type="text" data-mttema value="${esc(MT.tema)}" placeholder="Tema o unidad (opcional): Tema 2" aria-label="Tema del test"><select data-mtcfg="n" aria-label="Número de preguntas">${[10,15,20,30,40].map(v=>`<option value="${v}" ${(MS.tq.n||20)===v?"selected":""}>${v} preguntas</option>`).join("")}</select><select data-mtcfg="opts" aria-label="Opciones por pregunta">${[3,4].map(v=>`<option value="${v}" ${mtOpts()===v?"selected":""}>${v} opciones</option>`).join("")}</select></div>
         <div class="row"><button class="btn" data-act="mt-copy">Copiar instrucción</button><a class="btn primary" id="mtOpen" href="https://claude.ai/new?q=${encodeURIComponent(mtPrompt())}" target="_blank" rel="noopener">Abrir Claude ↗</a></div></li>
       <li><b>Copia su respuesta y pégala aquí.</b> Se convierte en un test interactivo con corrección al momento.
-        <textarea class="ta" rows="${MT.paste?6:3}" data-mtpaste placeholder="1. ¿Qué es la zona de desarrollo próximo? [Tema 2]&#10;a) …&#10;b) …&#10;Respuesta: b">${esc(MT.paste)}</textarea>
+        <textarea class="ta" rows="${MT.paste?6:3}" data-mtpaste placeholder="1. ¿Qué es la zona de desarrollo próximo? [Tema 2]&#10;a) …&#10;b) …&#10;c) …&#10;Respuesta: b">${esc(MT.paste)}</textarea>
         <div class="row"><button class="btn" data-act="mt-clip">📋 Pegar</button><button class="btn primary" data-act="mt-start" ${MT.paste.trim()?"":"disabled"}>Empezar test de ${esc(s.short)}</button></div></li></ol>
     ${aiOn()?`<details class="rw"><summary><span><b>O genera el test con Claude desde aquí</b><small>Pega los apuntes del tema y se crean las preguntas solo con ese contenido</small></span></summary>
       <textarea class="ta" rows="4" data-mtgen placeholder="Pega aquí los apuntes de ${esc(s.short)}…">${esc(MT.genTxt)}</textarea><button class="btn primary" data-act="mt-gen" ${MT.busy?"disabled":""}>${MT.busy?"Generando…":`Generar ${MS.tq.n||20} preguntas`}</button></details>`:""}
-    <label class="setrow small"><span>Penalización por fallo</span><select data-mtcfg="pen"><option value="0" ${!MS.tq.pen?"selected":""}>Sin penalización</option><option value="0.3333" ${MS.tq.pen>.3?"selected":""}>Resta 1/3</option><option value="0.25" ${MS.tq.pen===.25?"selected":""}>Resta 1/4</option></select></label>
+    <label class="setrow small"><span>Penalización por fallo</span><select data-mtcfg="pen"><option value="0" ${!MS.tq.pen?"selected":""}>Sin penalización</option><option value="0.5" ${MS.tq.pen===.5?"selected":""}>Resta 1/2</option><option value="0.3333" ${MS.tq.pen>.3&&MS.tq.pen<.5?"selected":""}>Resta 1/3</option><option value="0.25" ${MS.tq.pen===.25?"selected":""}>Resta 1/4</option></select></label>
   </section>
   ${weak.length?`<section class="sheet" style="display:flex;flex-direction:column;gap:8px"><div><div class="lbl">${esc(s.short)} · según tus fallos</div><h2 class="sec">Temas a reforzar</h2></div>${weak.map(w=>`<div class="ob"><span class="ob-n">Tema ${esc(w.tm)}</span><span class="ob-bar"><i style="flex:${w.r};background:var(--danger)"></i><i style="flex:${1-w.r};background:var(--good)"></i></span><em>${Math.round(w.r*100)}%</em></div>`).join("")}<p class="small muted" style="margin:0">Porcentaje de fallos por tema (mínimo 3 preguntas). Sale si el test indica el tema de cada pregunta.</p></section>`:""}
   ${log.length?`<section class="sheet" style="display:flex;flex-direction:column;gap:8px"><div><div class="lbl">${esc(s.short)} · evolución</div><h2 class="sec">Tus notas</h2></div>${mtChart(log)}
@@ -4331,7 +4331,7 @@ function mtFinish(){const r=MT.run;const n=r.qs.length;let ok=0,ko=0;const Q=MS.
   if(r.mode==="test")Q.log.push({id:"x"+uid().slice(1),d:todayStr(),subj:r.subj,n:nota,ok,ko,bl:n-ok-ko,tot:n,tema:r.tema});
   r.done={ok,ko,bl:n-ok-ko,nota};saveLocal();render()}
 async function mtGen(){if(!aiOn()||MT.busy||!MT.genTxt.trim())return;const k=mtSubj();const s=subjOf(k);MT.busy=true;render();
-  try{const r=await SL.sample.json(`Eres profesor del Máster de Profesorado, asignatura «${s.name||s.short}». Con ÚNICAMENTE la información del texto siguiente, crea ${MS.tq.n||20} preguntas tipo test de 4 opciones (una correcta), como las de un examen, variadas y sin ambigüedades, en español de España. Responde solo con JSON: {"questions":[{"q":"pregunta","opts":["a","b","c","d"],"ans":0,"exp":"explicación breve","tema":número o null}]}
+  try{const r=await SL.sample.json(`Eres profesor del Máster de Profesorado, asignatura «${s.name||s.short}». Con ÚNICAMENTE la información del texto siguiente, crea ${MS.tq.n||20} preguntas tipo test de exactamente ${mtOpts()} opciones (una correcta), como las de un examen, variadas y sin ambigüedades, en español de España. Responde solo con JSON: {"questions":[{"q":"pregunta","opts":[${"abcd".slice(0,mtOpts()).split("").map(l=>`"${l}"`).join(",")}],"ans":0,"exp":"explicación breve","tema":número o null}]}
 
 TEXTO:
 ${MT.genTxt.slice(0,40000)}`,{cache:false});
