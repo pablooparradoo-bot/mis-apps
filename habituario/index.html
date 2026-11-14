@@ -811,6 +811,8 @@ div.jpage p{margin:0 0 .6em}
 .oleg2{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--ink-2)}.oleg2 span{display:inline-flex;align-items:center;gap:5px}.oleg2 i{width:10px;height:10px;border-radius:3px}.oleg2 b{color:var(--ink)}
 .ball.mem{border-color:var(--ink)}.ball.mem em{color:var(--ink)}
 .ses-t{border-left:2px solid var(--line);padding-left:8px}
+a.btn{text-decoration:none;display:inline-block}
+.sdot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:6px;vertical-align:middle}
 /* calma */
 .calm-btn{background:var(--calm);color:var(--calm-ink);border-color:var(--calm)}
 .calm-btn:disabled{opacity:.4;cursor:default}
@@ -1007,8 +1009,8 @@ DEMO=makeDemo();
 
 /* ---------- storage ---------- */
 let db=null;
-function saveLocal(noAch){try{localStorage.setItem(LS,JSON.stringify({habits:S.habits,months:S.months,calm:C.cfg,calmLog:C.log,sleep:SL.nights,sleepCfg:SL.cfg,sleepMeta:SL.meta,workouts:SP.workouts,runs:SP.runs,sportCfg:SP.cfg,sportMeta:SP.meta,journal:J.entries,journalCfg:J.cfg,agenda:AG.tasks,opos:O.t,oposCfg:O.cfg,oposLog:O.log,msAtt:MS.att,oBank:O.bank,oCards:O.cards,oQstat:O.qstat,oCrev:O.crev,msNotes:MS.notes,tfm:MS.tfm,prac:MS.prac,rev:REV.w,ach:ACH.u,lect:LB.books,lectCfg:LB.cfg,msForos:MS.foros,msActs:MS.acts,msEval:MS.ev}))}catch(e){}if(!noAch){clearTimeout(saveLocal.t);saveLocal.t=setTimeout(achCheck,600)}}
-function loadLocal(){try{const r=JSON.parse(localStorage.getItem(LS)||"null");if(r&&Array.isArray(r.habits)){S.habits=r.habits;S.months=r.months||{};if(r.calm)C.cfg={...CDEF,...r.calm,parts:{...CDEF.parts,...(r.calm.parts||{})}};if(r.calmLog)C.log=r.calmLog;if(r.sleep)SL.nights=r.sleep;if(r.sleepCfg)SL.cfg={...SDEF,...r.sleepCfg};if(r.sleepMeta)SL.meta=r.sleepMeta;if(r.workouts)SP.workouts=r.workouts;if(r.runs)SP.runs=r.runs;if(r.sportCfg)SP.cfg={...SPDEF,...r.sportCfg};if(r.sportMeta)SP.meta=r.sportMeta;if(r.journal)J.entries=r.journal;if(r.journalCfg)J.cfg={...JDEF,...r.journalCfg};if(r.agenda)AG.tasks=r.agenda;if(r.opos)O.t=r.opos;if(r.oposCfg)O.cfg={...ODEF,...r.oposCfg};if(r.oposLog)O.log={s:[],tests:[],uds:[],prog:"",...r.oposLog};if(r.msAtt)MS.att=r.msAtt;if(r.oBank)O.bank=r.oBank;if(r.oCards)O.cards=r.oCards;if(r.oQstat)O.qstat=r.oQstat;if(r.oCrev)O.crev=r.oCrev;if(r.msNotes)MS.notes=r.msNotes;if(r.tfm)MS.tfm={...JSON.parse(JSON.stringify(TFMDEF)),...r.tfm};if(r.prac)MS.prac={...JSON.parse(JSON.stringify(PRDEF)),...r.prac};if(r.rev)REV.w=r.rev;if(r.ach)ACH.u=r.ach;if(r.lect)LB.books=r.lect;if(r.lectCfg)LB.cfg={...LB.cfg,...r.lectCfg};if(r.msForos)MS.foros=r.msForos;if(r.msActs)MS.acts=r.msActs;if(r.msEval)MS.ev=r.msEval;return true}}catch(e){}return false}
+function saveLocal(noAch){try{localStorage.setItem(LS,JSON.stringify({habits:S.habits,months:S.months,calm:C.cfg,calmLog:C.log,sleep:SL.nights,sleepCfg:SL.cfg,sleepMeta:SL.meta,workouts:SP.workouts,runs:SP.runs,sportCfg:SP.cfg,sportMeta:SP.meta,journal:J.entries,journalCfg:J.cfg,agenda:AG.tasks,opos:O.t,oposCfg:O.cfg,oposLog:O.log,msAtt:MS.att,oBank:O.bank,oCards:O.cards,oQstat:O.qstat,oCrev:O.crev,msNotes:MS.notes,tfm:MS.tfm,prac:MS.prac,rev:REV.w,ach:ACH.u,lect:LB.books,lectCfg:LB.cfg,msForos:MS.foros,msActs:MS.acts,msEval:MS.ev,msTq:MS.tq,msCards:MS.mcards,msCrev:MS.mcrev}))}catch(e){}if(!noAch){clearTimeout(saveLocal.t);saveLocal.t=setTimeout(achCheck,600)}}
+function loadLocal(){try{const r=JSON.parse(localStorage.getItem(LS)||"null");if(r&&Array.isArray(r.habits)){S.habits=r.habits;S.months=r.months||{};if(r.calm)C.cfg={...CDEF,...r.calm,parts:{...CDEF.parts,...(r.calm.parts||{})}};if(r.calmLog)C.log=r.calmLog;if(r.sleep)SL.nights=r.sleep;if(r.sleepCfg)SL.cfg={...SDEF,...r.sleepCfg};if(r.sleepMeta)SL.meta=r.sleepMeta;if(r.workouts)SP.workouts=r.workouts;if(r.runs)SP.runs=r.runs;if(r.sportCfg)SP.cfg={...SPDEF,...r.sportCfg};if(r.sportMeta)SP.meta=r.sportMeta;if(r.journal)J.entries=r.journal;if(r.journalCfg)J.cfg={...JDEF,...r.journalCfg};if(r.agenda)AG.tasks=r.agenda;if(r.opos)O.t=r.opos;if(r.oposCfg)O.cfg={...ODEF,...r.oposCfg};if(r.oposLog)O.log={s:[],tests:[],uds:[],prog:"",...r.oposLog};if(r.msAtt)MS.att=r.msAtt;if(r.oBank)O.bank=r.oBank;if(r.oCards)O.cards=r.oCards;if(r.oQstat)O.qstat=r.oQstat;if(r.oCrev)O.crev=r.oCrev;if(r.msNotes)MS.notes=r.msNotes;if(r.tfm)MS.tfm={...JSON.parse(JSON.stringify(TFMDEF)),...r.tfm};if(r.prac)MS.prac={...JSON.parse(JSON.stringify(PRDEF)),...r.prac};if(r.rev)REV.w=r.rev;if(r.ach)ACH.u=r.ach;if(r.lect)LB.books=r.lect;if(r.lectCfg)LB.cfg={...LB.cfg,...r.lectCfg};if(r.msForos)MS.foros=r.msForos;if(r.msActs)MS.acts=r.msActs;if(r.msEval)MS.ev=r.msEval;if(r.msTq)MS.tq={...MS.tq,...r.msTq};if(r.msCards)MS.mcards=r.msCards;if(r.msCrev)MS.mcrev=r.msCrev;return true}}catch(e){}return false}
 const dirty={},running={};
 function queue(path,body){
   if(!db)return;dirty[path]=body;if(running[path])return;running[path]=true;
@@ -1066,6 +1068,7 @@ function _render(){
   else if(S.view==="habituario")main.innerHTML=vGrid();
   else if(S.view==="stats"){main.innerHTML=vStats();drawChart()}
   else main.innerHTML=vManage();
+  document.querySelectorAll(".subtabs.scroll").forEach(st=>{const el=st.querySelector('[aria-selected="true"]');if(el)st.scrollLeft=el.offsetLeft-st.offsetLeft-(st.clientWidth-el.offsetWidth)/2});
 }
 
 const checkSvg=`<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -1284,6 +1287,7 @@ document.addEventListener("click",e=>{
   if(/^o-(af|ses|st[a-z])/.test(a)&&a!=="o-stage"&&a!=="o-study"){v22Opos(a,b);return}
   if(a.startsWith("l-")){lecturasAction(a,b);return}
   if(/^m-(f[a-z]|a(form|fil|done|del)$|ev)/.test(a)){master3Action(a,b);return}
+  if(/^m[tk]-/.test(a)){mtAction(a,b);return}
   if(a==="o-sub"){O.sub=b.dataset.k;render();window.scrollTo({top:0});return}
   if(/^[tkpf]-/.test(a)){studyAction(a,b);return}
   if(/^[rx]-/.test(a)){extrasAction(a,b);return}
@@ -3016,7 +3020,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&e.targe
 
 /* ---------- COPIA DE SEGURIDAD ---------- */
 const BK={pending:null,msg:""};
-function buildBackup(){return{app:"habituario",v:1,exportedAt:new Date().toISOString(),habits:S.habits,months:S.months,calm:C.cfg,calmLog:C.log,sleep:SL.nights,sleepCfg:SL.cfg,sleepMeta:SL.meta,workouts:SP.workouts,runs:SP.runs,sportCfg:SP.cfg,sportMeta:SP.meta,journal:J.entries,journalCfg:J.cfg,agenda:AG.tasks,opos:O.t,oposCfg:O.cfg,oposLog:O.log,msAtt:MS.att,oBank:O.bank,oCards:O.cards,oQstat:O.qstat,oCrev:O.crev,msNotes:MS.notes,tfm:MS.tfm,prac:MS.prac,rev:REV.w,ach:ACH.u,lect:LB.books,lectCfg:LB.cfg,msForos:MS.foros,msActs:MS.acts,msEval:MS.ev}}
+function buildBackup(){return{app:"habituario",v:1,exportedAt:new Date().toISOString(),habits:S.habits,months:S.months,calm:C.cfg,calmLog:C.log,sleep:SL.nights,sleepCfg:SL.cfg,sleepMeta:SL.meta,workouts:SP.workouts,runs:SP.runs,sportCfg:SP.cfg,sportMeta:SP.meta,journal:J.entries,journalCfg:J.cfg,agenda:AG.tasks,opos:O.t,oposCfg:O.cfg,oposLog:O.log,msAtt:MS.att,oBank:O.bank,oCards:O.cards,oQstat:O.qstat,oCrev:O.crev,msNotes:MS.notes,tfm:MS.tfm,prac:MS.prac,rev:REV.w,ach:ACH.u,lect:LB.books,lectCfg:LB.cfg,msForos:MS.foros,msActs:MS.acts,msEval:MS.ev,msTq:MS.tq,msCards:MS.mcards,msCrev:MS.mcrev}}
 function bkSummary(b){const n=o=>o?Object.keys(o).length:0;const days=Object.values(b.months||{}).reduce((a,m)=>a+n(m.d),0);
   return`${(b.habits||[]).length} hábitos, ${days} días marcados, ${n(b.sleep)} noches, ${n(b.agenda)} tareas, ${Object.values(b.opos||{}).filter(t=>t&&(t.res||t.cl||t.mem)).length} temas en marcha${n(b.oCards)?`, ${n(b.oCards)} tarjetas`:""}${n(b.lect)?`, ${n(b.lect)} libros`:""}${n(b.msForos)+n(b.msActs)?`, ${n(b.msForos)} foros y ${n(b.msActs)} actividades`:""}`}
 async function saveBackup(){
@@ -3032,7 +3036,7 @@ function applyBackup(b){
   SP.workouts=b.workouts||{};SP.runs=b.runs||{};SP.cfg={...SPDEF,...(b.sportCfg||{})};SP.meta=b.sportMeta||{};
   J.entries=b.journal||{};J.cfg={...JDEF,...(b.journalCfg||{})};
   AG.tasks=b.agenda||{};O.t=b.opos||{};O.cfg={...ODEF,...(b.oposCfg||{})};O.log={s:[],tests:[],uds:[],prog:"",...(b.oposLog||{})};MS.att=b.msAtt||{};
-  O.bank=b.oBank||[];O.cards=b.oCards||{};O.qstat=b.oQstat||{};O.crev=b.oCrev||{};MS.notes=b.msNotes||{};MS.tfm={...JSON.parse(JSON.stringify(TFMDEF)),...(b.tfm||{})};MS.prac={...JSON.parse(JSON.stringify(PRDEF)),...(b.prac||{})};REV.w=b.rev||{};ACH.u=b.ach||{};LB.books=b.lect||{};LB.cfg={goal:12,...(b.lectCfg||{})};MS.foros=b.msForos||{};MS.acts=b.msActs||{};MS.ev=b.msEval||{};
+  O.bank=b.oBank||[];O.cards=b.oCards||{};O.qstat=b.oQstat||{};O.crev=b.oCrev||{};MS.notes=b.msNotes||{};MS.tfm={...JSON.parse(JSON.stringify(TFMDEF)),...(b.tfm||{})};MS.prac={...JSON.parse(JSON.stringify(PRDEF)),...(b.prac||{})};REV.w=b.rev||{};ACH.u=b.ach||{};LB.books=b.lect||{};LB.cfg={goal:12,...(b.lectCfg||{})};MS.foros=b.msForos||{};MS.acts=b.msActs||{};MS.ev=b.msEval||{};MS.tq={bank:[],log:[],qstat:{},pen:0,subj:"",n:20,...(b.msTq||{})};MS.mcards=b.msCards||{};MS.mcrev=b.msCrev||{};
   S.loaded=true;saveLocal();
   if(db){const cp=x=>()=>JSON.parse(JSON.stringify(x));
     queue("config/habits",()=>({habits:S.habits}));Object.keys(S.months).forEach(k=>queue("months/"+k,cp(S.months[k])));
@@ -3727,9 +3731,9 @@ const PRDEF={centro:"",tutor:"",goalH:0,entries:[]};
 Object.assign(MS,{sub:"cal",notes:{},tfm:JSON.parse(JSON.stringify(TFMDEF)),prac:JSON.parse(JSON.stringify(PRDEF)),delFor:null,clsAll:false,prForm:false});
 const nowHM=()=>pad(new Date().getHours())+":"+pad(new Date().getMinutes());
 const clsPast=c=>{const t=todayStr();return c.date<t||(c.date===t&&c.end<=nowHM())};
-function vMasterTabs(){const fp=Object.values(MS.foros).filter(f=>f&&!foroDone(f)).length,ap=Object.values(MS.acts).filter(a=>a&&!a.done).length;const subs=[["cal","Calendario"],["cls","Clases"],["foros","Foros"+(fp?` <small>${fp}</small>`:"")],["acts","Actividades"+(ap?` <small>${ap}</small>`:"")],["eval","Evaluación"],["tfm","TFM"],["prac","Prácticas"]];
+function vMasterTabs(){const fp=Object.values(MS.foros).filter(f=>f&&!foroDone(f)).length,ap=Object.values(MS.acts).filter(a=>a&&!a.done).length;const subs=[["cal","Calendario"],["cls","Clases"],["foros","Foros"+(fp?` <small>${fp}</small>`:"")],["acts","Actividades"+(ap?` <small>${ap}</small>`:"")],["test","Test"],["cards","Tarjetas"+(mkDue().length?` <small>${mkDue().length}</small>`:"")],["eval","Evaluación"],["tfm","TFM"],["prac","Prácticas"]];
   return`<div class="subtabs scroll" role="tablist">${subs.map(([k,l])=>`<button role="tab" data-act="m-sub" data-k="${k}" aria-selected="${MS.sub===k}">${l}</button>`).join("")}</div>`}
-function vMasterAll(){return vMasterTabs()+(MS.sub==="cls"?vClases():MS.sub==="foros"?vForos():MS.sub==="acts"?vActs():MS.sub==="eval"?vEval():MS.sub==="tfm"?vTFM():MS.sub==="prac"?vPrac():vMaster())}
+function vMasterAll(){return vMasterTabs()+(MS.sub==="cls"?vClases():MS.sub==="foros"?vForos():MS.sub==="acts"?vActs():MS.sub==="eval"?vEval():MS.sub==="test"?vMTest():MS.sub==="cards"?vMCards():MS.sub==="tfm"?vTFM():MS.sub==="prac"?vPrac():vMaster())}
 /* --- diario de clases --- */
 function vClases(){
   const t=todayStr();const all=msClasses();const past=all.filter(clsPast).reverse();const nx=all.find(c=>!clsPast(c));
@@ -3902,6 +3906,8 @@ const ACHS=[
   ["lb1","📖","Primer libro","Termina un libro",()=>lbList().some(b=>b.status==="leido")],
   ["lb10","📚","Diez libros","10 libros leídos",()=>lbList().filter(b=>b.status==="leido").length>=10],
   ["lbg","🎯","Objetivo lector","Cumple tu objetivo anual de lectura",()=>LB.cfg.goal>0&&lbYear(+todayStr().slice(0,4)).length>=LB.cfg.goal],
+  ["mt1","📝","Primer test del máster","Haz un test de una asignatura",()=>MS.tq.log.length>=1],
+  ["mt25","🎓","Entrenado para el examen","25 tests del máster",()=>MS.tq.log.length>=25],
   ["fo10","💬","Foros al día","10 foros completados",()=>Object.values(MS.foros).filter(foroDone).length>=10],
   ["ac10","📮","Diez entregas","10 actividades entregadas",()=>Object.values(MS.acts).filter(a=>a.done).length>=10],
 ];
@@ -3954,7 +3960,7 @@ function extrasAction(a,b){switch(a){
   case"r-goalrm":{const r=REV.w[b.dataset.w];if(r&&r.goals){r.goals.splice(+b.dataset.i,1);saveLocal();render()}break}
   case"r-done":{const w=b.dataset.w;REV.w[w]={...(REV.w[w]||{}),done:true,at:new Date().toISOString()};saveLocal();REV.sel=null;toast("Revisión guardada. ¡A por la semana!");go("inicio");break}
   case"x-paste":pasteTasks();break;
-  case"x-msub":MS.sub=b.dataset.k;go("master");break;
+  case"x-msub":MS.sub=b.dataset.k;if(b.dataset.s)MS.tq.subj=b.dataset.s;go("master");break;
   case"x-book":LB.open=b.dataset.id;go("lecturas");break;
   case"x-copyurl":(async()=>{try{await navigator.clipboard.writeText(b.dataset.u);toast("Dirección copiada")}catch(e){toast("No se pudo copiar")}})();break;
   case"x-opos":O.sub=b.dataset.k==="test"?"test":"cards";go("opos");break;
@@ -4212,6 +4218,7 @@ function vEval(){const subs=subjList();const k=MS.evSubj||subs[0][0];const s=sub
       ${rem>0?`<div class="small">Para sacar un <b>7</b> necesitas ${need(7)>10?"más de 10 (no llega)":`un <b>${fmtN(need(7))}</b>`} y para un <b>9</b>, ${need(9)>10?"más de 10":`un <b>${fmtN(need(9))}</b>`} de media en lo que queda.</div>`:""}`
     :`<p class="small muted" style="margin:0">Copia los criterios de la guía docente: cada concepto con su porcentaje. Luego ve poniendo las notas y verás cuánto llevas y qué necesitas en el examen.</p>`}
     <div class="row">${[["Examen final",60],["Actividades",30,"act"],["Foros",10,"foro"],["Participación",10]].map(([n,w,au])=>`<button class="chip" data-act="m-evadd" data-k="${k}" data-n="${n}" data-w="${w}" data-a="${au||""}">+ ${n}</button>`).join("")}<button class="chip" data-act="m-evadd" data-k="${k}" data-n="" data-w="">+ Otro</button></div>
+    ${mtLog(k).length?`<div class="small">📝 En tus tests de práctica de esta asignatura llevas una media de <b>${fmtN(Math.round(mtAvg(k)*10)/10)}</b> (${mtLog(k).length} test${mtLog(k).length>1?"s":""}). <button class="linkbtn" data-act="x-msub" data-k="test" data-s="${k}">Hacer otro ›</button></div>`:""}
     <label class="rq"><span>Comentarios y aclaraciones</span><textarea class="ta" rows="3" data-evnotes="${k}" placeholder="Hay que aprobar el examen con un 5 para que haga media · el foro cuenta solo si participas antes del día X · el profesor dijo que…">${esc(E.notes||"")}</textarea></label>
   </section>`}
 function master3Action(a,b){const id=b.dataset.id;switch(a){
@@ -4249,6 +4256,156 @@ function vMasterPend(){const t=todayStr();const lim=addDays(t,7);const fo=Object
   return`<section class="sheet" style="display:flex;flex-direction:column;gap:6px"><div class="spread"><div><div class="lbl">Máster · próximos 7 días</div><h2 class="sec">Foros y actividades</h2></div><button class="btn ghost" data-act="x-msub" data-k="${fo.length?"foros":"acts"}">Ver ›</button></div>${items.map(x=>x.h).join("")}</section>`}
 function vLectInicio(){const r=lbList().filter(b=>b.status==="leyendo");if(!r.length)return"";
   return`<section class="sheet dash-read">${r.slice(0,2).map(b=>{const p=b.pages?Math.min(1,(b.page||0)/b.pages):0;return`<button class="lbr" data-act="x-book" data-id="${b.id}">${lbCover(b)}<span class="lbr-t"><span class="lbl">Leyendo</span><b>${esc(b.title)}</b>${b.pages?`<span class="mbar"><b style="width:${p*100}%;background:var(--ink)"></b></span><small>${Math.round(p*100)}% · pág. ${b.page||0} de ${b.pages}</small>`:`<small>${esc(b.author||"")}</small>`}</span></button>`}).join("")}</section>`}
+
+/* ================= MÁSTER: test y tarjetas por asignatura ================= */
+Object.assign(MS,{tq:{bank:[],log:[],qstat:{},pen:0,subj:"",n:20},mcards:{},mcrev:{}});
+const MT={run:null,paste:"",tema:"",genTxt:"",busy:false,ses:null,form:false,imp:false,ktema:""};
+function mtSubj(){const k=MS.tq.subj;if(k&&MS.data.subjects[k])return k;const nx=msNextClass();return nx&&MS.data.subjects[nx.subj]?nx.subj:subjList()[0][0]}
+const mtLog=k=>MS.tq.log.filter(x=>x.subj===k);
+const mtBank=k=>MS.tq.bank.filter(x=>x.subj===k);
+const mtAvg=k=>{const l=mtLog(k).slice(-5);return l.length?l.reduce((a,x)=>a+x.n,0)/l.length:null};
+const mkList=k=>Object.values(MS.mcards).filter(c=>c&&c.id&&(!k||c.subj===k));
+const mkDue=k=>mkList(k).filter(c=>!c.due||c.due<=todayStr());
+function mtPrompt(){const s=subjOf(mtSubj());const tm=MT.tema.trim();const n=MS.tq.n||20;
+  return`Hazme un test de ${n} preguntas tipo test (4 opciones, solo una correcta) de la asignatura «${s.name||s.short}» del Máster de Profesorado${tm?`, sobre: ${tm}`:""}. Usa única y exclusivamente los apuntes y materiales de ESTA asignatura; no mezcles contenidos ni conceptos de otras asignaturas. Que se parezcan a las de un examen real: variadas, sin ambigüedades y con distractores creíbles. Escríbelo EXACTAMENTE con este formato, para pegarlo en mi app (una línea en blanco entre preguntas):
+
+1. Texto de la pregunta [Tema 2]
+a) opción
+b) opción
+c) opción
+d) opción
+Respuesta: b
+Explicación: una o dos frases.`}
+function mkPrompt(){const s=subjOf(mtSubj());const tm=MT.ktema.trim();
+  return`De los apuntes de la asignatura «${s.name||s.short}» del Máster de Profesorado${tm?` (${tm})`:""}, saca 20 tarjetas de memoria con los conceptos, autores, leyes, clasificaciones y definiciones clave para un examen tipo test. Usa solo el material de ESTA asignatura. Escríbelas EXACTAMENTE así, una por línea, para pegarlas en mi app:
+Pregunta | Respuesta`}
+function mtPicker(kind){const cur=mtSubj();const t=todayStr();
+  return`<div class="evsl">${subjList().map(([k,s])=>{let v="—";if(kind==="test"){const a=mtAvg(k);v=a!=null?fmtN(Math.round(a*10)/10):"—"}else{const d=mkDue(k).length,n=mkList(k).length;v=n?(d?String(d):"✓"):"—"}
+    return`<button class="evs ${k===cur?"on":""}" style="--c:${s.color}" data-act="mt-subj" data-k="${k}"><i></i><span>${esc(s.short)}</span><b>${v}</b></button>`}).join("")}</div>`}
+function mtChart(l){if(l.length<2)return"";const pts=l.slice(-20);const X=i=>10+260*i/(pts.length-1),Y=v=>8+72*(1-v/10);
+  return`<svg viewBox="0 0 280 100" width="100%" style="max-height:140px" role="img" aria-label="Evolución de las notas"><line x1="10" x2="270" y1="${Y(5)}" y2="${Y(5)}" stroke="var(--line)" stroke-dasharray="3 4"/><text x="272" y="${Y(5)+3}" font-size="9" fill="var(--ink-3)">5</text><path d="${pts.map((x,i)=>(i?"L":"M")+X(i)+" "+Y(x.n)).join(" ")}" fill="none" stroke="var(--ink)" stroke-width="2"/>${pts.map((x,i)=>`<circle cx="${X(i)}" cy="${Y(x.n)}" r="3.2" fill="${x.n>=5?"var(--ink)":"var(--danger)"}"><title>${x.d}: ${x.n}</title></circle>`).join("")}</svg>`}
+function vMTest(){
+  const r=MT.run;const t=todayStr();
+  if(r&&!r.done){const q=r.qs[r.i];const p=r.picks[r.i];const answered=p!=null;const s=subjOf(r.subj);
+    return`<section class="sheet tq" style="--c:${s.color}"><div class="spread"><div class="lbl"><i class="sdot"></i>${esc(s.short)} · ${r.mode==="fallos"?"repaso de fallos":"test"} · ${r.i+1} de ${r.qs.length}${q.tema?` · tema ${q.tema}`:""}</div><button class="btn ghost" data-act="mt-quit">Salir</button></div>
+      <div class="pl-prog"><i style="width:${r.i/r.qs.length*100}%;background:var(--ink)"></i></div>
+      <p class="tq-q">${esc(q.q)}</p>
+      <div class="tq-opts">${q.opts.map((o,i)=>`<button class="tqo ${answered?(i===q.ans?"ok":i===p?"ko":""):""}" data-act="mt-pick" data-i="${i}" ${answered?"disabled":""}><b>${L4[i]}</b><span>${esc(o)}</span></button>`).join("")}</div>
+      ${answered?`<div class="tq-fb ${p===q.ans?"ok":"ko"}"><b>${p===q.ans?"¡Correcta!":"Incorrecta: era la "+L4[q.ans]+")"}</b>${q.exp?`<p>${esc(q.exp)}</p>`:""}</div>`:""}
+      <div class="row" style="justify-content:space-between"><button class="btn ghost" data-act="mt-skip" ${answered?"hidden":""}>Dejar en blanco</button><span></span>${answered?`<button class="btn primary" data-act="mt-next">${r.i+1<r.qs.length?"Siguiente →":"Ver resultado"}</button>`:""}</div></section>`}
+  if(r&&r.done){const d=r.done;const s=subjOf(r.subj);const fails=r.qs.map((q,i)=>({q,p:r.picks[i]})).filter(x=>x.p!==x.q.ans);
+    return`<section class="sheet tq" style="--c:${s.color}"><div class="lbl"><i class="sdot"></i>${esc(s.short)} · resultado</div><div class="tres"><b class="${d.nota>=5?"ok":"ko"}">${String(d.nota).replace(".",",")}</b><span>${d.ok} aciertos · ${d.ko} fallos · ${d.bl} en blanco${MS.tq.pen?` · penalización ${MS.tq.pen===.25?"1/4":"1/3"}`:""}</span></div>
+      ${fails.length?`<div class="lbl">Para repasar</div><ul class="fails">${fails.map(x=>`<li><b>${esc(x.q.q)}</b><span>Correcta: ${L4[x.q.ans]}) ${esc(x.q.opts[x.q.ans])}</span>${x.q.exp?`<small>${esc(x.q.exp)}</small>`:""}</li>`).join("")}</ul><p class="small muted" style="margin:0">Los fallos se guardan en el banco de ${esc(s.short)}. Cuando aciertes una pregunta dos veces seguidas, sale del banco.</p>`:`<p>¡Pleno! 🎉</p>`}
+      <div class="row"><button class="btn primary" data-act="mt-close">Listo</button>${fails.length?`<button class="btn" data-act="mt-tocards">Pasar los fallos a tarjetas</button>`:""}</div></section>`}
+  const k=mtSubj();const s=subjOf(k);const log=mtLog(k);const bank=mtBank(k);const avg=mtAvg(k);const best=log.length?Math.max(...log.map(x=>x.n)):null;
+  const weak=Object.entries(MS.tq.qstat).filter(([key,v])=>key.startsWith(k+"|")&&!["0","all"].includes(key.split("|")[1])&&v.ok+v.ko>=3&&v.ko>0).map(([key,v])=>({tm:key.split("|")[1],r:v.ko/(v.ok+v.ko)})).sort((a,b)=>b.r-a.r).slice(0,6);
+  const tot=MS.tq.qstat[k+"|all"]||{ok:0,ko:0};
+  return`<section class="sheet" style="display:flex;flex-direction:column;gap:10px"><div><div class="lbl">Test por asignatura</div><h2 class="sec">Elige asignatura</h2></div>${mtPicker("test")}
+    <p class="small muted" style="margin:0">La cifra es tu nota media en los últimos 5 tests. Cada test, sus fallos y sus notas se guardan solo en la asignatura elegida: nunca se mezclan.</p></section>
+  <section class="sheet ev-card" style="--c:${s.color}">
+    <div class="spread"><div><div class="lbl">${s.sem}º cuatrimestre${s.exam?` · examen ${s.exam}`:""}</div><h2 class="sec">${esc(s.short)}</h2></div>${bank.length?`<button class="btn" data-act="mt-fallos">Repasar fallos (${bank.length})</button>`:""}</div>
+    ${log.length?`<div class="kpis"><div class="kpi"><div class="lbl">Tests</div><div class="v">${log.length}</div></div><div class="kpi"><div class="lbl">Media reciente</div><div class="v">${fmtN(Math.round(avg*10)/10)}</div></div><div class="kpi"><div class="lbl">Mejor nota</div><div class="v">${fmtN(best)}</div></div><div class="kpi"><div class="lbl">Aciertos</div><div class="v">${tot.ok+tot.ko?Math.round(tot.ok/(tot.ok+tot.ko)*100):"—"}<small>%</small></div></div></div>`:""}
+    <ol class="tsteps"><li><b>Pide el test a Claude</b> con los apuntes de ${esc(s.short)}. Esta instrucción ya le dice la asignatura y el formato:
+        <div class="row"><input type="text" data-mttema value="${esc(MT.tema)}" placeholder="Tema o unidad (opcional): Tema 2" aria-label="Tema del test"><select data-mtcfg="n" aria-label="Número de preguntas">${[10,15,20,30,40].map(v=>`<option value="${v}" ${(MS.tq.n||20)===v?"selected":""}>${v} preguntas</option>`).join("")}</select></div>
+        <div class="row"><button class="btn" data-act="mt-copy">Copiar instrucción</button><a class="btn primary" id="mtOpen" href="https://claude.ai/new?q=${encodeURIComponent(mtPrompt())}" target="_blank" rel="noopener">Abrir Claude ↗</a></div></li>
+      <li><b>Copia su respuesta y pégala aquí.</b> Se convierte en un test interactivo con corrección al momento.
+        <textarea class="ta" rows="${MT.paste?6:3}" data-mtpaste placeholder="1. ¿Qué es la zona de desarrollo próximo? [Tema 2]&#10;a) …&#10;b) …&#10;Respuesta: b">${esc(MT.paste)}</textarea>
+        <div class="row"><button class="btn" data-act="mt-clip">📋 Pegar</button><button class="btn primary" data-act="mt-start" ${MT.paste.trim()?"":"disabled"}>Empezar test de ${esc(s.short)}</button></div></li></ol>
+    ${aiOn()?`<details class="rw"><summary><span><b>O genera el test con Claude desde aquí</b><small>Pega los apuntes del tema y se crean las preguntas solo con ese contenido</small></span></summary>
+      <textarea class="ta" rows="4" data-mtgen placeholder="Pega aquí los apuntes de ${esc(s.short)}…">${esc(MT.genTxt)}</textarea><button class="btn primary" data-act="mt-gen" ${MT.busy?"disabled":""}>${MT.busy?"Generando…":`Generar ${MS.tq.n||20} preguntas`}</button></details>`:""}
+    <label class="setrow small"><span>Penalización por fallo</span><select data-mtcfg="pen"><option value="0" ${!MS.tq.pen?"selected":""}>Sin penalización</option><option value="0.3333" ${MS.tq.pen>.3?"selected":""}>Resta 1/3</option><option value="0.25" ${MS.tq.pen===.25?"selected":""}>Resta 1/4</option></select></label>
+  </section>
+  ${weak.length?`<section class="sheet" style="display:flex;flex-direction:column;gap:8px"><div><div class="lbl">${esc(s.short)} · según tus fallos</div><h2 class="sec">Temas a reforzar</h2></div>${weak.map(w=>`<div class="ob"><span class="ob-n">Tema ${esc(w.tm)}</span><span class="ob-bar"><i style="flex:${w.r};background:var(--danger)"></i><i style="flex:${1-w.r};background:var(--good)"></i></span><em>${Math.round(w.r*100)}%</em></div>`).join("")}<p class="small muted" style="margin:0">Porcentaje de fallos por tema (mínimo 3 preguntas). Sale si el test indica el tema de cada pregunta.</p></section>`:""}
+  ${log.length?`<section class="sheet" style="display:flex;flex-direction:column;gap:8px"><div><div class="lbl">${esc(s.short)} · evolución</div><h2 class="sec">Tus notas</h2></div>${mtChart(log)}
+    <ul class="exh">${log.slice().reverse().slice(0,MT.allLog?200:10).map(x=>`<li><span class="dt">${parse(x.d).getDate()} ${MON_S[parse(x.d).getMonth()]}</span><span><b class="${x.n>=5?"":"late-l"}">${String(x.n).replace(".",",")}</b> · ${x.ok}/${x.tot} aciertos${x.tema?` · <span class="muted">${esc(x.tema)}</span>`:""} <button class="linkbtn danger-t" data-act="mt-dellog" data-id="${x.id}" aria-label="Borrar">×</button></span></li>`).join("")}</ul>
+    ${log.length>10?`<button class="btn ghost" data-act="mt-alllog">${MT.allLog?"Ver menos":`Ver los ${log.length} tests`}</button>`:""}</section>`:""}`;
+}
+function mtStart(qs,mode,subj,tema){MT.run={qs,i:0,picks:[],mode:mode||"test",subj,tema:tema||""};render();window.scrollTo({top:0,behavior:"smooth"})}
+function mtFinish(){const r=MT.run;const n=r.qs.length;let ok=0,ko=0;const Q=MS.tq;
+  r.qs.forEach((q,i)=>{const p=r.picks[i];if(p==null)return;const good=p===q.ans;if(good)ok++;else ko++;
+    [r.subj+"|"+(q.tema||0),r.subj+"|all"].forEach(key=>{const s=Q.qstat[key]||(Q.qstat[key]={ok:0,ko:0});if(good)s.ok++;else s.ko++});
+    const key=q.q.slice(0,120);const ix=Q.bank.findIndex(b=>b.subj===r.subj&&b.q.slice(0,120)===key);
+    if(!good){if(ix>=0){Q.bank[ix].fails=(Q.bank[ix].fails||1)+1;Q.bank[ix].streak=0}else Q.bank.push({...q,subj:r.subj,fails:1,streak:0,d:todayStr()})}
+    else if(ix>=0){Q.bank[ix].streak=(Q.bank[ix].streak||0)+1;if(Q.bank[ix].streak>=2)Q.bank.splice(ix,1)}});
+  const nota=Math.max(0,Math.round((ok-(Q.pen||0)*ko)/n*100)/10);
+  if(r.mode==="test")Q.log.push({id:"x"+uid().slice(1),d:todayStr(),subj:r.subj,n:nota,ok,ko,bl:n-ok-ko,tot:n,tema:r.tema});
+  r.done={ok,ko,bl:n-ok-ko,nota};saveLocal();render()}
+async function mtGen(){if(!aiOn()||MT.busy||!MT.genTxt.trim())return;const k=mtSubj();const s=subjOf(k);MT.busy=true;render();
+  try{const r=await SL.sample.json(`Eres profesor del Máster de Profesorado, asignatura «${s.name||s.short}». Con ÚNICAMENTE la información del texto siguiente, crea ${MS.tq.n||20} preguntas tipo test de 4 opciones (una correcta), como las de un examen, variadas y sin ambigüedades, en español de España. Responde solo con JSON: {"questions":[{"q":"pregunta","opts":["a","b","c","d"],"ans":0,"exp":"explicación breve","tema":número o null}]}
+
+TEXTO:
+${MT.genTxt.slice(0,40000)}`,{cache:false});
+    const qs=(r&&r.questions||[]).filter(q=>q&&q.q&&Array.isArray(q.opts)&&q.opts.length>=2&&q.ans>=0&&q.ans<q.opts.length).map(q=>({q:String(q.q),opts:q.opts.map(String),ans:+q.ans,exp:String(q.exp||""),tema:q.tema?+q.tema:null}));
+    MT.busy=false;if(qs.length){MT.genTxt="";mtStart(qs,"test",k,MT.tema.trim())}else{toast("No se pudieron crear preguntas con ese texto");render()}}
+  catch(e){MT.busy=false;toast(e&&e.code==="rate_limited"?"Límite de uso de Claude alcanzado":"No se pudo generar el test");render()}}
+/* --- tarjetas del máster --- */
+function mkAdd(list,subj,tema){list.forEach(c=>{const id="mk"+uid().slice(1)+Math.random().toString(36).slice(2,5);MS.mcards[id]={id,subj,tema:tema||"",q:c.q,a:c.a,ef:2.5,iv:0,reps:0,due:todayStr(),created:todayStr()}});saveLocal()}
+function vMCards(){const k=mtSubj();const s=subjOf(k);const ses=MT.ses;const t=todayStr();
+  if(ses){const c=MS.mcards[ses.ids[ses.i]];if(!c){MT.ses=null;return vMCards()}const cs=subjOf(c.subj);
+    return`<section class="sheet fc" style="--c:${cs.color}"><div class="spread"><div class="lbl"><i class="sdot"></i>${esc(cs.short)} · tarjeta ${ses.i+1} de ${ses.ids.length}${c.tema?` · ${esc(c.tema)}`:""}</div><button class="btn ghost" data-act="mk-quit">Salir</button></div>
+      <div class="pl-prog"><i style="width:${ses.i/ses.ids.length*100}%;background:var(--ink)"></i></div>
+      <div class="fc-card"><p class="fc-q">${esc(c.q)}</p>${ses.show?`<hr><p class="fc-a">${esc(c.a)}</p>`:""}</div>
+      ${ses.show?`<div class="fc-r">${[["Otra vez","var(--danger)"],["Difícil","#A9845C"],["Bien","var(--good)"],["Fácil","var(--ink)"]].map(([l,col],g)=>{const iv=cardIv(c,g);return`<button style="--c:${col}" data-act="mk-rate" data-g="${g}"><b>${l}</b><small>${iv?`${iv} d`:"hoy"}</small></button>`}).join("")}</div>`
+        :`<button class="btn primary big-up" style="max-width:none" data-act="mk-show">Mostrar respuesta</button>`}</section>`}
+  const all=mkList(k);const due=mkDue(k);const byT={};all.forEach(c=>{const g=c.tema||"";(byT[g]=byT[g]||[]).push(c)});
+  const rev7=[...Array(7)].map((_,i)=>(MS.mcrev[addDays(t,i-6)]||{})[k]||0).reduce((a,b)=>a+b,0);
+  return`<section class="sheet" style="display:flex;flex-direction:column;gap:10px"><div><div class="lbl">Tarjetas por asignatura</div><h2 class="sec">Elige asignatura</h2></div>${mtPicker("cards")}
+    <p class="small muted" style="margin:0">La cifra son las tarjetas que tocan hoy. Se repasan siempre de una sola asignatura.</p></section>
+  <section class="sheet ev-card" style="--c:${s.color}">
+    <div class="spread"><div><div class="lbl">${esc(s.short)}</div><h2 class="sec">${all.length?(due.length?`${due.length} para repasar hoy`:"Al día ✓"):"Sin tarjetas todavía"}</h2></div><button class="btn primary" data-act="mk-start" ${due.length?"":"disabled"}>Repasar${due.length?` (${Math.min(due.length,50)})`:""}</button></div>
+    ${all.length?`<div class="kpis"><div class="kpi"><div class="lbl">Tarjetas</div><div class="v">${all.length}</div></div><div class="kpi"><div class="lbl">Repasadas 7 días</div><div class="v">${rev7}</div></div><div class="kpi"><div class="lbl">Dominadas</div><div class="v">${all.filter(c=>(c.iv||0)>=21).length}</div><div class="small muted">intervalo ≥ 21 días</div></div></div>`:""}
+    <label class="setrow small"><span>Tema o unidad de las nuevas</span><input type="text" data-mktema value="${esc(MT.ktema)}" placeholder="Tema 2 (opcional)" style="max-width:180px"></label>
+    <div class="row"><button class="btn" data-act="mk-form">${MT.form?"Cerrar":"+ Nueva tarjeta"}</button><button class="btn" data-act="mk-imp">${MT.imp?"Cerrar":"Importar o generar"}</button></div>
+    ${MT.form?`<form class="rted" data-form="mk-add"><textarea class="ta" rows="2" id="mkQ" placeholder="Pregunta: ¿Qué es el andamiaje?"></textarea><textarea class="ta" rows="2" id="mkA" placeholder="Respuesta: el apoyo temporal que se retira según avanza el alumno (Bruner)"></textarea><button class="btn primary">Guardar en ${esc(s.short)}</button></form>`:""}
+    ${MT.imp?`<div class="rted"><div class="small">Pide las tarjetas a Claude con los apuntes de ${esc(s.short)} (copia la instrucción) y pega aquí su respuesta: una por línea, «pregunta | respuesta». También vale una exportación de Anki.</div>
+      <div class="row"><button class="btn" data-act="mk-copy">Copiar instrucción</button><a class="btn primary" href="https://claude.ai/new?q=${encodeURIComponent(mkPrompt())}" target="_blank" rel="noopener">Abrir Claude ↗</a></div>
+      <textarea class="ta" rows="5" id="mkImp" placeholder="¿Qué es la zona de desarrollo próximo? | La distancia entre lo que el alumno hace solo y lo que logra con ayuda (Vygotski)"></textarea>
+      <div class="row"><button class="btn primary" data-act="mk-doimp">Importar a ${esc(s.short)}</button>${aiOn()?`<button class="btn" data-act="mk-gen" ${MT.busy?"disabled":""}>${MT.busy?"Generando…":"✨ Generar tarjetas desde este texto"}</button>`:""}</div></div>`:""}
+    ${all.length?`<details class="rw"><summary><span><b>Ver las tarjetas de ${esc(s.short)}</b><small>${all.length} tarjetas</small></span></summary>${Object.keys(byT).sort().map(g=>`<div class="lbl" style="margin-top:8px">${g?esc(g):"Sin tema"}</div>${byT[g].map(c=>`<div class="kc"><span><b>${esc(c.q)}</b><small>${esc(c.a)}</small></span><em>${c.due&&c.due>t?relDay(c.due):"hoy"}</em><button class="icon-btn" data-act="mk-del" data-id="${c.id}" aria-label="Borrar tarjeta">×</button></div>`).join("")}`).join("")}</details>`
+      :`<p class="small muted" style="margin:0">Cada tarjeta vuelve justo antes de que la olvides: si la sabes, tarda más en volver; si fallas, vuelve hoy.</p>`}
+  </section>`}
+async function mkGen(txt){if(!aiOn()||MT.busy||!txt.trim())return;const k=mtSubj();const s=subjOf(k);MT.busy=true;render();
+  try{const r=await SL.sample.json(`Con ÚNICAMENTE la información de este texto de la asignatura «${s.name||s.short}» del Máster de Profesorado, crea entre 15 y 25 tarjetas de memoria (conceptos, autores, leyes, clasificaciones, definiciones). Español de España, respuestas breves. Solo JSON: {"cards":[{"q":"pregunta","a":"respuesta"}]}
+
+TEXTO:
+${txt.slice(0,40000)}`,{cache:false});const l=(r&&r.cards||[]).filter(c=>c&&c.q&&c.a).map(c=>({q:String(c.q),a:String(c.a)}));
+    MT.busy=false;if(l.length){mkAdd(l,k,MT.ktema.trim());MT.imp=false;toast(`${l.length} tarjetas creadas en ${s.short}`)}else toast("No se pudieron crear tarjetas");render()}
+  catch(e){MT.busy=false;toast("No se pudieron generar las tarjetas");render()}}
+function mtAction(a,b){const k=mtSubj();switch(a){
+  case"mt-subj":MS.tq.subj=b.dataset.k;MT.paste="";MT.form=false;MT.imp=false;saveLocal(true);render();break;
+  case"mt-copy":copyTxt(mtPrompt());break;
+  case"mt-clip":(async()=>{try{const x=await navigator.clipboard.readText();if(x){MT.paste=x;render()}}catch(e){toast("Mantén pulsado el recuadro y elige Pegar")}})();break;
+  case"mt-start":{const r=parseTest(MT.paste);if(!r.ok.length){toast("No encuentro preguntas con respuesta. Revisa el formato.");break}if(r.bad)toast(`${r.ok.length} preguntas listas (${r.bad} sin respuesta clara, se omiten)`);MT.paste="";mtStart(r.ok,"test",k,MT.tema.trim());break}
+  case"mt-gen":mtGen();break;
+  case"mt-fallos":{const l=mtBank(k).slice().sort((x,y)=>(y.fails||1)-(x.fails||1)).slice(0,20).map(({q,opts,ans,exp,tema})=>({q,opts,ans,exp,tema}));if(l.length)mtStart(l,"fallos",k);break}
+  case"mt-pick":{const r=MT.run;r.picks[r.i]=+b.dataset.i;bell(r.picks[r.i]===r.qs[r.i].ans?"soft":"tick");render();break}
+  case"mt-skip":{const r=MT.run;r.picks[r.i]=null;if(r.i+1<r.qs.length){r.i++;render()}else mtFinish();break}
+  case"mt-next":{const r=MT.run;if(r.i+1<r.qs.length){r.i++;render()}else mtFinish();break}
+  case"mt-quit":if(!confirmSoft(b,"Se perderá este test."))break;MT.run=null;render();break;
+  case"mt-close":MT.run=null;render();break;
+  case"mt-tocards":{const r=MT.run;const fails=r.qs.filter((q,i)=>r.picks[i]!==q.ans);const have=new Set(mkList(r.subj).map(c=>c.q));const l=fails.filter(q=>!have.has(q.q)).map(q=>({q:q.q,a:q.opts[q.ans]+(q.exp?" — "+q.exp:"")}));
+    if(l.length)mkAdd(l,r.subj,r.tema||(fails[0].tema?"Tema "+fails[0].tema:""));toast(l.length?`${l.length} tarjetas creadas en ${subjOf(r.subj).short}`:"Ya estaban en tus tarjetas");break}
+  case"mt-dellog":if(!confirmSoft(b,"¿Borrar esta nota?"))break;MS.tq.log=MS.tq.log.filter(x=>x.id!==b.dataset.id);saveLocal();render();break;
+  case"mt-alllog":MT.allLog=!MT.allLog;render();break;
+  case"mk-start":{const ids=mkDue(k).sort((x,y)=>(x.due||"")<(y.due||"")?-1:1).slice(0,50).map(c=>c.id);if(!ids.length)break;MT.ses={ids,i:0,show:false};render();window.scrollTo({top:0,behavior:"smooth"});break}
+  case"mk-show":MT.ses.show=true;render();break;
+  case"mk-rate":{const s=MT.ses;const c=MS.mcards[s.ids[s.i]];const g=+b.dataset.g;const iv=cardIv(c,g);c.ef=Math.max(1.3,(c.ef||2.5)+[-.2,-.15,0,.15][g]);c.iv=iv;c.reps=g===0?0:(c.reps||0)+1;c.due=addDays(todayStr(),iv);
+    const t=todayStr();const d=MS.mcrev[t]||(MS.mcrev[t]={});d[c.subj]=(d[c.subj]||0)+1;saveLocal();if(g===0)s.ids.push(c.id);s.i++;s.show=false;if(s.i>=s.ids.length){MT.ses=null;toast("¡Repaso terminado!")}render();break}
+  case"mk-quit":MT.ses=null;render();break;
+  case"mk-form":MT.form=!MT.form;MT.imp=false;render();break;
+  case"mk-imp":MT.imp=!MT.imp;MT.form=false;render();break;
+  case"mk-copy":copyTxt(mkPrompt());break;
+  case"mk-doimp":{const l=parseCards((document.getElementById("mkImp")||{}).value);if(!l.length){toast("No encuentro tarjetas. Usa «pregunta | respuesta» en cada línea.");break}mkAdd(l,k,MT.ktema.trim());MT.imp=false;render();toast(`${l.length} tarjetas importadas en ${subjOf(k).short}`);break}
+  case"mk-gen":mkGen((document.getElementById("mkImp")||{}).value||"");break;
+  case"mk-del":delete MS.mcards[b.dataset.id];saveLocal();render();break;
+}}
+document.addEventListener("input",e=>{const t=e.target;
+  if(t.matches("[data-mtpaste]")){const had=!!MT.paste.trim();MT.paste=t.value;if(had!==!!t.value.trim())render()}
+  else if(t.matches("[data-mttema]")){MT.tema=t.value;const a=document.getElementById("mtOpen");if(a)a.href="https://claude.ai/new?q="+encodeURIComponent(mtPrompt())}
+  else if(t.matches("[data-mtgen]"))MT.genTxt=t.value;
+  else if(t.matches("[data-mktema]"))MT.ktema=t.value});
+document.addEventListener("change",e=>{const t=e.target;if(t.matches("[data-mtcfg]")){MS.tq[t.dataset.mtcfg]=+t.value;saveLocal(true);render()}else if(t.matches("[data-mktema]"))render()});
+document.addEventListener("submit",e=>{const f=e.target.closest("form[data-form='mk-add']");if(!f)return;e.preventDefault();e.stopImmediatePropagation();const q=((document.getElementById("mkQ")||{}).value||"").trim(),a=((document.getElementById("mkA")||{}).value||"").trim();if(!q||!a){toast("Escribe pregunta y respuesta");return}mkAdd([{q,a}],mtSubj(),MT.ktema.trim());render();toast("Tarjeta guardada");setTimeout(()=>{const x=document.getElementById("mkQ");if(x)x.focus()},40)},true);
 
 /* ---------- boot ---------- */
 const hadLocal=loadLocal();

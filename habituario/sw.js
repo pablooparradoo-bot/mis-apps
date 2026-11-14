@@ -1,5 +1,5 @@
 /* Mi Habituario: funciona sin conexión. La página se pide primero a la red (para recibir actualizaciones) y, si no hay red, se usa la copia guardada. */
-const V = "habituario-v2.2.0";
+const V = "habituario-v2.3.0";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon-180.png", "./icon-512.png"];
 
 self.addEventListener("install", (e) => {
