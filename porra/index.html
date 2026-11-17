@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>La Porra 2027</title>
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Porra 2027">
+<meta name="theme-color" content="#FBF6EC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Figtree:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap">
+<style>
+/* Layout: a football pools slip (boleto de quiniela) in a phone-width column. Paper ground, pools-blue ink and grid, red seal; Ale in pink, Pablo in tide blue. One screen at a time: category, pass-the-phone cover, each player's slip, the reveal, the sealed ticket and, in December 2027, the results. */
+:root{
+  --papel:#FBF6EC; --papel-2:#F3EBDA; --tinta:#1C2B6B; --tinta-2:#4A5794; --linea:#C9CDE3;
+  --sello:#D7263D; --ale:#E2468F; --ale-bg:#FFE1EF; --pablo:#0E5E6F; --pablo-bg:#D7EEF1; --ok:#1F8A4C;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#E9E1CF;color:var(--tinta);font-family:var(--body);-webkit-tap-highlight-color:transparent}
+button,input,textarea{font:inherit;color:inherit}
+.app{min-height:100%;max-width:520px;margin:0 auto;background:var(--papel);
+  background-image:linear-gradient(var(--linea) 1px,transparent 1px);background-size:100% 32px;background-position:0 -1px;
+  padding-top:calc(env(safe-area-inset-top,0px) + 18px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 28px);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:16px}
+.app > *{min-width:0}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-2)}
+h1,h2{font-family:var(--display);margin:0;line-height:.92;letter-spacing:.005em;text-transform:uppercase;text-wrap:balance}
+h1{font-weight:900;font-size:clamp(56px,18vw,88px)}
+h2{font-weight:800;font-size:clamp(34px,10vw,46px)}
+p{margin:0;line-height:1.45;font-size:16px}
+.muted{color:var(--tinta-2)}
+.slip{background:#fff;border:2px solid var(--tinta);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:14px;position:relative}
+.slip.dashed{border-style:dashed}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:54px;border:2px solid var(--tinta);border-radius:6px;background:var(--tinta);color:var(--papel);font-weight:800;font-size:17px;padding:12px 18px;cursor:pointer;text-align:center}
+.btn.ghost{background:transparent;color:var(--tinta)}
+.btn.ale{background:var(--ale);border-color:var(--ale);color:#fff}
+.btn.pablo{background:var(--pablo);border-color:var(--pablo);color:#fff}
+.btn:focus-visible,.opt:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--sello);outline-offset:2px}
+.btn:active,.opt:active{transform:scale(.98)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.stack{display:flex;flex-direction:column;gap:10px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.grow{flex:1}
+label.f{display:flex;flex-direction:column;gap:6px;font-weight:700}
+input[type=text],input[type=number],textarea{width:100%;border:2px solid var(--tinta);border-radius:6px;background:var(--papel);padding:12px;font-size:17px;min-height:50px}
+textarea{resize:vertical;min-height:72px}
+/* header ticket */
+.ticket-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-bottom:3px double var(--tinta);padding-bottom:12px}
+.ticket-head .n{font-family:var(--mono);font-size:12px;text-align:right}
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 10px;font-weight:800;font-size:13px}
+.chip.ale{background:var(--ale-bg);color:var(--ale)}
+.chip.pablo{background:var(--pablo-bg);color:var(--pablo)}
+/* question */
+.q{display:flex;flex-direction:column;gap:10px;padding-bottom:14px;border-bottom:1px dashed var(--linea)}
+.q:last-child{border-bottom:0;padding-bottom:0}
+.q .num{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--tinta-2)}
+.q .t{font-weight:800;font-size:18px;line-height:1.25}
+.q .hint{font-size:14px;color:var(--tinta-2)}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
+.opt{min-height:50px;border:2px solid var(--tinta);border-radius:6px;background:var(--papel);font-weight:800;font-size:16px;cursor:pointer;padding:8px 10px}
+.opt[aria-pressed="true"]{background:var(--tinta);color:var(--papel)}
+.who-ale .opt[aria-pressed="true"]{background:var(--ale);border-color:var(--ale);color:#fff}
+.who-pablo .opt[aria-pressed="true"]{background:var(--pablo);border-color:var(--pablo);color:#fff}
+/* category card */
+.cat{border:3px solid var(--tinta);border-radius:6px;background:#fff;padding:22px 18px;display:flex;flex-direction:column;gap:16px;min-height:300px;justify-content:space-between}
+.cat .big{font-family:var(--display);font-weight:900;font-size:110px;line-height:.8;color:var(--sello)}
+/* cover */
+.cover{border-radius:6px;padding:26px 20px;display:flex;flex-direction:column;gap:14px;min-height:360px;justify-content:center;color:#fff}
+.cover.ale{background:var(--ale)}
+.cover.pablo{background:var(--pablo)}
+.cover h2{font-size:clamp(44px,14vw,64px)}
+/* reveal */
+.vs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.vs div{border-radius:6px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.vs .a{background:var(--ale-bg)}
+.vs .p{background:var(--pablo-bg)}
+.vs span{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em}
+.vs .a span{color:var(--ale)}
+.vs .p span{color:var(--pablo)}
+.vs b{font-size:17px;overflow-wrap:anywhere}
+.vs .win{box-shadow:inset 0 0 0 3px var(--ok)}
+.same{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--sello)}
+/* seal */
+.stamp{position:absolute;top:12px;right:10px;transform:rotate(-11deg);border:4px solid var(--sello);color:var(--sello);border-radius:8px;padding:4px 10px;font-family:var(--display);font-weight:900;font-size:26px;line-height:1;text-align:center;background:rgba(255,255,255,.75)}
+.stamp small{display:block;font-family:var(--mono);font-size:10px;font-weight:700}
+.premio{background:var(--papel-2);border-radius:6px;padding:12px;display:flex;flex-direction:column;gap:4px}
+.score{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.score div{border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:2px;align-items:flex-start}
+.score b{font-family:var(--display);font-weight:900;font-size:56px;line-height:.9}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translateX(-50%);background:var(--tinta);color:var(--papel);border-radius:6px;padding:10px 16px;font-weight:700;z-index:5}
+.linkbox{font-family:var(--mono);font-size:12px;word-break:break-all;background:var(--papel-2);border-radius:6px;padding:10px;max-height:110px;overflow:auto;user-select:all;-webkit-user-select:all}
+.err{color:var(--sello);font-weight:700;font-size:14px}
+@media (prefers-reduced-motion:reduce){.btn:active,.opt:active{transform:none}}
+</style>
+</head>
+<body>
+<main class="app" id="app" aria-live="polite"></main>
+<script>
+(function(){
+"use strict";
+var CATS=[
+ {id:"nos",name:"Nosotros",sub:"Lo más importante",qs:[
+  {id:"teamo",t:"num",q:"¿Cuántos «te amo» nos escribiremos en el chat en 2027?",hint:"En 2026 vais camino de unos 6.000."},
+  {id:"primer",t:"who",q:"¿Quién mandará el primer mensaje de 2027?",hint:"El de 2026 lo mandó Ale a las 00:00:00 en punto."},
+  {id:"tres",t:"txt",q:"¿Dónde celebraremos los 3 años, el 27 de diciembre de 2027?",ph:"Sitio y plan"},
+  {id:"vivir",t:"yn",q:"¿Viviremos juntos antes de que acabe 2027?"}
+ ]},
+ {id:"viajes",name:"Viajes",sub:"A dónde nos lleva 2027",qs:[
+  {id:"viaje",t:"txt",q:"¿Cuál será el mejor viaje de 2027?",ph:"Destino"},
+  {id:"noches",t:"num",q:"¿Cuántas noches dormiremos fuera juntos, de viaje o escapada?"},
+  {id:"portugal",t:"yn",q:"¿Volveremos a Portugal en 2027?",hint:"Oporto sigue pendiente."}
+ ]},
+ {id:"chat",name:"El chat",sub:"Se resuelve con la exportación de 2027",qs:[
+  {id:"msgs",t:"num",q:"¿Cuántos mensajes nos mandaremos en 2027?",hint:"En 2026 vais camino de unos 119.000."},
+  {id:"masesc",t:"who",q:"¿Quién escribirá más mensajes en 2027?",hint:"Hasta ahora Pablo siempre ha ganado."},
+  {id:"bien",t:"num",q:"¿Cuántas veces escribirá Ale «biennn» en 2027?",hint:"En 2026 lleva unas 855."},
+  {id:"quizas",t:"yn",q:"¿Escribirá alguno de los dos «quizás» por primera vez?",hint:"En casi dos años, nunca."}
+ ]},
+ {id:"vida",name:"Estudios y trabajo",sub:"El año de las oposiciones",qs:[
+  {id:"trabA",t:"txt",q:"¿Dónde estará trabajando Ale en septiembre de 2027?",ph:"Sitio o curro"},
+  {id:"trabP",t:"txt",q:"¿Dónde estará trabajando Pablo en septiembre de 2027?",ph:"Sitio o curro"},
+  {id:"agobio",t:"who",q:"¿Quién acabará 2027 más agobiado con los estudios?"}
+ ]},
+ {id:"risas",name:"Las graciosas",sub:"Sin vergüenza",qs:[
+  {id:"caca",t:"num",q:"¿Cuántas veces saldrá «caca» en el chat en 2027?",hint:"En 2026 vais camino de unas 175."},
+  {id:"tattoo",t:"yn",q:"¿Se hará Pablo otro tatuaje en 2027?"},
+  {id:"llora",t:"who",q:"¿Quién llorará más veces viendo una peli o una serie?"},
+  {id:"perdon",t:"num",q:"¿Cuántas veces escribirá Pablo «perdón» o «lo siento»?",hint:"En 2026 lleva 384."}
+ ]},
+ {id:"futbol",name:"Fútbol y deporte",sub:"Aquí empezó La Porra",qs:[
+  {id:"liga",t:"opt",o:["Barça","Real Madrid","Atlético","Otro"],q:"¿Quién ganará la Liga 2026/27?"},
+  {id:"cadiz",t:"opt",o:["Primera","Segunda","Primera RFEF"],q:"¿En qué categoría jugará el Cádiz la temporada 2027/28?"},
+  {id:"alcaraz",t:"opt",o:["0","1","2","3","4"],q:"¿Cuántos Grand Slams ganará Alcaraz en 2027?"},
+  {id:"laporra",t:"who",q:"¿Quién ganará La Porra de fútbol de esta temporada?"}
+ ]},
+ {id:"cadizp",name:"Planes",sub:"Cádiz y alrededores",qs:[
+  {id:"disfraz",t:"txt",q:"¿De qué nos disfrazaremos en el Carnaval de 2027?",ph:"Disfraz"},
+  {id:"cortadura",t:"yn",q:"¿Repetiremos el atardecer en Cortadura de la primera cita?"},
+  {id:"cine",t:"num",q:"¿Cuántas veces iremos al cine juntos?"}
+ ]},
+ {id:"final",name:"Dentro de un año",sub:"La última",qs:[
+  {id:"regalo",t:"txt",q:"¿Qué te regalará {otro} por los 3 años?",ph:"Tu apuesta"},
+  {id:"primera",t:"txt",q:"Una cosa que haremos juntos por primera vez en 2027",ph:"Algo nuevo"},
+  {id:"palabra",t:"txt",q:"Una palabra para nuestro 2027",ph:"Una palabra"}
+ ]}
+];
+var NAMES={A:"Ale",P:"Pablo"};
+var ALLQ=[];CATS.forEach(function(c){c.qs.forEach(function(q){ALLQ.push(q)})});
+var KEY="porra2027-v1";
+var S=load()||fresh();
+function fresh(){return {v:1,premio:"Quien gane elige el plan del aniversario de los 3 años",step:"start",ci:0,turn:0,ans:{},sealed:null,res:{}}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){try{var v=JSON.parse(localStorage.getItem(KEY)||"null");if(v&&v.v===1)return v}catch(e){}return null}
+var $app=document.getElementById("app");
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function fmt(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,".")}
+function qtext(q,who){return q.q.replace("{otro}",who==="A"?"Pablo":"Ale")}
+function order(ci){return ci%2===0?["A","P"]:["P","A"]}
+function show(v){if(v===undefined||v===null||v==="")return "—";if(typeof v==="number")return fmt(v);return String(v)}
+function toast(t){var d=document.createElement("div");d.className="toast";d.textContent=t;document.body.appendChild(d);setTimeout(function(){d.remove()},2200)}
+function top(){window.scrollTo(0,0)}
+function today(){var d=new Date();return d.getDate()+"/"+(d.getMonth()+1)+"/"+String(d.getFullYear()).slice(2)}
+
+/* ---------- encode / decode the sealed slip ---------- */
+function enc(obj){var b=new TextEncoder().encode(JSON.stringify(obj));var s="";b.forEach(function(x){s+=String.fromCharCode(x)});return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function dec(str){try{str=str.replace(/-/g,"+").replace(/_/g,"/");while(str.length%4)str+="=";var bin=atob(str);var u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return JSON.parse(new TextDecoder().decode(u))}catch(e){return null}}
+function packed(){return {v:1,p:S.premio,d:S.sealed,a:S.ans,r:S.res}}
+function linkFor(){return location.origin+location.pathname+"#s="+enc(packed())}
+function fromHash(){var m=location.hash.match(/^#s=(.+)$/);if(!m)return false;var o=dec(m[1]);if(!o||!o.a)return false;
+  S={v:1,premio:o.p||"",step:"sealed",ci:0,turn:0,ans:o.a,sealed:o.d||today(),res:o.r||{}};save();return true}
+
+/* ---------- screens ---------- */
+function render(){
+  if(S.step==="start")return renderStart();
+  if(S.step==="cat")return renderCat();
+  if(S.step==="cover")return renderCover();
+  if(S.step==="form")return renderForm();
+  if(S.step==="reveal")return renderReveal();
+  if(S.step==="seal")return renderSeal();
+  if(S.step==="sealed")return renderSealed();
+  if(S.step==="resolve")return renderResolve();
+}
+function head(right){
+  return '<div class="ticket-head"><div class="stack" style="gap:4px"><span class="eyebrow">Boleto · ale &lt;3 &amp; parrado</span><h2 style="font-size:40px">La Porra 2027</h2></div><div class="n">'+right+'</div></div>';
+}
+function renderStart(){
+  var inProgress=S.ci>0||S.turn>0||Object.keys(S.ans).length;
+  $app.innerHTML=
+   '<div class="eyebrow">Boleto n.º 27 · se abre el 31/12/27</div>'+
+   '<h1>La Porra 2027</h1>'+
+   '<p>Cada uno apuesta qué va a pasar en vuestro 2027, sin ver lo que pone el otro. Al final se sella el boleto y no se puede cambiar hasta el 31 de diciembre de 2027.</p>'+
+   '<div class="slip"><div class="stack" style="gap:6px"><span class="eyebrow">Cómo se juega</span>'+
+   '<p><b>1.</b> En cada categoría contesta uno y luego le pasa el móvil al otro, sin mirar.</p>'+
+   '<p><b>2.</b> Después veis las dos apuestas juntas.</p>'+
+   '<p><b>3.</b> Se sella y os mandáis el enlace por WhatsApp para guardarlo en el chat.</p>'+
+   '<p><b>4.</b> El 31/12/2027 se abre, se apunta lo que pasó de verdad y gana quien más acierte.</p></div>'+
+   '<p class="muted" style="font-size:14px">'+CATS.length+' categorías · '+ALLQ.length+' apuestas cada uno</p></div>'+
+   '<label class="f" for="premio">¿Qué os jugáis?<input id="premio" type="text" maxlength="120" value="'+esc(S.premio)+'"></label>'+
+   '<div class="stack">'+(inProgress?'<button class="btn" id="cont" type="button">Seguir donde lo dejasteis</button><button class="btn ghost" id="restart" type="button">Empezar de cero</button>':'<button class="btn" id="go" type="button">Empezar</button>')+'</div>';
+  var p=document.getElementById("premio");p.oninput=function(){S.premio=p.value;save()};
+  if(inProgress){document.getElementById("cont").onclick=function(){S.step=S.turn===0&&!hasAnswers(S.ci,order(S.ci)[0])?"cat":"cover";save();render()};
+    document.getElementById("restart").onclick=function(){var pr=S.premio;S=fresh();S.premio=pr;S.step="cat";save();render();top()}}
+  else document.getElementById("go").onclick=function(){S.step="cat";save();render();top()};
+}
+function hasAnswers(ci,who){return CATS[ci].qs.every(function(q){return S.ans[q.id]&&S.ans[q.id][who]!==undefined})}
+function renderCat(){
+  var c=CATS[S.ci],o=order(S.ci);
+  $app.innerHTML=head('Categoría<br><b>'+(S.ci+1)+' de '+CATS.length+'</b>')+
+   '<section class="cat"><div class="big" aria-hidden="true">'+(S.ci+1)+'</div><div class="stack" style="gap:6px"><h2>'+esc(c.name)+'</h2><p class="muted" style="font-weight:700">'+esc(c.sub)+'</p></div>'+
+   '<p>'+c.qs.length+' apuestas. Empieza <span class="chip '+(o[0]==="A"?"ale":"pablo")+'">'+NAMES[o[0]]+'</span></p></section>'+
+   '<button class="btn" id="go" type="button">Vamos</button>';
+  document.getElementById("go").onclick=function(){S.turn=0;S.step="cover";save();render();top()};
+}
+function renderCover(){
+  var who=order(S.ci)[S.turn],other=who==="A"?"P":"A",cls=who==="A"?"ale":"pablo";
+  $app.innerHTML=head(esc(CATS[S.ci].name))+
+   '<section class="cover '+cls+'"><span class="eyebrow" style="color:#fff">Turno '+(S.turn+1)+' de 2</span><h2>Le toca a '+NAMES[who]+'</h2>'+
+   '<p style="font-size:18px">'+(S.turn===0?NAMES[other]+', no mires.':NAMES[other]+', pásale el móvil sin mirar lo que ha puesto.')+'</p></section>'+
+   '<button class="btn '+cls+'" id="go" type="button">Soy '+NAMES[who]+'</button>';
+  document.getElementById("go").onclick=function(){S.step="form";save();render();top()};
+}
+function inputFor(q,who,val,prefix){
+  var id=prefix+q.id,cls=who==="A"?"who-ale":"who-pablo";
+  if(q.t==="num")return '<input id="'+id+'" type="number" inputmode="numeric" min="0" step="1" value="'+(val!==undefined?esc(val):"")+'" aria-label="Número">';
+  if(q.t==="txt")return '<input id="'+id+'" type="text" maxlength="80" placeholder="'+esc(q.ph||"")+'" value="'+(val!==undefined?esc(val):"")+'" aria-label="Respuesta">';
+  var opts=q.t==="yn"?["Sí","No"]:q.t==="who"?["Ale","Pablo"]:q.o;
+  return '<div class="opts '+cls+'" id="'+id+'" role="group">'+opts.map(function(o){return '<button type="button" class="opt" data-v="'+esc(o)+'" aria-pressed="'+(val===o?"true":"false")+'">'+esc(o)+'</button>'}).join("")+'</div>';
+}
+function bindOpts(root){
+  [].slice.call(root.querySelectorAll(".opts")).forEach(function(g){
+    g.addEventListener("click",function(e){var b=e.target.closest(".opt");if(!b)return;[].slice.call(g.children).forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false")})});
+  });
+}
+function readVal(q,prefix){
+  var el=document.getElementById(prefix+q.id);
+  if(q.t==="num"){if(el.value==="")return undefined;var n=Math.round(+el.value);return isFinite(n)&&n>=0?n:undefined}
+  if(q.t==="txt"&&prefix!=="r-"){var v=el.value.trim();return v?v:undefined}
+  var p=el.querySelector('[aria-pressed="true"]');return p?p.getAttribute("data-v"):undefined;
+}
+function renderForm(){
+  var c=CATS[S.ci],who=order(S.ci)[S.turn],cls=who==="A"?"ale":"pablo";
+  var n=0;CATS.slice(0,S.ci).forEach(function(cc){n+=cc.qs.length});
+  $app.innerHTML=head('Apuesta de<br><span class="chip '+cls+'">'+NAMES[who]+'</span>')+
+   '<div class="stack" style="gap:4px"><span class="eyebrow">'+esc(c.name)+'</span></div>'+
+   '<section class="slip">'+c.qs.map(function(q,i){var prev=S.ans[q.id]&&S.ans[q.id][who];
+     return '<div class="q"><span class="num">APUESTA '+(n+i+1)+' / '+ALLQ.length+'</span><span class="t">'+esc(qtext(q,who))+'</span>'+(q.hint?'<span class="hint">'+esc(q.hint)+'</span>':'')+inputFor(q,who,prev,"f-")+'</div>'}).join("")+'</section>'+
+   '<p class="err" id="err" hidden>Te falta alguna apuesta por rellenar.</p>'+
+   '<button class="btn '+cls+'" id="done" type="button">Listo, '+NAMES[who]+'</button>';
+  bindOpts($app);
+  document.getElementById("done").onclick=function(){
+    var vals={},miss=false;c.qs.forEach(function(q){var v=readVal(q,"f-");if(v===undefined)miss=true;vals[q.id]=v});
+    if(miss){document.getElementById("err").hidden=false;return}
+    c.qs.forEach(function(q){S.ans[q.id]=S.ans[q.id]||{};S.ans[q.id][who]=vals[q.id]});
+    if(S.turn===0){S.turn=1;S.step="cover"}else{S.step="reveal"}
+    save();render();top();
+  };
+}
+function renderReveal(){
+  var c=CATS[S.ci],last=S.ci===CATS.length-1;
+  $app.innerHTML=head('Categoría<br><b>'+(S.ci+1)+' de '+CATS.length+'</b>')+
+   '<div class="stack" style="gap:4px"><span class="eyebrow">Las dos apuestas</span><h2>'+esc(c.name)+'</h2></div>'+
+   '<section class="slip">'+c.qs.map(function(q){var a=S.ans[q.id]||{};var same=String(a.A).toLowerCase()===String(a.P).toLowerCase();
+     return '<div class="q"><span class="t">'+esc(q.q.replace("{otro}","el otro"))+'</span><div class="vs"><div class="a"><span>ALE</span><b>'+esc(show(a.A))+'</b></div><div class="p"><span>PABLO</span><b>'+esc(show(a.P))+'</b></div></div>'+(same?'<span class="same">Pensáis lo mismo</span>':'')+'</div>'}).join("")+'</section>'+
+   '<button class="btn" id="go" type="button">'+(last?'Ir a sellar el boleto':'Siguiente categoría')+'</button>';
+  document.getElementById("go").onclick=function(){if(last){S.step="seal"}else{S.ci++;S.turn=0;S.step="cat"}save();render();top()};
+}
+function slipSummary(withRes){
+  return '<section class="slip">'+CATS.map(function(c){
+    return '<div class="stack" style="gap:10px"><span class="eyebrow">'+esc(c.name)+'</span>'+c.qs.map(function(q){var a=S.ans[q.id]||{};var w=withRes?winners(q):null;
+      return '<div class="q"><span class="t" style="font-size:16px">'+esc(q.q.replace("{otro}","el otro"))+'</span><div class="vs"><div class="a'+(w&&w.A?' win':'')+'"><span>ALE</span><b>'+esc(show(a.A))+'</b></div><div class="p'+(w&&w.P?' win':'')+'"><span>PABLO</span><b>'+esc(show(a.P))+'</b></div></div>'+(withRes&&S.res[q.id]!==undefined?'<span class="same" style="color:var(--ok)">Resultado: '+esc(resLabel(q))+'</span>':'')+'</div>'}).join("")+'</div>'}).join("")+'</section>';
+}
+function renderSeal(){
+  $app.innerHTML=head('Último paso')+
+   '<div class="stack" style="gap:6px"><h2>Sellar el boleto</h2><p>Una vez sellado ya no se puede cambiar nada hasta el 31 de diciembre de 2027.</p></div>'+
+   '<div class="premio"><span class="eyebrow">Os jugáis</span><b>'+esc(S.premio||"La gloria")+'</b></div>'+
+   slipSummary(false)+
+   '<button class="btn" id="seal" type="button" style="background:var(--sello);border-color:var(--sello)">Sellar la porra</button>'+
+   '<button class="btn ghost" id="back" type="button">Volver a la última categoría</button>';
+  document.getElementById("seal").onclick=function(){S.sealed=today();S.step="sealed";save();history.replaceState(null,"",linkFor());render();top()};
+  document.getElementById("back").onclick=function(){S.step="reveal";save();render();top()};
+}
+function copy(text,ok){
+  function fallback(){var box=document.getElementById("lb");if(box){var r=document.createRange();r.selectNodeContents(box);var s=getSelection();s.removeAllRanges();s.addRange(r)}toast("Selecciona y copia el enlace")}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){toast(ok)},fallback)}else fallback();
+}
+function plainText(){
+  var t="LA PORRA 2027 · sellada el "+S.sealed+"\nOs jugáis: "+(S.premio||"La gloria")+"\n";
+  CATS.forEach(function(c){t+="\n"+c.name.toUpperCase()+"\n";c.qs.forEach(function(q){var a=S.ans[q.id]||{};t+="· "+q.q.replace("{otro}","el otro")+"\n   Ale: "+show(a.A)+" | Pablo: "+show(a.P)+"\n"})});
+  return t+"\nSe abre el 31/12/2027: "+linkFor();
+}
+function renderSealed(){
+  var link=linkFor();var now=new Date(),open=now>=new Date(2027,11,31);
+  $app.innerHTML='<div class="slip" style="padding-top:20px">'+head('')+'<div class="stamp">SELLADA<small>'+esc(S.sealed)+'</small></div>'+
+   '<div class="premio"><span class="eyebrow">Os jugáis</span><b>'+esc(S.premio||"La gloria")+'</b></div>'+
+   '<p>Mandaos este enlace por WhatsApp. Así el boleto queda guardado en vuestro chat y lo podéis abrir desde cualquier móvil.</p>'+
+   '<div class="linkbox" id="lb">'+esc(link)+'</div>'+
+   '<div class="stack"><button class="btn" id="cp" type="button">Copiar enlace</button>'+(navigator.share?'<button class="btn ghost" id="sh" type="button">Compartir</button>':'')+
+   '<button class="btn ghost" id="tx" type="button">Copiar el boleto en texto</button></div></div>'+
+   slipSummary(false)+
+   '<div class="slip dashed"><span class="eyebrow">31 de diciembre de 2027</span><p>'+(open?'Ya es el día. Apuntad lo que pasó de verdad y veréis quién gana.':'Todavía no toca. La porra se abre el 31 de diciembre de 2027. Si queréis ir apuntando resultados antes, también se puede.')+'</p>'+
+   '<button class="btn" id="res" type="button">Resolver la porra</button></div>';
+  document.getElementById("cp").onclick=function(){copy(link,"Enlace copiado")};
+  document.getElementById("tx").onclick=function(){copy(plainText(),"Boleto copiado")};
+  var sh=document.getElementById("sh");if(sh)sh.onclick=function(){navigator.share({title:"La Porra 2027",text:"Nuestra porra de 2027, sellada el "+S.sealed,url:link}).catch(function(){})};
+  document.getElementById("res").onclick=function(){S.step="resolve";save();render();top()};
+}
+/* ---------- resolving ---------- */
+function resLabel(q){var r=S.res[q.id];if(r===undefined)return "—";if(q.t==="txt")return {A:"acertó Ale",P:"acertó Pablo",B:"acertaron los dos",N:"nadie"}[r]||r;return show(r)}
+function winners(q){
+  var r=S.res[q.id],a=S.ans[q.id]||{};if(r===undefined)return null;
+  if(q.t==="txt")return {A:r==="A"||r==="B",P:r==="P"||r==="B"};
+  if(q.t==="num"){var da=Math.abs((+a.A)-r),dp=Math.abs((+a.P)-r);return {A:da<=dp,P:dp<=da}}
+  return {A:a.A===r,P:a.P===r};
+}
+function totals(){var t={A:0,P:0,n:0};ALLQ.forEach(function(q){var w=winners(q);if(!w)return;t.n++;if(w.A)t.A++;if(w.P)t.P++});return t}
+function renderResolve(){
+  var t=totals();
+  $app.innerHTML=head('Resolver')+
+   '<div class="stack" style="gap:6px"><h2>¿Qué pasó de verdad?</h2><p>Apuntad cada resultado. En los números gana quien más se acerque; en las de texto decidís vosotros quién acertó.</p></div>'+
+   '<div class="score"><div style="background:var(--ale-bg)"><span class="chip ale">Ale</span><b id="sa">'+t.A+'</b></div><div style="background:var(--pablo-bg)"><span class="chip pablo">Pablo</span><b id="sp">'+t.P+'</b></div></div>'+
+   CATS.map(function(c){return '<section class="slip"><span class="eyebrow">'+esc(c.name)+'</span>'+c.qs.map(function(q){var a=S.ans[q.id]||{};
+     var inp;
+     if(q.t==="txt"){var r=S.res[q.id];inp='<div class="opts" id="r-'+q.id+'" role="group">'+[["A","Ale"],["P","Pablo"],["B","Los dos"],["N","Nadie"]].map(function(o){return '<button type="button" class="opt" data-v="'+o[0]+'" aria-pressed="'+(r===o[0]?"true":"false")+'">'+o[1]+'</button>'}).join("")+'</div>'}
+     else inp=inputFor(q,"X",S.res[q.id],"r-");
+     return '<div class="q"><span class="t" style="font-size:16px">'+esc(q.q.replace("{otro}","el otro"))+'</span><div class="vs"><div class="a"><span>ALE</span><b>'+esc(show(a.A))+'</b></div><div class="p"><span>PABLO</span><b>'+esc(show(a.P))+'</b></div></div><span class="hint" style="font-weight:700">'+(q.t==="txt"?'¿Quién acertó?':'Lo que pasó:')+'</span>'+inp+'</div>'}).join("")+'</section>'}).join("")+
+   '<button class="btn" id="fin" type="button">Ver quién gana</button><button class="btn ghost" id="back" type="button">Volver al boleto</button>';
+  $app.innerHTML='<div id="rv" class="stack" style="gap:16px">'+$app.innerHTML+'</div>';
+  var rv=document.getElementById("rv");
+  bindOpts(rv);
+  function collect(){ALLQ.forEach(function(q){var v=readVal(q,"r-");if(v===undefined)delete S.res[q.id];else S.res[q.id]=v});save();history.replaceState(null,"",linkFor());var t=totals();document.getElementById("sa").textContent=t.A;document.getElementById("sp").textContent=t.P}
+  rv.addEventListener("click",function(e){if(e.target.closest(".opt"))setTimeout(collect,0)});
+  rv.addEventListener("change",collect);
+  document.getElementById("fin").onclick=function(){collect();renderFinal();top()};
+  document.getElementById("back").onclick=function(){collect();S.step="sealed";save();render();top()};
+}
+function renderFinal(){
+  var t=totals(),win=t.A===t.P?null:(t.A>t.P?"A":"P");
+  $app.innerHTML=head('Resultado')+
+   '<div class="stack" style="gap:6px"><span class="eyebrow">'+t.n+' de '+ALLQ.length+' apuestas resueltas</span><h1 style="font-size:clamp(48px,15vw,72px)">'+(win?'Gana '+NAMES[win]:'Empate')+'</h1></div>'+
+   '<div class="score"><div style="background:var(--ale-bg)"><span class="chip ale">Ale</span><b>'+t.A+'</b></div><div style="background:var(--pablo-bg)"><span class="chip pablo">Pablo</span><b>'+t.P+'</b></div></div>'+
+   '<div class="premio"><span class="eyebrow">'+(win?NAMES[win]+' se lleva':'Os lleváis los dos')+'</span><b>'+esc(S.premio||"La gloria")+'</b></div>'+
+   slipSummary(true)+
+   '<button class="btn" id="cp" type="button">Copiar enlace con los resultados</button><button class="btn ghost" id="back" type="button">Seguir apuntando resultados</button>'+
+   '<div class="linkbox" id="lb" hidden>'+esc(linkFor())+'</div>';
+  document.getElementById("cp").onclick=function(){document.getElementById("lb").hidden=false;copy(linkFor(),"Enlace copiado")};
+  document.getElementById("back").onclick=function(){S.step="resolve";save();render();top()};
+}
+
+if(!fromHash()&&S.step==="sealed"&&S.sealed){history.replaceState(null,"",linkFor())}
+render();
+})();
+</script>
+</body>
+</html>
