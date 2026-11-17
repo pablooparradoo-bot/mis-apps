@@ -4,409 +4,476 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
+<title>¿Cuánto sabes de nosotros?</title>
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-180.png">
-<title>Wrapped ale &lt;3 &amp; parrado</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Wrapped Ale">
+<meta name="apple-mobile-web-app-title" content="Nosotros">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#191339">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800;900&family=Figtree:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800;900&family=Figtree:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-*{box-sizing:border-box}
-/* Layout: phone-sized story column, one full-bleed slide at a time, tap/swipe to advance. Single deliberate look (sunset at Cortadura), no theme switch. */
+/* Layout: one-screen quiz app in a phone-width column. Header with progress and score, a countdown bar, and one scrollable screen at a time (category card, question, answer reveal, final). Single deliberate night look from the Wrapped: night sky, Cortadura sunset, her pink. */
 :root{
-  --noche:#191339;      /* night over the Atlantic */
-  --rosa:#FF8FC7;       /* her 🩷 */
-  --atardecer:#FF6A3D;  /* Cortadura sunset */
-  --marea:#0E5E6F;      /* tide */
-  --arena:#F6E7C8;      /* sand */
-  --tinta:#16112E;
-  --blanco:#FFF8F0;
-  --font-display:"Unbounded","Arial Black",system-ui,sans-serif;
-  --font-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --font-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --noche:#191339; --noche-2:#241D4D; --rosa:#FF8FC7; --atardecer:#FF6A3D; --marea:#0E5E6F; --arena:#F6E7C8;
+  --tinta:#16112E; --blanco:#FFF8F0; --muted:#B9B3D9; --ok:#3DDC97; --ko:#FF5C6C;
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
   color-scheme:dark;
 }
+*{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;background:#0d0a20;color:var(--blanco);font-family:var(--font-body);-webkit-tap-highlight-color:transparent;overflow:hidden}
-.stage{position:relative;height:100%;max-width:480px;margin:0 auto;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:pan-y}
-.progress{position:absolute;z-index:20;left:0;right:0;top:0;display:flex;gap:4px;
-  padding-top:calc(env(safe-area-inset-top,0px) + 12px);
+body{margin:0;background:#0d0a20;color:var(--blanco);font-family:var(--body);-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit}
+.app{position:relative;height:100%;max-width:520px;margin:0 auto;display:flex;flex-direction:column;background:var(--noche);overflow:hidden}
+.top{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-top:calc(env(safe-area-inset-top,0px) + 12px);padding-bottom:10px;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.progress span{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.28);overflow:hidden}
-.progress span i{display:block;height:100%;width:0;background:rgba(255,255,255,.95);transition:width .35s ease}
-.progress span.done i{width:100%}
-.brand{position:absolute;z-index:20;top:calc(env(safe-area-inset-top,0px) + 24px);left:max(16px,env(safe-area-inset-left,0px));
-  font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;opacity:.75}
-.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:18px;
-  padding-block:calc(env(safe-area-inset-top,0px) + 64px) calc(env(safe-area-inset-bottom,0px) + 56px);
-  padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px));
-  visibility:hidden;opacity:0;transform:translateX(18px);transition:opacity .35s ease,transform .35s ease,visibility 0s .35s}
-.slide.on{visibility:visible;opacity:1;transform:none;transition:opacity .35s ease,transform .35s ease}
-.slide > *{min-width:0}
-.bg-noche{background:var(--noche);color:var(--blanco)}
-.bg-rosa{background:var(--rosa);color:var(--tinta)}
-.bg-atardecer{background:var(--atardecer);color:var(--tinta)}
-.bg-marea{background:var(--marea);color:var(--blanco)}
-.bg-arena{background:var(--arena);color:var(--tinta)}
-.ts{font-family:var(--font-mono);font-size:12px;letter-spacing:.02em;opacity:.8}
-.ts b{font-weight:600}
-h1,h2{font-family:var(--font-display);font-weight:900;margin:0;line-height:.98;letter-spacing:-.02em;text-wrap:balance}
-h1{font-size:clamp(40px,12vw,58px)}
-h2{font-size:clamp(28px,8.4vw,40px)}
-.big{font-family:var(--font-display);font-weight:900;font-size:clamp(64px,21vw,104px);line-height:.9;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
-.mid{font-family:var(--font-display);font-weight:800;font-size:clamp(34px,10vw,48px);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-p{margin:0;font-size:17px;line-height:1.45;max-width:34ch}
-.small{font-size:14px;line-height:1.45;opacity:.85}
-.lead{font-size:20px;font-weight:600;line-height:1.3}
-.hint{position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);left:0;right:0;text-align:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;opacity:.7}
-/* split bar */
-.split{display:flex;height:56px;border-radius:8px;overflow:hidden;gap:3px}
-.split div{display:flex;align-items:center;padding:0 12px;font-weight:800;font-size:15px;white-space:nowrap}
-.split .p{background:var(--marea);color:var(--blanco)}
-.split .a{background:var(--rosa);color:var(--tinta)}
-.legend{display:flex;justify-content:space-between;font-size:14px;gap:12px}
-/* rows */
-.rows{display:grid;gap:10px}
-.row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px solid currentColor;border-color:color-mix(in srgb,currentColor 22%,transparent);padding-bottom:8px}
-.row span:first-child{font-weight:600;font-size:18px}
-.row span:last-child{font-family:var(--font-display);font-weight:800;font-size:20px;font-variant-numeric:tabular-nums}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.cols h3{margin:0 0 6px;font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.8}
-.word{display:flex;justify-content:space-between;gap:6px;padding:6px 0;border-bottom:1px solid color-mix(in srgb,currentColor 20%,transparent);font-size:15px}
-.word b{font-variant-numeric:tabular-nums}
-/* tiles */
-.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.tile{border-radius:14px;padding:14px;background:color-mix(in srgb,var(--tinta) 8%,transparent);display:flex;flex-direction:column;gap:4px}
-.tile .n{font-family:var(--font-display);font-weight:800;font-size:28px;font-variant-numeric:tabular-nums}
-.tile .l{font-weight:600}
-.tile .w{font-size:13px;opacity:.8}
-/* emojis */
-.emo{display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap}
-.emo div{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
-.emo .e{font-size:64px;line-height:1}
-.emo .c{font-family:var(--font-display);font-weight:800;font-size:22px}
-.emo .who{font-family:var(--font-mono);font-size:11px;opacity:.8}
-/* charts */
+.top .where{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top .score{flex:none;font-family:var(--display);font-weight:800;font-size:15px;font-variant-numeric:tabular-nums;background:var(--noche-2);border-radius:999px;padding:6px 12px}
+.top[hidden]{display:none!important}
+.prog{flex:none;height:4px;margin:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--rosa);width:0;transition:width .3s}
+.timer{flex:none;height:6px;margin:8px max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden;visibility:hidden}
+.timer.on{visibility:visible}
+.timer i{display:block;height:100%;width:100%;background:var(--atardecer);transform-origin:left;border-radius:3px}
+.screen{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:18px;
+  padding-top:18px;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 20px);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.screen > *{min-width:0}
+.ts{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.ts b{color:var(--blanco);font-weight:600}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.02em;text-wrap:balance}
+h1{font-weight:900;font-size:clamp(34px,10vw,48px);line-height:1}
+h2{font-weight:800;font-size:clamp(22px,6.4vw,28px);line-height:1.15}
+p{margin:0;line-height:1.45;font-size:16px}
+.muted{color:var(--muted)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:54px;border:0;border-radius:16px;padding:14px 20px;font-weight:800;font-size:17px;cursor:pointer;background:var(--rosa);color:var(--tinta);width:100%}
+.btn.ghost{background:transparent;color:var(--blanco);border:2px solid rgba(255,255,255,.22)}
+.btn:focus-visible,.tile:focus-visible,.switch:focus-visible{outline:3px solid var(--blanco);outline-offset:3px}
+.btn:active,.tile:active{transform:scale(.98)}
+.stack{display:flex;flex-direction:column;gap:10px}
+.grow{flex:1}
+/* start */
+.hero{position:relative;border-radius:24px;overflow:hidden;background:linear-gradient(var(--noche-2),var(--noche-2));min-height:200px;display:flex;flex-direction:column;justify-content:flex-end;padding:22px}
+.hero .sun{position:absolute;right:10%;bottom:52px;width:120px;height:120px;border-radius:50%;background:var(--atardecer)}
+.hero .sea{position:absolute;left:0;right:0;bottom:0;height:70px;background:var(--marea)}
+.hero .z{position:relative}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.facts div{background:var(--noche-2);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:2px}
+.facts b{font-family:var(--display);font-size:20px;font-weight:800}
+.facts span{font-size:12px;color:var(--muted)}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--noche-2);border:0;border-radius:14px;padding:14px 16px;cursor:pointer;text-align:left;width:100%}
+.switch .knob{flex:none;width:46px;height:28px;border-radius:14px;background:rgba(255,255,255,.2);position:relative;transition:background .2s}
+.switch .knob::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--blanco);transition:transform .2s}
+.switch[aria-checked="true"] .knob{background:var(--atardecer)}
+.switch[aria-checked="true"] .knob::after{transform:translateX(18px)}
+/* category */
+.cat{flex:1;border-radius:28px;padding:26px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;min-height:380px}
+.cat .num{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.08em}
+.cat h1{font-size:clamp(38px,12vw,58px)}
+.cat .bg-shape{width:96px;height:96px}
+.c-rosa{background:var(--rosa);color:var(--tinta)}
+.c-atardecer{background:var(--atardecer);color:var(--tinta)}
+.c-marea{background:var(--marea);color:var(--blanco)}
+.c-arena{background:var(--arena);color:var(--tinta)}
+.c-noche{background:var(--noche-2);color:var(--blanco);box-shadow:inset 0 0 0 2px rgba(255,143,199,.5)}
+/* question */
+.qcard{background:var(--blanco);color:var(--tinta);border-radius:20px;padding:20px 18px;display:flex;flex-direction:column;gap:8px}
+.qcard .qn{font-family:var(--mono);font-size:12px;font-weight:600;color:#6A6158}
+.qcard h2{font-family:var(--body);font-weight:800;font-size:clamp(20px,5.8vw,24px);line-height:1.25;letter-spacing:-.01em}
+.qcard.quote h2{font-family:var(--display);font-weight:800;font-size:clamp(22px,6.6vw,28px)}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tile{position:relative;border:0;border-radius:18px;padding:14px 14px 16px;min-height:96px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:10px;text-align:left;cursor:pointer;font-weight:800;font-size:17px;line-height:1.2;transition:opacity .25s,transform .1s}
+.tile svg{width:26px;height:26px;flex:none}
+.tile .tx{overflow-wrap:anywhere}
+.tile.big{min-height:150px;font-family:var(--display);font-size:22px}
+.tile.big svg{width:40px;height:40px}
+.tile.emoji .tx{font-size:40px;line-height:1}
+.t0{background:var(--rosa);color:var(--tinta)}
+.t1{background:var(--atardecer);color:var(--tinta)}
+.t2{background:var(--marea);color:var(--blanco)}
+.t3{background:var(--arena);color:var(--tinta)}
+.tiles.done .tile{cursor:default}
+.tiles.done .tile.dim{opacity:.28}
+.tile .mark{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--tinta);color:var(--blanco);font-size:16px;font-weight:800}
+.tile.right{box-shadow:0 0 0 4px var(--ok)}
+.tile.wrong{box-shadow:0 0 0 4px var(--ko)}
+/* reveal */
+.verdict{display:flex;align-items:center;justify-content:space-between;gap:12px;border-radius:18px;padding:14px 16px}
+.verdict.good{background:var(--ok);color:var(--tinta)}
+.verdict.bad{background:var(--ko);color:var(--tinta)}
+.verdict .w{font-family:var(--display);font-weight:900;font-size:24px}
+.verdict .pts{font-family:var(--display);font-weight:800;font-size:18px;font-variant-numeric:tabular-nums;text-align:right}
+.verdict .pts small{display:block;font-family:var(--body);font-weight:700;font-size:12px}
+.info{background:var(--noche-2);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.info .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--rosa)}
+.info .bigN{font-family:var(--display);font-weight:900;font-size:clamp(40px,13vw,60px);line-height:.95;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.info p{font-size:16px}
+.info .foot{font-size:14px;color:var(--muted)}
+.bubble{align-self:flex-start;max-width:92%;background:#1F5F4F;color:var(--blanco);border-radius:4px 16px 16px 16px;padding:10px 12px 8px;display:flex;flex-direction:column;gap:4px}
+.bubble.me{align-self:flex-end;background:#3B2F7A;border-radius:16px 4px 16px 16px}
+.bubble .who{font-size:12px;font-weight:800;color:var(--rosa)}
+.bubble .t{font-size:16px;line-height:1.35}
+.bubble .when{font-family:var(--mono);font-size:10px;color:var(--muted);align-self:flex-end}
+.duel{display:flex;flex-direction:column;gap:10px}
+.duel .row{display:grid;grid-template-columns:70px minmax(0,1fr) auto;align-items:center;gap:10px;font-size:14px}
+.duel .row b{font-variant-numeric:tabular-nums;font-size:15px}
+.duel .track{height:14px;border-radius:7px;background:rgba(255,255,255,.08);overflow:hidden}
+.duel .track i{display:block;height:100%;border-radius:7px}
+.duel .p i{background:#2FA7BF}
+.duel .a i{background:var(--rosa)}
+.rank{display:flex;flex-direction:column;gap:8px}
+.rank .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center;font-size:15px}
+.rank .row b{font-variant-numeric:tabular-nums}
+.rank .row .track{grid-column:1 / -1;height:6px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden}
+.rank .row .track i{display:block;height:100%;background:var(--atardecer);border-radius:3px}
+.rank .row.first .track i{background:var(--rosa)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{background:var(--blanco);color:var(--tinta);border-radius:999px;padding:6px 12px;font-weight:700;font-size:14px}
+.longword{font-family:var(--display);font-weight:900;font-size:18px;line-height:1.15;word-break:break-all;color:var(--arena)}
 .chart{display:flex;flex-direction:column;gap:6px}
-.bars{display:flex;align-items:flex-end;gap:2px;height:170px;border-bottom:1px solid color-mix(in srgb,currentColor 35%,transparent)}
-.bars button{flex:1;min-width:0;height:100%;padding:0;border:0;background:transparent;display:flex;align-items:flex-end;cursor:pointer}
-.bars button i{display:block;width:100%;border-radius:4px 4px 0 0;background:color-mix(in srgb,currentColor 38%,transparent);transition:background .2s}
-.bars button.peak i,.bars button:hover i,.bars button:focus-visible i,.bars button.sel i{background:currentColor}
-.bars button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
-.axis{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;opacity:.75}
-.readout{font-family:var(--font-mono);font-size:12px;min-height:1.4em}
-/* jaja */
-.jaja{font-family:var(--font-display);font-weight:900;font-size:clamp(18px,5.6vw,26px);line-height:1;word-break:break-all;letter-spacing:-.01em}
-/* timeline */
-.tl{display:grid;gap:14px;border-left:2px solid currentColor;padding-left:16px}
-.tl > div{position:relative}
-.tl > div::before{content:"";position:absolute;left:-23px;top:5px;width:12px;height:12px;border-radius:50%;background:currentColor}
-.tl .d{font-family:var(--font-mono);font-size:12px;font-weight:600}
-.tl .t{font-size:15px;line-height:1.35}
-.tl .future::before{background:var(--atardecer);box-shadow:0 0 0 3px var(--tinta)}
-blockquote{margin:0;font-family:var(--font-display);font-weight:800;font-size:clamp(24px,7vw,32px);line-height:1.15;letter-spacing:-.01em;text-wrap:balance}
-.btn{align-self:flex-start;font:600 14px var(--font-body);color:var(--tinta);background:var(--rosa);border:0;border-radius:999px;padding:12px 18px;cursor:pointer}
-.btn:focus-visible{outline:2px solid var(--blanco);outline-offset:3px}
-.sun{position:absolute;right:12%;bottom:calc(30% - 90px);width:180px;height:180px;border-radius:50%;background:var(--atardecer);opacity:.9;pointer-events:none}
-.sun + .sea{position:absolute;left:0;right:0;bottom:0;height:30%;background:linear-gradient(var(--marea),#0a3f4b);pointer-events:none}
-.slide .z{position:relative;z-index:1}
-.cover{justify-content:flex-start;padding-top:calc(env(safe-area-inset-top,0px) + 16vh)}
-.hint{z-index:2}
-@media (prefers-reduced-motion:reduce){.slide,.slide.on{transition:none;transform:none}.progress span i{transition:none}}
+.chart .bars{display:flex;align-items:flex-end;gap:2px;height:120px;border-bottom:1px solid rgba(255,255,255,.25)}
+.chart .bars i{flex:1;min-width:0;border-radius:3px 3px 0 0;background:rgba(255,143,199,.35)}
+.chart .bars i.hi{background:var(--rosa)}
+.chart .axis{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--muted)}
+.next{position:sticky;bottom:0;padding-top:8px;background:linear-gradient(transparent,var(--noche) 30%)}
+/* end */
+.final{border-radius:28px;padding:24px 20px;background:var(--rosa);color:var(--tinta);display:flex;flex-direction:column;gap:12px}
+.final .rk{font-family:var(--display);font-weight:900;font-size:clamp(30px,9vw,42px);line-height:1}
+.final .sc{font-family:var(--display);font-weight:800;font-size:20px;font-variant-numeric:tabular-nums}
+.letter{background:var(--noche-2);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.letter p{font-size:17px}
+.letter .sign{font-family:var(--display);font-weight:800;color:var(--rosa)}
+.recap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.recap div{background:var(--noche-2);border-radius:14px;padding:10px 12px;font-size:13px;display:flex;justify-content:space-between;gap:8px}
+.recap b{font-variant-numeric:tabular-nums}
+.pop{animation:pop .35s ease-out}
+@keyframes pop{from{transform:scale(.92);opacity:.4}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.pop{animation:none}.prog i,.switch .knob,.switch .knob::after{transition:none}}
 </style>
 </head>
 <body>
-
-<div class="stage" id="stage" aria-roledescription="carrusel">
-  <div class="progress" id="progress"></div>
-
-  <!-- 1 -->
-  <section class="slide bg-noche cover on" aria-label="Portada">
-    <div class="sun"></div><div class="sea"></div>
-    <div class="ts z">[27/12/24, 22:44:20] <b>ale &lt;3</b>: Los mensajes y las llamadas están cifrados…</div>
-    <h1 class="z">ale&nbsp;&lt;3 &amp; parrado</h1>
-    <p class="lead z">Vuestro Wrapped de WhatsApp</p>
-    <p class="small z">7 ene 2025 → 5 nov 2026 · 225.651 mensajes analizados</p>
-    <div class="hint">TOCA PARA EMPEZAR →</div>
-  </section>
-
-  <!-- 2 -->
-  <section class="slide bg-rosa" aria-label="Días">
-    <div class="ts">668 días de chat</div>
-    <div class="big" data-count="665">665</div>
-    <p class="lead">días con mensajes, de 668 posibles.</p>
-    <p>Solo hubo tres días sin escribiros. Dos de ellos, en septiembre de 2025, porque estabais juntos de viaje por Portugal.</p>
-  </section>
-
-  <!-- 3 -->
-  <section class="slide bg-atardecer" aria-label="Mensajes">
-    <div class="ts">Os habéis mandado</div>
-    <div class="big" data-count="225651">225.651</div>
-    <p class="lead">mensajes.</p>
-    <p>Unos <b>339 cada día</b>: más o menos uno cada tres minutos que estáis despiertos.</p>
-  </section>
-
-  <!-- 4 -->
-  <section class="slide bg-marea" aria-label="Palabras">
-    <div class="ts">Y en palabras</div>
-    <div class="big" data-count="926461" style="font-size:clamp(56px,17vw,90px)">926.461</div>
-    <p class="lead">palabras escritas entre los dos.</p>
-    <p>El Quijote tiene unas 381.000. Lleváis casi <b>dos Quijotes y medio</b> de conversación.</p>
-  </section>
-
-  <!-- 5 -->
-  <section class="slide bg-arena" aria-label="Quién habla más">
-    <div class="ts">¿Quién escribe más?</div>
-    <h2>Pablo, por poco.</h2>
-    <div class="split" role="img" aria-label="Pablo 54,5 por ciento, Ale 45,5 por ciento">
-      <div class="p" style="flex:54.5">54,5%</div>
-      <div class="a" style="flex:45.5">45,5%</div>
-    </div>
-    <div class="legend"><span><b>parrado</b> · 122.935</span><span><b>ale &lt;3</b> · 102.716</span></div>
-    <p>Pero ella pregunta más: <b>12.658 interrogaciones</b> contra 10.799.</p>
-  </section>
-
-  <!-- 6 -->
-  <section class="slide bg-noche" aria-label="Racha">
-    <div class="ts">Racha más larga</div>
-    <div class="big" data-count="379" style="color:var(--rosa)">379</div>
-    <p class="lead">días seguidos sin saltaros ni uno.</p>
-    <p>Del 19 de septiembre de 2025 al 2 de octubre de 2026. Más de un año entero hablando todos los días.</p>
-  </section>
-
-  <!-- 7 -->
-  <section class="slide bg-rosa" aria-label="Meses">
-    <div class="ts">Mensajes por mes</div>
-    <h2>Diciembre de 2025 fue vuestro mes.</h2>
-    <p><b>15.782 mensajes</b> en 31 días, más de 500 al día.</p>
-    <div class="chart" data-nointeract>
-      <div class="bars" id="months"></div>
-      <div class="axis"><span>ene 25</span><span>jul 25</span><span>ene 26</span><span>jul 26</span><span>nov 26</span></div>
-      <div class="readout" id="monthsOut">Toca una barra para ver el mes.</div>
-    </div>
-  </section>
-
-  <!-- 8 -->
-  <section class="slide bg-atardecer" aria-label="Día récord">
-    <div class="ts">[17/3/25, 12:31] <b>ale &lt;3</b>: me chocan todas las rodillas</div>
-    <h2>El día récord: 17 de marzo de 2025.</h2>
-    <div class="big" data-count="1266">1.266</div>
-    <p>mensajes en un solo día. Ale en un autobús, con el asiento de delante clavado en las rodillas, viendo capítulos y con unas ganas enormes de darte el regalo que traía.</p>
-  </section>
-
-  <!-- 9 -->
-  <section class="slide bg-marea" aria-label="Horas">
-    <div class="ts">Mensajes por hora del día</div>
-    <h2>Vuestra hora son las 22:00.</h2>
-    <p><b>24.234 mensajes</b> entre las diez y las once de la noche. Y 7.577 de madrugada, entre las 0 y las 5.</p>
-    <div class="chart" data-nointeract>
-      <div class="bars" id="hours"></div>
-      <div class="axis"><span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>23h</span></div>
-      <div class="readout" id="hoursOut">Toca una barra para ver la hora.</div>
-    </div>
-  </section>
-
-  <!-- 10 -->
-  <section class="slide bg-arena" aria-label="Buenos días y buenas noches">
-    <div class="ts">Quién abre y quién cierra</div>
-    <h2>Él da los buenos días. Ella, las buenas noches.</h2>
-    <div class="rows">
-      <div class="row"><span>Pablo escribe primero por la mañana</span><span>580</span></div>
-      <div class="row"><span>Ale escribe primero por la mañana</span><span>85</span></div>
-      <div class="row"><span>Ale tiene la última palabra de la noche</span><span>484</span></div>
-      <div class="row"><span>Pablo tiene la última palabra</span><span>112</span></div>
-    </div>
-  </section>
-
-  <!-- 11 -->
-  <section class="slide bg-noche" aria-label="Te amo">
-    <div class="ts">La frase del chat</div>
-    <div class="big" data-count="8470" style="color:var(--rosa)">8.470</div>
-    <p class="lead">«te amo».</p>
-    <div class="legend" style="max-width:320px"><span><b>parrado</b> 5.568</span><span><b>ale &lt;3</b> 2.902</span></div>
-    <p>Más <b>3.951 «te quiero»</b> y <b>18.919 «amor»</b>. Vuestra palabra más usada, con muchísima diferencia.</p>
-  </section>
-
-  <!-- 12 -->
-  <section class="slide bg-rosa" aria-label="Cómo os llamáis">
-    <div class="ts">Cómo os llamáis</div>
-    <h2>Mi niña y guapo.</h2>
-    <div class="cols">
-      <div><h3>Pablo a Ale</h3>
-        <div class="word"><span>mi niña</span><b>2.489</b></div>
-        <div class="word"><span>mi vida</span><b>2.283</b></div>
-        <div class="word"><span>princesa</span><b>726</b></div>
-        <div class="word"><span>amorsin</span><b>622</b></div>
-      </div>
-      <div><h3>Ale a Pablo</h3>
-        <div class="word"><span>guapo</span><b>2.216</b></div>
-        <div class="word"><span>gordi</span><b>775</b></div>
-        <div class="word"><span>guapísimo</span><b>361</b></div>
-        <div class="word"><span>amor de mi vida</span><b>103</b></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 13 -->
-  <section class="slide bg-atardecer" aria-label="Diccionario">
-    <div class="ts">Vuestro diccionario</div>
-    <h2>Biennn, oleee y jeje.</h2>
-    <div class="cols">
-      <div><h3>ale &lt;3</h3>
-        <div class="word"><span>biennn</span><b>2.000</b></div>
-        <div class="word"><span>valee</span><b>978</b></div>
-        <div class="word"><span>oleee</span><b>814</b></div>
-        <div class="word"><span>lloro</span><b>455</b></div>
-        <div class="word"><span>omg</span><b>336</b></div>
-      </div>
-      <div><h3>parrado</h3>
-        <div class="word"><span>jeje</span><b>1.527</b></div>
-        <div class="word"><span>descansa</span><b>1.140</b></div>
-        <div class="word"><span>avísame</span><b>724</b></div>
-        <div class="word"><span>oleee</span><b>617</b></div>
-        <div class="word"><span>con locura</span><b>606</b></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 14 -->
-  <section class="slide bg-marea" aria-label="Emojis">
-    <div class="ts">Emojis favoritos</div>
-    <h2>Ella en rosa, él llorando.</h2>
-    <div class="emo">
-      <div><span class="e">🩷</span><span class="c">903</span><span class="who">ALE</span></div>
-      <div><span class="e">☹️</span><span class="c">468</span><span class="who">ALE</span></div>
-      <div><span class="e">😭</span><span class="c">751</span><span class="who">PABLO</span></div>
-    </div>
-    <p class="small">Casi 4 de cada 10 emojis que manda Pablo son 😭.</p>
-  </section>
-
-  <!-- 15 -->
-  <section class="slide bg-arena" aria-label="Multimedia">
-    <div class="ts">Todo lo que no es texto</div>
-    <h2>Ella manda audios. Él manda fotos.</h2>
-    <div class="tiles">
-      <div class="tile"><span class="n">4.921</span><span class="l">stickers</span><span class="w">gana Ale · 2.656</span></div>
-      <div class="tile"><span class="n">3.340</span><span class="l">fotos</span><span class="w">gana Pablo · 2.074</span></div>
-      <div class="tile"><span class="n">2.292</span><span class="l">audios</span><span class="w">gana Ale · 1.279</span></div>
-      <div class="tile"><span class="n">357</span><span class="l">vídeos</span><span class="w">gana Pablo · 207</span></div>
-    </div>
-  </section>
-
-  <!-- 16 -->
-  <section class="slide bg-noche" aria-label="Velocidad">
-    <div class="ts">Tiempo de respuesta</div>
-    <h2>Seis de cada diez respuestas llegan en menos de un minuto.</h2>
-    <div class="rows">
-      <div class="row"><span>Pablo tarda (mediana)</span><span style="color:var(--rosa)">21 s</span></div>
-      <div class="row"><span>Ale tarda (mediana)</span><span style="color:var(--rosa)">31 s</span></div>
-    </div>
-  </section>
-
-  <!-- 17 -->
-  <section class="slide bg-rosa" aria-label="Récords">
-    <div class="ts">[8/3/26, 12:26] <b>parrado</b>:</div>
-    <div class="jaja">JAJAJAJAJAJAJAJAJAJAJAJAJAJAJAJJAJAJAJAAJ</div>
-    <p>El jajaja más largo: <b>41 letras</b>.</p>
-    <div class="rows">
-      <div class="row"><span>Mensajes seguidos de Pablo sin respuesta (1/11/26)</span><span>43</span></div>
-      <div class="row"><span>Veces que alguien dijo «es broma»</span><span>272</span></div>
-    </div>
-    <p class="small">El «es broma» está casi empatado: Ale 140, Pablo 132.</p>
-  </section>
-
-  <!-- 18 -->
-  <section class="slide bg-arena" aria-label="Momentos">
-    <div class="ts">Vuestra historia en el chat</div>
-    <div class="tl">
-      <div><div class="d">27/12/24</div><div class="t">Nace este chat. Vuestro día 27.</div></div>
-      <div><div class="d">8/1/25</div><div class="t">«y vemos la puesta de sol en Cortadura?» La primera cita.</div></div>
-      <div><div class="d">1/3/25</div><div class="t">El primer «te quiero» del chat. Lo escribió ella: «te quiero muuucho 🩷».</div></div>
-      <div><div class="d">Sep 2025</div><div class="t">Primer viaje juntos: el Algarve y Lisboa.</div></div>
-      <div><div class="d">Cada día 27</div><div class="t">«HOY ES NUESTRO ANIVERSARIOOOO», sin fallar un mes.</div></div>
-      <div class="future"><div class="d">27/12/26</div><div class="t"><b>Dos años.</b></div></div>
-    </div>
-  </section>
-
-  <!-- 19 -->
-  <section class="slide bg-noche" aria-label="Final">
-    <div class="sun" style="bottom:-90px;opacity:.5"></div>
-    <div class="ts z">[8/10/25, 23:00] <b>ale &lt;3</b>:</div>
-    <blockquote class="z">«me encantan esos detallitos que tienes, y sé que jamás vas a dejar de tenerlos»</blockquote>
-    <p class="z">665 días escritos. Los que quedan, por escribir.</p>
-    <button class="btn z" id="restart" data-nointeract type="button">Volver a empezar</button>
-  </section>
+<div class="app">
+  <header class="top" id="top" hidden>
+    <div class="where" id="where"></div>
+    <div class="score" id="score">0</div>
+  </header>
+  <div class="prog" id="prog" hidden><i></i></div>
+  <div class="timer" id="timer"><i></i></div>
+  <main class="screen" id="screen" aria-live="polite"></main>
 </div>
 
 <script>
 (function(){
-  var slides=[].slice.call(document.querySelectorAll('.slide'));
-  var prog=document.getElementById('progress');
-  slides.forEach(function(){var s=document.createElement('span');s.appendChild(document.createElement('i'));prog.appendChild(s)});
-  var bars=[].slice.call(prog.children);
-  var cur=0;
-  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function fmtES(n){var s=String(Math.round(n));return s.replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
-  function countUp(slide){
-    if(reduce)return;
-    slide.querySelectorAll('[data-count]').forEach(function(el){
-      var to=+el.getAttribute('data-count'),t0=null,dur=900;
-      function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);p=1-Math.pow(1-p,3);el.textContent=fmtES(to*p);if(p<1)requestAnimationFrame(step);else el.textContent=fmtES(to)}
-      requestAnimationFrame(step);
-    });
-  }
-  function go(i){
-    if(i<0||i>=slides.length)return;
-    slides[cur].classList.remove('on');cur=i;slides[cur].classList.add('on');
-    bars.forEach(function(b,k){b.classList.toggle('done',k<=cur)});
-    var th=getComputedStyle(slides[cur]).backgroundColor;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',th);
-    countUp(slides[cur]);
-    try{localStorage.setItem('wrapped-slide',cur)}catch(e){}
-  }
-  bars.forEach(function(b,k){b.classList.toggle('done',k<=0)});
-  var stage=document.getElementById('stage');
-  stage.addEventListener('click',function(e){
-    if(e.target.closest('[data-nointeract]'))return;
-    var r=stage.getBoundingClientRect();
-    if(e.clientX-r.left<r.width*0.3)go(cur-1);else go(cur+1);
-  });
-  var sx=null,sy=null;
-  stage.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
-  stage.addEventListener('touchend',function(e){
-    if(sx===null)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
-    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){e.preventDefault();go(dx<0?cur+1:cur-1)}
-    sx=null;
-  });
-  document.addEventListener('keydown',function(e){
-    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(cur+1)}
-    if(e.key==='ArrowLeft'){e.preventDefault();go(cur-1)}
-  });
-  document.getElementById('restart').addEventListener('click',function(){go(0)});
+"use strict";
+var SHAPES=[
+ '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21s-7.5-4.6-9.5-9.2C1.2 8.6 3.3 5 6.8 5c2 0 3.6 1.1 5.2 3 1.6-1.9 3.2-3 5.2-3 3.5 0 5.6 3.6 4.3 6.8C19.5 16.4 12 21 12 21z"/></svg>',
+ '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon fill="currentColor" points="12,2.5 14.9,8.9 21.8,9.6 16.6,14.2 18.1,21 12,17.5 5.9,21 7.4,14.2 2.2,9.6 9.1,8.9"/></svg>',
+ '<svg viewBox="0 0 24 24" aria-hidden="true"><circle fill="currentColor" cx="12" cy="12" r="8.5"/></svg>',
+ '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon fill="currentColor" points="12,2.5 21.5,12 12,21.5 2.5,12"/></svg>'
+];
+var HOURS=[4942,1807,551,252,66,202,1696,5514,11211,9651,8982,10689,11314,12969,14645,12569,13507,13644,13975,13002,13070,18035,24583,12631];
+var WEEK=[35158,35657,33931,32964,30096,28451,33250];
+var MONTHS=[12964,9414,11268,8977,9413,7311,8106,9014,7087,11530,13851,15782,14317,11998,10111,10762,9477,8775,8123,8489,8642,8625,5471];
 
-  // charts
-  var months=[["ene 25",12965],["feb 25",9414],["mar 25",11268],["abr 25",8977],["may 25",9413],["jun 25",7311],["jul 25",8106],["ago 25",9014],["sep 25",7087],["oct 25",11530],["nov 25",13851],["dic 25",15782],["ene 26",14317],["feb 26",11998],["mar 26",10111],["abr 26",10762],["may 26",9477],["jun 26",8775],["jul 26",8123],["ago 26",8489],["sep 26",8651],["oct 26",8632],["nov 26 (5 días)",1616]];
-  var hours=[4908,1800,551,252,66,202,1686,5398,10895,9469,8895,10466,11220,12727,14320,12380,13288,13348,13764,12740,12860,17788,24234,12414].map(function(v,h){return [h+":00–"+h+":59",v]});
-  function chart(id,outId,data,unit){
-    var el=document.getElementById(id),out=document.getElementById(outId);
-    var max=Math.max.apply(null,data.map(function(d){return d[1]}));
-    data.forEach(function(d){
-      var b=document.createElement('button');b.type='button';
-      b.setAttribute('aria-label',d[0]+': '+fmtES(d[1])+' mensajes');
-      if(d[1]===max)b.classList.add('peak');
-      var i=document.createElement('i');i.style.height=Math.max(2,d[1]/max*100)+'%';b.appendChild(i);
-      var show=function(){el.querySelectorAll('.sel').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');out.textContent=d[0]+' · '+fmtES(d[1])+' mensajes'};
-      b.addEventListener('click',show);b.addEventListener('mouseenter',show);b.addEventListener('focus',show);
-      el.appendChild(b);
-    });
+var CATS=[
+{name:"Los números",sub:"Para calentar",color:"rosa",qs:[
+ {q:"¿Cuántos mensajes os habéis mandado desde el 7 de enero de 2025?",o:["98.412","152.730","229.507","310.906"],a:2,
+  info:{big:"229.507",text:"mensajes hasta el 17 de noviembre de 2026. Unos 338 al día.",duel:[125142,104365],foot:"Y 940.157 palabras: casi dos Quijotes y medio."}},
+ {q:"En 680 días de chat, ¿cuántos días no os habéis escrito ni un solo mensaje?",o:["Ninguno","3","11","27"],a:1,
+  info:{big:"3 días",text:"El 16 y el 18 de septiembre de 2025, y el 3 de octubre de 2026. Los dos de septiembre tienen truco: estabais juntos. Dónde, lo descubres en la última categoría."}},
+ {q:"¿Cuál ha sido vuestra racha más larga escribiéndoos todos los días?",o:["127 días","245 días","379 días","512 días"],a:2,
+  info:{big:"379 días",text:"Del 19 de septiembre de 2025 al 2 de octubre de 2026. Más de un año sin saltaros ni uno. La racha de ahora empezó el 4 de octubre y sigue viva."}}
+]},
+{name:"Te amo",sub:"Lo que más os decís",color:"atardecer",qs:[
+ {q:"¿Cuántas veces aparece «te amo» en el chat?",o:["1.204","3.950","8.461","15.300"],a:2,
+  info:{big:"8.461",text:"«te amo». Además hay 3.981 «te quiero» y 19.322 «amor», la palabra más escrita de todo el chat.",duel:[5605,2856],duelLbl:"«te amo» de cada uno"}},
+ {q:"¿Quién escribió el primer «te quiero» del chat?",t:"who",a:"A",
+  info:{quote:{who:"ale <3",when:"27/2/25, 01:18",text:"ayy yo sí que te quierooo"},text:"Fue el 27 de febrero de 2025, justo dos meses después del 27. Esa noche Pablo te lo había dicho en persona por primera vez, «con la boca cerrada casi». Tú te acuerdas del día exacto.",foot:"El primer «te amo» escrito también fue tuyo: «te amooo», el 3 de marzo."}},
+ {q:"¿Cuál de estas frases no aparece nunca en el chat?",o:["te echo de menos","tengo ganas de verte","te odio","eres el amor de mi vida"],a:2,
+  info:{big:"0",text:"«te odio», ni una sola vez en casi dos años.",rank:[["amor de mi vida",578],["ganas de verte",318],["te echo de menos",137],["te odio",0]],foot:"Y «te adoro» sale una única vez. La escribiste tú."}}
+]},
+{name:"Cómo nos llamamos",sub:"Motes y más motes",color:"marea",qs:[
+ {q:"¿Cómo te llama Pablo más veces?",o:["princesa","mi niña","amorsin","preciosa"],a:1,
+  info:{big:"2.560",text:"veces «mi niña». Pablo tiene todo un repertorio:",rank:[["mi niña",2560],["mi vida",2302],["amorsin",1077],["princesa",700],["preciosa",489]]}},
+ {q:"¿Y cómo le llamas tú más veces a él?",o:["gordi","mi vida","guapo","guapísimo"],a:2,
+  info:{big:"2.627",text:"veces «guapo». Él te lo ha devuelto 828 veces con «guapa».",rank:[["guapo",2627],["gordi",891],["mi vida",417],["guapísimo",362]]}},
+ {q:"Pablo te ha llamado «princesa» 700 veces. ¿Cuántas veces sale «príncipe» en el chat?",o:["0","12","57","203"],a:0,
+  info:{big:"0",text:"Ninguna. Y «princesita» sale 110 veces: 109 de Pablo y 1 tuya."}}
+]},
+{name:"Cuándo hablamos",sub:"Horas, días y récords",color:"arena",qs:[
+ {q:"¿A qué hora os escribís más?",o:["A las 9 de la mañana","A las 2 de la tarde","A las 6 de la tarde","A las 10 de la noche"],a:3,
+  info:{big:"22:00",text:"24.583 mensajes entre las diez y las once de la noche. Y 7.618 de madrugada, entre las 0 y las 5.",chart:"hours"}},
+ {q:"¿Qué día de la semana os escribís menos?",o:["Lunes","Miércoles","Sábado","Domingo"],a:2,
+  info:{big:"Sábado",text:"Es el día con menos mensajes, seguramente porque es cuando más tiempo pasáis juntos. El que más, el martes.",chart:"week"}},
+ {q:"El 17 de marzo de 2025 os mandasteis 1.266 mensajes, el récord de un solo día. ¿Qué estabas haciendo tú?",o:["Volviendo en autobús, con un regalo para Pablo","Estudiando para un examen","En la feria","De viaje en Portugal"],a:0,
+  info:{big:"1.266",text:"mensajes en un día. Ibas en autobús, viendo capítulos, con el asiento de delante clavado en las rodillas y con muchas ganas de darle el regalo.",quote:{who:"ale <3",when:"17/3/25, 12:36",text:"tengo unas ganas de darte el regalo"},chart:"months",foot:"El mes con más mensajes fue diciembre de 2025: 15.782."}}
+]},
+{name:"¿Quién lo dijo?",sub:"¿Tú o Pablo?",color:"noche",qs:[
+ {q:"«tengo un hambre… morrocotudo»",t:"who",a:"P",quote:true,
+  info:{text:"Pablo, el 20 de octubre de 2025, nada más llegar a casa. Es la única vez que sale «morrocotudo» en todo el chat."}},
+ {q:"«soy pitonisa»",t:"who",a:"A",quote:true,
+  info:{text:"Tú, el 24 de febrero de 2025, después de acertar 7 de 10 partidos de liga.",quote:{who:"parrado",when:"24/2/25, 23:05",text:"a partir de ahora me haces tú la quiniela"},foot:"La Porra viene de lejos."}},
+ {q:"«ser maestra es mejor que profesor. y punto»",t:"who",a:"A",quote:true,
+  info:{text:"Tú, el 26 de marzo de 2025. Ahora Pablo está haciendo el Máster de Profesorado, así que el debate sigue abierto."}},
+ {q:"«pasar contigo la tarde es mi plan favorito jo»",t:"who",a:"P",quote:true,
+  info:{text:"Pablo, el 28 de septiembre de 2025, antes de irse a dormir. Y siguió: «eres impresionante de verdad»."}},
+ {q:"«ojalá gane cabo verde. es mi sueño»",t:"who",a:"A",quote:true,
+  info:{text:"Tú, a las 2:24 de la madrugada del 4 de julio de 2026, viendo el Mundial.",quote:{who:"parrado",when:"4/7/26, 07:31",text:"lo he visto qué lástima jo"}}}
+]},
+{name:"Diccionario",sub:"Vuestras palabras",color:"rosa",qs:[
+ {q:"Pablo ha escrito «jeje» 1.496 veces. ¿Cuántas veces lo has escrito tú?",o:["1","48","310","902"],a:0,
+  info:{big:"1",text:"Una sola vez. Lo tuyo es otra cosa:",rank:[["biennn (tú)",2022],["jeje (Pablo)",1496],["valee (tú)",1001],["oleee (tú)",810],["omg (tú)",340]]}},
+ {q:"¿Quién dice más «joder»?",o:["Tú, de calle","Pablo, de calle","Prácticamente empate","Ninguno lo dice"],a:2,
+  info:{big:"285 – 275",text:"Gana Pablo por diez. Eso sí: «coño» lo dice él 102 veces y tú 6. Y «cállate» lo dices tú 15 veces y él 2.",duel:[285,275]}},
+ {q:"¿Quién pide más perdón?",t:"who",a:"P",
+  info:{big:"734 – 367",text:"Entre «perdón» y «lo siento», Pablo pide perdón exactamente el doble que tú.",duel:[734,367]}}
+]},
+{name:"Una sola vez",sub:"Palabras que solo habéis escrito una vez",color:"atardecer",qs:[
+ {q:"Esta palabra la ha escrito Pablo una sola vez en casi dos años. ¿Cuál es?",o:["casita","tiquismiquis","preciosa","descansa"],a:1,
+  info:{big:"1 vez",text:"«que tiquismiquis por dios», el 12 de diciembre de 2025. Otras palabras que Pablo solo ha usado una vez:",chips:["angelical (tu voz)","sonámbula","calzonazos","pelagatos","Uzbekistán","morrocotudo"]}},
+ {q:"¿Y cuál de estas has escrito tú una sola vez?",o:["gordi","valee","hipopótamo","omg"],a:2,
+  info:{big:"1 vez",text:"«como un hipopótamo», el día de Navidad de 2025. Otras palabras tuyas de una sola vez:",chips:["pitonisa","telepatía","sobaquina","insuperable","jilguero","magisterio"],foot:"Sí: «magisterio», tu propia carrera, una sola vez."}},
+ {q:"Pablo ha escrito «guapi» 194 veces. ¿Cuántas veces lo has escrito tú?",o:["0","1","27","150"],a:1,
+  info:{big:"1",text:"Una. Al revés pasa lo mismo: Pablo solo ha escrito «gordi» 6 veces, contra tus 891.",duel:[194,1],duelLbl:"«guapi»"}}
+]},
+{name:"Nunca jamás",sub:"Palabras que no habéis dicho nunca",color:"marea",qs:[
+ {q:"¿Cuál de estas palabras no ha salido nunca en el chat?",o:["boda","quizás","cuernos","suegra"],a:1,
+  info:{big:"0",text:"En 229.507 mensajes nadie ha escrito «quizás» ni «quizá». Lo vuestro es «ojalá»: 782 veces.",rank:[["boda",72],["suegra",16],["cuernos",10],["quizás",0]]}},
+ {q:"¿Y cuál de estos insultos no ha salido nunca?",o:["tonto","idiota","gilipollas","pesado"],a:1,
+  info:{big:"0",text:"«idiota», cero. Tampoco «imbécil» ni «estúpido». «Tonto» o «tonta» sí sale, casi siempre en broma.",rank:[["tonto/a",101],["pesado/a",93],["gilipollas",13],["idiota",0]]}},
+ {q:"Última de animales. ¿Cuál no ha salido nunca?",o:["dinosaurio","hipopótamo","pelícano","unicornio"],a:3,
+  info:{big:"0",text:"«unicornio», nunca. Los otros tres salen exactamente una vez cada uno."}}
+]},
+{name:"Ale contra Pablo",sub:"¿Quién gana?",color:"arena",qs:[
+ {q:"¿Quién manda más audios?",t:"who",a:"A",info:{duel:[1034,1307],text:"Ganas tú. Y también en stickers: 2.691 contra 2.275."}},
+ {q:"¿Quién manda más fotos?",t:"who",a:"P",info:{duel:[2195,1314],text:"Gana Pablo. Y también en vídeos: 217 contra 156."}},
+ {q:"¿Quién escribe primero por la mañana más veces?",t:"who",a:"P",info:{duel:[588,89],text:"Él da los buenos días. Tú, las buenas noches: la última palabra de la noche es tuya 492 veces, contra 116 de él."}},
+ {q:"¿Quién contesta más rápido?",t:"who",a:"P",info:{big:"21 s",text:"Pablo suele tardar 21 segundos en contestar. Tú, 31. Seis de cada diez respuestas llegan en menos de un minuto."}}
+]},
+{name:"Emojis",sub:"Lo que no se escribe",color:"noche",qs:[
+ {q:"¿Cuál es tu emoji más usado?",o:["🩷","☹️","😭","🫶"],a:0,emoji:true,info:{big:"928",text:"veces 🩷. Detrás van ☹️ (468) y 😭 (412)."}},
+ {q:"¿Y el de Pablo?",o:["🥰","😭","🥹","🥺"],a:1,emoji:true,info:{big:"752",text:"veces 😭. Casi 4 de cada 10 emojis que manda Pablo."}}
+]},
+{name:"Nuestro mundo",sub:"Comida, sitios y gente",color:"rosa",qs:[
+ {q:"¿Qué comida o bebida sale más en el chat?",o:["pizza","hamburguesa","café","sushi"],a:2,
+  info:{big:"551",text:"veces «café». Ni se acercan:",rank:[["café",551],["hamburguesa",120],["cerveza",106],["pizza",96],["sushi",46]]}},
+ {q:"¿Qué sitio nombráis más?",o:["Chiclana","Cádiz","Naveros","Madrid"],a:1,
+  info:{big:"569",text:"veces Cádiz.",rank:[["Cádiz",569],["Naveros",262],["Chiclana",257],["Madrid",236],["Vejer",175]]}},
+ {q:"¿Quién sale más en vuestras conversaciones?",o:["«mi madre» (la de cada uno)","«mi padre»","el abuelo","Koke"],a:0,
+  info:{big:"1.252",text:"veces «mi madre». Koke está casi empatado entre los dos: 98 de Pablo y 95 tuyos.",rank:[["mi madre",1252],["mi padre",660],["abuelo",575],["mi hermano",391],["Koke",193]]}}
+]},
+{name:"Récords",sub:"Lo más largo",color:"atardecer",qs:[
+ {q:"El «jajaja» más largo del chat tiene 41 letras. ¿De quién es?",t:"who",a:"P",
+  info:{word:"JAJAJAJAJAJAJAJAJAJAJAJAJAJAJAJJAJAJAJAAJ",text:"De Pablo, el 8 de marzo de 2026. El tuyo más largo tiene 40. Perdiste por una letra."}},
+ {q:"La palabra más larga del chat tiene 64 letras. ¿Qué palabra es?",o:["muchísimo","amorrrr","joooo","preciosaaa"],a:0,
+  info:{word:"muchiiisiisisisisisiisisisisisisisisisisisiissisisiisisisisisimo",text:"Un «muchísimo» estirado hasta 64 letras. Tuyo, del 25 de septiembre de 2025. El récord de Pablo también es un «muchísimo», pero se queda en 42."}},
+ {q:"¿Cuántos mensajes seguidos te mandó Pablo sin respuesta el 1 de noviembre de 2026?",o:["12","27","43","61"],a:2,
+  info:{big:"43",text:"mensajes seguidos, el récord del chat. El tuyo son 37, el 13 de diciembre de 2025."}}
+]},
+{name:"Lo que nadie cuenta",sub:"Esto no sale en las películas",color:"marea",qs:[
+ {q:"¿Cuántas veces sale la palabra «caca» en el chat?",o:["7","56","207","650"],a:2,
+  info:{big:"207",text:"Pablo 113, tú 94. Y «peo» sale 4 veces, todas de Pablo.",duel:[113,94]}},
+ {q:"¿Quién habla más de dormir?",t:"who",a:"P",
+  info:{duel:[1009,550],text:"Pablo escribe «dormir» casi el doble que tú. Y «descansa», 1.157 veces."}}
+]},
+{name:"Nuestra historia",sub:"La última categoría",color:"noche",qs:[
+ {q:"¿Qué día os visteis por primera vez?",o:["26 de octubre de 2024","27 de diciembre de 2024","7 de enero de 2025","14 de febrero de 2025"],a:0,
+  info:{quote:{who:"ale <3",when:"26/10/25",text:"HOY HACE UN AÑO QUE NOS VIMOS POR PRIMERA VEZ"},text:"Un año después lo celebraste tú, en mayúsculas."}},
+ {q:"¿Dónde fue vuestra primera cita?",o:["Viendo el atardecer en Cortadura","Cenando en El Palmar","En la playa de Zahara","Paseando por Vejer"],a:0,
+  info:{quote:{who:"parrado",when:"8/1/25",text:"y vemos la puesta de sol en cortadura?"},text:"Y en abril de 2026 propusiste repetirla: «podemos recrear nuestra primera cita e ir a ver la puesta de sol a cortadura»."}},
+ {q:"¿Dónde estabais los días de septiembre de 2025 en los que no os escribisteis?",o:["En Rumanía","En Portugal","En Valencia","En Madrid"],a:1,
+  info:{big:"Portugal",text:"De viaje por el Algarve y Lisboa. Los únicos días de 2025 sin mensajes fueron porque no hacía falta escribirse."}},
+ {q:"¿Qué día del mes celebráis el aniversario?",o:["El 7","El 14","El 26","El 27"],a:3,
+  info:{big:"27",text:"Todos los meses desde el 27 de diciembre de 2024, con su «FELIZ ANIVERSARIO» en mayúsculas. El 27 de diciembre de 2026 hacéis dos años."}}
+]}
+];
+
+var GOOD=["¡Biennn!","¡Oleee!","¡Olé tú!","¡Pitonisa!","¡Valee, sí!"];
+var BAD=["Lloro","Jooo","Casi casi","☹️"];
+var LIMIT=20;
+var STEPS=[];
+CATS.forEach(function(c,ci){STEPS.push({t:"cat",ci:ci});c.qs.forEach(function(q,qi){STEPS.push({t:"q",ci:ci,qi:qi})})});
+var TOTALQ=STEPS.filter(function(s){return s.t==="q"}).length;
+var KEY="trivial-nosotros-v1";
+var S=fresh();
+function fresh(){return {i:-1,score:0,correct:0,streak:0,best:0,timer:true,ans:{}}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){try{var v=JSON.parse(localStorage.getItem(KEY)||"null");if(v&&typeof v.i==="number")return v}catch(e){}return null}
+
+var $screen=document.getElementById("screen"),$top=document.getElementById("top"),$where=document.getElementById("where"),$score=document.getElementById("score"),$prog=document.getElementById("prog"),$timer=document.getElementById("timer");
+function fmt(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,".")}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+var raf=null,deadline=0,phase="idle",cur=null;
+function stopTimer(){if(raf)cancelAnimationFrame(raf);raf=null;$timer.classList.remove("on")}
+function qIndex(i){var n=0;for(var k=0;k<=i;k++)if(STEPS[k].t==="q")n++;return n}
+
+function chrome(show){
+  $top.hidden=!show;$prog.hidden=!show;
+  if(show){
+    var s=STEPS[S.i];var c=CATS[s.ci];
+    $where.textContent=c.name+(s.t==="q"?" · "+qIndex(S.i)+"/"+TOTALQ:"");
+    $score.textContent=fmt(S.score)+" pts";
+    $prog.firstElementChild.style.width=(qIndex(S.i)/TOTALQ*100)+"%";
   }
-  chart('months','monthsOut',months);
-  chart('hours','hoursOut',hours);
+}
+function scrollTop(){$screen.scrollTop=0}
+
+function renderStart(){
+  stopTimer();chrome(false);phase="idle";
+  var saved=load();var resume=saved&&saved.i>=0&&saved.i<STEPS.length;
+  $screen.innerHTML=
+   '<div class="ts">[1/12/26] <b>ale &lt;3</b> &amp; <b>parrado</b></div>'+
+   '<div class="hero"><div class="sun"></div><div class="sea"></div><div class="z stack"><h1>¿Cuánto sabes de nosotros?</h1></div></div>'+
+   '<p>El trivial de vuestro chat de WhatsApp: 229.507 mensajes, del 7 de enero de 2025 al 17 de noviembre de 2026. Después de cada respuesta verás el dato completo.</p>'+
+   '<div class="facts"><div><b>'+CATS.length+'</b><span>categorías</span></div><div><b>'+TOTALQ+'</b><span>preguntas</span></div><div><b>~25</b><span>minutos</span></div></div>'+
+   '<button class="switch" id="tsw" role="switch" aria-checked="'+(S.timer?"true":"false")+'" type="button"><span><b>Cuenta atrás de '+LIMIT+' s</b><br><span class="muted" style="font-size:14px">Cuanto antes contestes, más puntos</span></span><span class="knob" aria-hidden="true"></span></button>'+
+   '<div class="grow"></div>'+
+   '<div class="stack">'+(resume?'<button class="btn" id="cont" type="button">Seguir por la pregunta '+Math.max(1,qIndex(saved.i))+'</button><button class="btn ghost" id="go" type="button">Empezar de cero</button>':'<button class="btn" id="go" type="button">Jugar</button>')+'</div>';
+  document.getElementById("tsw").onclick=function(){S.timer=!S.timer;this.setAttribute("aria-checked",S.timer?"true":"false")};
+  document.getElementById("go").onclick=function(){var t=S.timer;S=fresh();S.timer=t;S.i=0;save();go()};
+  if(resume)document.getElementById("cont").onclick=function(){var t=S.timer;S=saved;S.timer=t;go()};
+  scrollTop();
+}
+
+function go(){
+  if(S.i>=STEPS.length){renderEnd();return}
+  var s=STEPS[S.i];
+  if(s.t==="cat")renderCat(s);else{
+    var key=s.ci+"-"+s.qi;
+    if(S.ans[key])renderQ(s,true);else renderQ(s,false);
+  }
+}
+function next(){S.i++;save();go()}
+
+function renderCat(s){
+  stopTimer();chrome(true);phase="cat";
+  var c=CATS[s.ci];
+  $screen.innerHTML='<section class="cat c-'+c.color+' pop">'+
+   '<div class="num">CATEGORÍA '+(s.ci+1)+' DE '+CATS.length+'</div>'+
+   '<div class="stack" style="gap:12px"><h1>'+esc(c.name)+'</h1><p style="font-size:18px;font-weight:600">'+esc(c.sub)+'</p></div>'+
+   '<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px"><span style="font-weight:700">'+c.qs.length+' preguntas</span><span class="bg-shape">'+SHAPES[s.ci%4].replace('<svg','<svg width="96" height="96"')+'</span></div>'+
+   '</section><button class="btn" id="nx" type="button">Vamos</button>';
+  document.getElementById("nx").onclick=next;
+  scrollTop();
+}
+
+function optionsOf(q){
+  if(q.t==="who")return [{k:"A",label:"ale <3",cls:"t0",shape:0},{k:"P",label:"parrado",cls:"t2",shape:1}];
+  return q.o.map(function(o,i){return {k:i,label:o,cls:"t"+i,shape:i}});
+}
+function isRight(q,k){return q.t==="who"?k===q.a:k===q.a}
+
+function renderQ(s,answered){
+  var c=CATS[s.ci],q=c.qs[s.qi],key=s.ci+"-"+s.qi;
+  chrome(true);
+  var opts=optionsOf(q);
+  var html='<div class="qcard'+(q.quote?' quote':'')+' pop"><div class="qn">PREGUNTA '+qIndex(S.i)+' DE '+TOTALQ+(q.t==="who"?' · ¿TÚ O PABLO?':'')+'</div><h2>'+esc(q.q)+'</h2></div>';
+  html+='<div class="tiles" id="tiles">'+opts.map(function(o){
+    return '<button class="tile '+o.cls+(q.t==="who"?' big':'')+(q.emoji?' emoji':'')+'" type="button" data-k="'+o.k+'">'+SHAPES[o.shape]+'<span class="tx">'+esc(o.label)+'</span></button>';
+  }).join("")+'</div><div id="reveal" class="stack" style="gap:14px"></div>';
+  $screen.innerHTML=html;scrollTop();
+  var tiles=[].slice.call(document.querySelectorAll(".tile"));
+  if(answered){showReveal(s,S.ans[key],false);return}
+  phase="ask";
+  tiles.forEach(function(b){b.onclick=function(){var k=b.getAttribute("data-k");answer(s,q.t==="who"?k:+k)}});
+  if(S.timer){
+    $timer.classList.add("on");var bar=$timer.firstElementChild;deadline=performance.now()+LIMIT*1000;
+    (function tick(){var left=deadline-performance.now();var f=Math.max(0,left/(LIMIT*1000));bar.style.transform="scaleX("+f+")";bar.style.background=f<.25?"var(--ko)":"var(--atardecer)";
+      if(left<=0){answer(s,null);return}raf=requestAnimationFrame(tick)})();
+  }else stopTimer();
+}
+
+function answer(s,k){
+  if(phase!=="ask")return;phase="reveal";
+  var left=S.timer?Math.max(0,deadline-performance.now()):LIMIT*1000;stopTimer();
+  var q=CATS[s.ci].qs[s.qi],ok=k!==null&&isRight(q,k);
+  var pts=ok?(S.timer?Math.round(500+500*left/(LIMIT*1000)):1000):0;
+  if(ok){S.correct++;S.streak++;S.best=Math.max(S.best,S.streak)}else S.streak=0;
+  S.score+=pts;
+  var rec={k:k,ok:ok,pts:pts,streak:S.streak,w:ok?GOOD[Math.floor(Math.random()*GOOD.length)]:(k===null?"Se acabó el tiempo":BAD[Math.floor(Math.random()*BAD.length)])};
+  S.ans[s.ci+"-"+s.qi]=rec;save();
+  showReveal(s,rec,true);
+}
+
+function infoHTML(i){
+  var h='<div class="info pop"><div class="lbl">El dato</div>';
+  if(i.big)h+='<div class="bigN">'+esc(i.big)+'</div>';
+  if(i.text)h+='<p>'+esc(i.text)+'</p>';
+  if(i.word)h+='<div class="longword">'+esc(i.word)+'</div>';
+  if(i.quote)h+='<div class="bubble'+(i.quote.who==="parrado"?" me":"")+'"><span class="who">'+esc(i.quote.who)+'</span><span class="t">'+esc(i.quote.text)+'</span><span class="when">'+esc(i.quote.when)+'</span></div>';
+  if(i.duel){var mx=Math.max(i.duel[0],i.duel[1])||1;
+    h+='<div class="duel">'+(i.duelLbl?'<div class="muted" style="font-size:13px">'+esc(i.duelLbl)+'</div>':'')+
+     '<div class="row p"><span>parrado</span><span class="track"><i style="width:'+(i.duel[0]/mx*100)+'%"></i></span><b>'+fmt(i.duel[0])+'</b></div>'+
+     '<div class="row a"><span>ale &lt;3</span><span class="track"><i style="width:'+(i.duel[1]/mx*100)+'%"></i></span><b>'+fmt(i.duel[1])+'</b></div></div>'}
+  if(i.rank){var m2=Math.max.apply(null,i.rank.map(function(r){return r[1]}))||1;
+    h+='<div class="rank">'+i.rank.map(function(r,ix){return '<div class="row'+(ix===0?' first':'')+'"><span>'+esc(r[0])+'</span><b>'+fmt(r[1])+'</b><span class="track"><i style="width:'+(r[1]/m2*100)+'%"></i></span></div>'}).join("")+'</div>'}
+  if(i.chips)h+='<div class="chips">'+i.chips.map(function(c){return '<span>'+esc(c)+'</span>'}).join("")+'</div>';
+  if(i.chart)h+=chartHTML(i.chart);
+  if(i.foot)h+='<p class="foot">'+esc(i.foot)+'</p>';
+  return h+'</div>';
+}
+function chartHTML(kind){
+  var d,hi,ax;
+  if(kind==="hours"){d=HOURS;hi=22;ax=["0h","6h","12h","18h","23h"]}
+  else if(kind==="week"){d=WEEK;hi=5;ax=["lun","mar","mié","jue","vie","sáb","dom"]}
+  else{d=MONTHS;hi=11;ax=["ene 25","jul 25","ene 26","jul 26","nov 26"]}
+  var mx=Math.max.apply(null,d);
+  return '<div class="chart" role="img" aria-label="Gráfico de mensajes"><div class="bars">'+d.map(function(v,ix){return '<i class="'+(ix===hi?'hi':'')+'" style="height:'+(v/mx*100)+'%"></i>'}).join("")+'</div><div class="axis">'+ax.map(function(a){return '<span>'+a+'</span>'}).join("")+'</div></div>';
+}
+
+function showReveal(s,rec,fresh){
+  phase="reveal";stopTimer();
+  var q=CATS[s.ci].qs[s.qi];
+  var tiles=document.getElementById("tiles");tiles.classList.add("done");
+  [].slice.call(tiles.children).forEach(function(b){
+    var k=b.getAttribute("data-k");k=q.t==="who"?k:+k;b.disabled=true;
+    if(isRight(q,k)){b.classList.add("right");b.insertAdjacentHTML("beforeend",'<span class="mark" aria-label="Correcta">✓</span>')}
+    else if(rec.k!==null&&k===rec.k){b.classList.add("wrong");b.insertAdjacentHTML("beforeend",'<span class="mark" aria-label="Tu respuesta">✕</span>')}
+    else b.classList.add("dim");
+  });
+  var v='<div class="verdict '+(rec.ok?'good':'bad')+' pop"><span class="w">'+esc(rec.w)+'</span><span class="pts">+'+fmt(rec.pts)+(rec.ok&&rec.streak>1?'<small>Racha de '+rec.streak+'</small>':'')+'</span></div>';
+  var last=S.i===STEPS.length-1;
+  document.getElementById("reveal").innerHTML=v+infoHTML(q.info)+'<div class="next"><button class="btn" id="nx" type="button">'+(last?'Ver resultado':'Siguiente')+'</button></div>';
+  chrome(true);
+  document.getElementById("nx").onclick=next;
+  if(fresh){setTimeout(function(){var r=document.getElementById("reveal");if(r)r.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})},350)}
+}
+
+function rankOf(p){
+  if(p>=.9)return ["Pitonisa oficial","Lo sabes todo de nosotros. «soy pitonisa», dijiste. Confirmado."];
+  if(p>=.7)return ["La mejor seño del mundo","Y la que más sabe de este chat."];
+  if(p>=.5)return ["¡Biennn!","Aprobado con nota. El resto lo repasamos juntos."];
+  return ["Lloro","Pero te amo igual. Y tenemos muchos mensajes más para que lo mejores."];
+}
+function renderEnd(){
+  stopTimer();phase="end";$top.hidden=false;$prog.hidden=false;
+  $where.textContent="Resultado";$score.textContent=fmt(S.score)+" pts";$prog.firstElementChild.style.width="100%";
+  var p=S.correct/TOTALQ,r=rankOf(p);
+  var catRows=CATS.map(function(c,ci){var ok=0;c.qs.forEach(function(q,qi){var a=S.ans[ci+"-"+qi];if(a&&a.ok)ok++});return '<div><span>'+esc(c.name)+'</span><b>'+ok+'/'+c.qs.length+'</b></div>'}).join("");
+  $screen.innerHTML='<section class="final pop"><div class="ts" style="color:var(--tinta)">TU RANGO</div><div class="rk">'+esc(r[0])+'</div><p>'+esc(r[1])+'</p><div class="sc">'+S.correct+' de '+TOTALQ+' · '+fmt(S.score)+' puntos</div>'+(S.best>1?'<div style="font-weight:700">Mejor racha: '+S.best+' seguidas</div>':'')+'</section>'+
+   '<div class="recap">'+catRows+'</div>'+
+   '<div class="letter"><div class="bubble"><span class="who">ale &lt;3</span><span class="t">me encantan esos detallitos que tienes, y sé que jamás vas a dejar de tenerlos</span><span class="when">8/10/25, 23:00</span></div>'+
+   '<p>229.507 mensajes, 8.461 «te amo» y 680 días. Y esto es solo lo que cabe en un chat.</p><p>Feliz 1 de diciembre, mi niña. Quedan 23 días de calendario.</p><div class="sign">Pablo</div></div>'+
+   '<button class="btn ghost" id="again" type="button">Volver a jugar</button>';
+  document.getElementById("again").onclick=function(){var t=S.timer;S=fresh();S.timer=t;save();renderStart()};
+  scrollTop();
+}
+
+document.addEventListener("keydown",function(e){
+  if(phase==="ask"&&/^[1-4]$/.test(e.key)){var t=document.querySelectorAll(".tile")[+e.key-1];if(t)t.click()}
+  else if((phase==="reveal"||phase==="cat")&&e.key==="Enter"){var n=document.getElementById("nx");if(n&&document.activeElement!==n){e.preventDefault();n.click()}}
+});
+document.addEventListener("visibilitychange",function(){if(document.hidden&&phase==="ask"&&S.timer){deadline+=0}});
+
+var saved=load();if(saved){S.timer=saved.timer!==false}
+renderStart();
 })();
 </script>
-
 </body>
 </html>
