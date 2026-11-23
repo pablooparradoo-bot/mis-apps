@@ -166,21 +166,6 @@ TRIGGER:-PT15M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:20261124-div@master-g5-2627
-DTSTAMP:20261102T163736Z
-DTSTART;TZID=Europe/Madrid:20261124T170000
-DTEND;TZID=Europe/Madrid:20261124T190000
-SUMMARY:Diversidad · videoconferencia (1/5)
-DESCRIPTION:Diversidad en el aprendizaje: el desarrollo cognitivo\, social
-  y emocional\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
-CATEGORIES:Clase
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Clase en 15 minutos
-TRIGGER:-PT15M
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:20261124-fam@master-g5-2627
 DTSTAMP:20261102T163736Z
 DTSTART;TZID=Europe/Madrid:20261124T190000
@@ -275,10 +260,11 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:20261201-div@master-g5-2627
-DTSTAMP:20261102T163736Z
-DTSTART;TZID=Europe/Madrid:20261201T170000
-DTEND;TZID=Europe/Madrid:20261201T190000
-SUMMARY:Diversidad · videoconferencia (2/5)
+DTSTAMP:20261123T211243Z
+SEQUENCE:1
+DTSTART;TZID=Europe/Madrid:20261201T190000
+DTEND;TZID=Europe/Madrid:20261201T210000
+SUMMARY:Diversidad · videoconferencia (1/5)
 DESCRIPTION:Diversidad en el aprendizaje: el desarrollo cognitivo\, social
   y emocional\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
 CATEGORIES:Clase
@@ -414,10 +400,11 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:20261215-div@master-g5-2627
-DTSTAMP:20261102T163736Z
-DTSTART;TZID=Europe/Madrid:20261215T170000
-DTEND;TZID=Europe/Madrid:20261215T190000
-SUMMARY:Diversidad · videoconferencia (3/5)
+DTSTAMP:20261123T211243Z
+SEQUENCE:1
+DTSTART;TZID=Europe/Madrid:20261215T190000
+DTEND;TZID=Europe/Madrid:20261215T210000
+SUMMARY:Diversidad · videoconferencia (2/5)
 DESCRIPTION:Diversidad en el aprendizaje: el desarrollo cognitivo\, social
   y emocional\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
 CATEGORIES:Clase
@@ -476,10 +463,11 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:20261222-div@master-g5-2627
-DTSTAMP:20261102T163736Z
-DTSTART;TZID=Europe/Madrid:20261222T170000
-DTEND;TZID=Europe/Madrid:20261222T190000
-SUMMARY:Diversidad · videoconferencia (4/5)
+DTSTAMP:20261123T211243Z
+SEQUENCE:1
+DTSTART;TZID=Europe/Madrid:20261222T190000
+DTEND;TZID=Europe/Madrid:20261222T210000
+SUMMARY:Diversidad · videoconferencia (3/5)
 DESCRIPTION:Diversidad en el aprendizaje: el desarrollo cognitivo\, social
   y emocional\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
 CATEGORIES:Clase
@@ -575,6 +563,21 @@ SUMMARY:Familia · videoconferencia (5/5)
 DESCRIPTION:Familia y comunidad en la sociedad global: retos y desafíos e
  n contextos educativos\nMáster Profesorado · Grupo 5 · 1º cuatrimestr
  e
+CATEGORIES:Clase
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Clase en 15 minutos
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:20270119-div@master-g5-2627
+DTSTAMP:20261123T211243Z
+DTSTART;TZID=Europe/Madrid:20270119T190000
+DTEND;TZID=Europe/Madrid:20270119T210000
+SUMMARY:Diversidad · videoconferencia (4/5)
+DESCRIPTION:Diversidad en el aprendizaje: el desarrollo cognitivo\, social
+  y emocional\nMáster Profesorado · Grupo 5 · 1º cuatrimestre
 CATEGORIES:Clase
 BEGIN:VALARM
 ACTION:DISPLAY
